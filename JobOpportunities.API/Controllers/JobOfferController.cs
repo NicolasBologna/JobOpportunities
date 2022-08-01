@@ -1,5 +1,7 @@
-﻿using JobOpportunities.Domain;
-using JobOpportunities.Repositories;
+﻿using JobOpportunities.Core.Features.JobOffers.Commands;
+using JobOpportunities.Core.Features.JobOffers.Models;
+using JobOpportunities.Core.Features.JobOffers.Queries;
+using MediatR;
 using Microsoft.AspNetCore.Mvc;
 
 // For more information on enabling Web API for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
@@ -10,38 +12,33 @@ namespace JobOpportunities.API.Controllers
     [ApiController]
     public class JobOfferController : ControllerBase
     {
-        private readonly IRepository<JobOffer> _jobOfferRepository;
+        private readonly IMediator _mediator;
 
-        public JobOfferController(IRepository<JobOffer> jobOfferRepository)
+        public JobOfferController(IMediator mediator)
         {
-            _jobOfferRepository = jobOfferRepository;
+            _mediator = mediator;
         }
+
         [HttpGet]
-        public async Task<ActionResult<IEnumerable<JobOffer>>> Get()
-        {
-            var jobOffers = await _jobOfferRepository.GetAllAsync();
-            return Ok(jobOffers);
-        }
-
+        public async Task<IEnumerable<GetJobOffersResponse>> Get() => await _mediator.Send(new GetJobOffersQuery());
         [HttpGet("{id}")]
-        public string Get(int id)
-        {
-            return "value";
-        }
+        public async Task<GetJobOfferResponse> Get(Guid id) => await _mediator.Send(new GetJobOfferQuery { JobOfferId = id });
 
         [HttpPost]
-        public void Post([FromBody] string value)
+        public async Task<IActionResult> Post(CreateJobOfferCommand command)
         {
+            await _mediator.Send(command);
+            return Ok();
         }
 
-        [HttpPut("{id}")]
-        public void Put(int id, [FromBody] string value)
-        {
-        }
+        //[HttpPut("{id}")]
+        //public void Put(int id, [FromBody] string value)
+        //{
+        //}
 
-        [HttpDelete("{id}")]
-        public void Delete(int id)
-        {
-        }
+        //[HttpDelete("{id}")]
+        //public void Delete(int id)
+        //{
+        //}
     }
 }

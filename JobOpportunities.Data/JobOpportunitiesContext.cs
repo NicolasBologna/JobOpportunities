@@ -7,14 +7,14 @@ namespace JobOpportunities.Data
     public class JobOpportunitiesContext : IdentityDbContext<ApplicationUser>
     {
 
-        public DbSet<JobOffer> JobOffers { get; set; }
-        public DbSet<FullTimeJob> FullTimeJobs { get; set; }
-        public DbSet<Intership> Interships { get; set; } //Los warnings los podemos obviar porque DbContext se encarga de eso.
-        public DbSet<SkillLevel> SkillLevels { get; set; }
-        public DbSet<Company> Companies { get; set; }
-        public DbSet<Candidate> Candidates { get; set; }
-        public DbSet<Knowleadge> Knowleadges { get; set; }
-        public DbSet<Skill> Skills { get; set; }
+        public DbSet<JobOffer> JobOffers => Set<JobOffer>();
+        public DbSet<FullTimeJob> FullTimeJobs => Set<FullTimeJob>();
+        public DbSet<Intership> Interships => Set<Intership>();
+        public DbSet<SkillLevel> SkillLevels => Set<SkillLevel>();
+        public DbSet<Company> Companies => Set<Company>();
+        public DbSet<Candidate> Candidates => Set<Candidate>();
+        public DbSet<Knowleadge> Knowleadges => Set<Knowleadge>();
+        public DbSet<Skill> Skills => Set<Skill>();
 
         public JobOpportunitiesContext(DbContextOptions<JobOpportunitiesContext> options)
             : base(options)

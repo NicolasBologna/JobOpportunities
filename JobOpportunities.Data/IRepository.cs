@@ -10,7 +10,7 @@ namespace JobOpportunities.Repositories
         Task<bool> SaveAsync();
     }
 
-    public interface IReadRepository<T>
+    public interface IReadRepository<T> where T : IEntity
     {
         Task<IEnumerable<T>> GetAllAsync();
         Task<T?> GetByIdAsync(Guid id);

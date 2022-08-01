@@ -38,7 +38,7 @@ namespace JobOpportunities.Repositories
 
         public async Task<bool> SaveAsync()
         {
-            return await _dbContext.SaveChangesAsync().ConfigureAwait(false) > 0;
+            return await _dbContext.SaveChangesAsync() > 0;
         }
 
         public async Task<T?> FindByConditionAsync(Expression<Func<T, bool>> predicate)

@@ -19,7 +19,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\JobOpportunities.Data\JobOpportunities.Data.csproj" />
+    <ProjectReference Include="..\JobOpportunities.Core\JobOpportunities.Core.csproj" />
     <ProjectReference Include="..\JobOpportunities.Domain\JobOpportunities.Domain.csproj" />
   </ItemGroup>
 
