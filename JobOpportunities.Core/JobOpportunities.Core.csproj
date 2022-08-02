@@ -10,6 +10,11 @@
 	  <ProjectReference Include="..\JobOpportunities.Data\JobOpportunities.Data.csproj" />
 	  <ProjectReference Include="..\JobOpportunities.Domain\JobOpportunities.Domain.csproj" />
 	</ItemGroup>
+
+	<ItemGroup>
+	  <Folder Include="Features\Skills\Models\" />
+	  <Folder Include="Features\Skills\Queries\" />
+	</ItemGroup>
   <PropertyGroup>
     <TargetFramework>net6.0</TargetFramework>
     <ImplicitUsings>enable</ImplicitUsings>

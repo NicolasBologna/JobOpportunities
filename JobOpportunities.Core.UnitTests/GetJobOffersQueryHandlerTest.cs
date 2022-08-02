@@ -13,7 +13,6 @@ namespace JobOpportunities.Core.UnitTests
         [SetUp]
         public void Setup()
         {
-
         }
 
         [Test]

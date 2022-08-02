@@ -13,7 +13,7 @@ namespace JobOpportunities.Data
         public DbSet<SkillLevel> SkillLevels => Set<SkillLevel>();
         public DbSet<Company> Companies => Set<Company>();
         public DbSet<Candidate> Candidates => Set<Candidate>();
-        public DbSet<Knowleadge> Knowleadges => Set<Knowleadge>();
+        public DbSet<Knowledge> Knowleadges => Set<Knowledge>();
         public DbSet<Skill> Skills => Set<Skill>();
 
         public JobOpportunitiesContext(DbContextOptions<JobOpportunitiesContext> options)

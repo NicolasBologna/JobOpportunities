@@ -13,10 +13,10 @@ public class GetJobOfferQuery : IRequest<GetJobOfferResponse>
 
 public class GetJobOfferQueryHandler : IRequestHandler<GetJobOfferQuery, GetJobOfferResponse>
 {
-    private readonly IRepository<JobOffer> _jobOfferRepository;
+    private readonly IReadRepository<JobOffer> _jobOfferRepository;
     private readonly IMapper _mapper;
 
-    public GetJobOfferQueryHandler(IRepository<JobOffer> jobOfferRepository, IMapper mapper)
+    public GetJobOfferQueryHandler(IReadRepository<JobOffer> jobOfferRepository, IMapper mapper)
     {
         _jobOfferRepository = jobOfferRepository;
         _mapper = mapper;
