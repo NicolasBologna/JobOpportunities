@@ -1,4 +1,5 @@
-﻿using FluentValidation;
+﻿
+using FluentValidation;
 using MediatR;
 
 namespace JobOpportunities.Core.Behaviours
@@ -29,7 +30,7 @@ namespace JobOpportunities.Core.Behaviours
                     .ToList();
 
                 if (failures.Any())
-                    throw new ValidationException(failures);
+                    throw new Exceptions.ValidationException(failures);
             }
             return await next();
         }

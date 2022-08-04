@@ -35,7 +35,7 @@ namespace JobOpportunities.API.Controllers
         }
 
         [HttpGet]
-        [Route("potentialcandidates/{id}")]
+        [Route("{id}/potentialcandidates")]
         public async Task<IEnumerable<GetJobOfferCandidatesResponse>> GetJobOfferCandidates(Guid id) => await _mediator.Send(new GetJobOfferCandidatesQuery { JobOfferId = id });
 
         //[HttpPut("{id}")]

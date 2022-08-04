@@ -17,14 +17,12 @@ namespace JobOpportunities.Core.Features.JobOfferMatches.Queries
     {
         private readonly ICandidatesRepository _candidateRepository;
         private readonly IMapper _mapper;
-        private readonly IReadRepository<Skill> _skillRepository;
         private readonly IJobOfferRepository _jobOfferRepository;
 
         public GetJobOfferCandidatesQueryHandler(ICandidatesRepository candidateRepository, IMapper mapper, IReadRepository<Skill> skillRepository, IJobOfferRepository jobOfferRepository)
         {
             _candidateRepository = candidateRepository;
             _mapper = mapper;
-            _skillRepository = skillRepository;
             _jobOfferRepository = jobOfferRepository;
         }
         public async Task<IEnumerable<GetJobOfferCandidatesResponse>> Handle(GetJobOfferCandidatesQuery request, CancellationToken cancellationToken)
@@ -36,12 +34,9 @@ namespace JobOpportunities.Core.Features.JobOfferMatches.Queries
 
             IEnumerable<Guid>? requiredSkillsIds = jobOfferSkills.Select(r => r.Id);
 
-            //var candidates = _candidateRepository.FindAllByConditionAsync(c => !jobOfferSkills.Except(c.Skills).Any()).ToList(); //FAILS
-
             var candidates = await _candidateRepository.GetallWithSkills();
 
             var filteredCandidates = candidates.Where(c => !requiredSkillsIds.Except(c.Skills.Select(s => s.Id)).Any());
-
 
             return _mapper.Map<IEnumerable<GetJobOfferCandidatesResponse>>(filteredCandidates);
         }
