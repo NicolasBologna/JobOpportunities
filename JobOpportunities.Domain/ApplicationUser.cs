@@ -1,8 +1,9 @@
-﻿using Microsoft.AspNetCore.Identity;
-
-namespace JobOpportunities.Domain
+﻿namespace JobOpportunities.Domain
 {
-    public class ApplicationUser : IdentityUser
+    public class ApplicationUser : EntityBase
     {
+        public string Name { get; set; }
+        public string Email { get; set; }
+        public string Password { get; set; }
     }
 }

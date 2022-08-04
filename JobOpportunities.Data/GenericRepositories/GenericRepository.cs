@@ -1,16 +1,15 @@
-﻿using JobOpportunities.Data;
-using JobOpportunities.Domain;
+﻿using JobOpportunities.Domain;
 using Microsoft.EntityFrameworkCore;
 using System.Linq.Expressions;
 
-namespace JobOpportunities.Repositories
+namespace JobOpportunities.Data.GenericRepository
 {
-    public class Repository<T> : IRepository<T> where T : class, IEntity
+    public class GenericRepository<T> : IGenericRepository<T> where T : class, IEntity
     {
-        private readonly JobOpportunitiesContext _dbContext;
-        private readonly DbSet<T> _dbSet;
+        protected readonly JobOpportunitiesContext _dbContext;
+        protected readonly DbSet<T> _dbSet;
 
-        public Repository(JobOpportunitiesContext dbContext)
+        public GenericRepository(JobOpportunitiesContext dbContext)
         {
             _dbContext = dbContext ?? throw new ArgumentNullException(nameof(dbContext)); ;
             _dbSet = _dbContext.Set<T>();
@@ -43,7 +42,17 @@ namespace JobOpportunities.Repositories
 
         public async Task<T?> FindByConditionAsync(Expression<Func<T, bool>> predicate)
         {
-            return await _dbContext.Set<T>().FirstOrDefaultAsync(predicate);
+            return await _dbSet.FirstOrDefaultAsync(predicate);
+        }
+
+        public async Task<IEnumerable<T>> FindAllByConditionAsync(Expression<Func<T, bool>> predicate)
+        {
+            return await _dbSet.Where(predicate).ToListAsync();
+        }
+
+        public async Task<bool> ItemExists(Guid id)
+        {
+            return await _dbSet.FindAsync(id) is not null;
         }
     }
 }

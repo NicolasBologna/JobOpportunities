@@ -1,7 +1,7 @@
 ﻿using JobOpportunities.Domain;
 using System.Linq.Expressions;
 
-namespace JobOpportunities.Repositories
+namespace JobOpportunities.Data.GenericRepository
 {
     public interface IWriteRepository<T> //in, out, check covariant/contravariant     
     {
@@ -15,9 +15,10 @@ namespace JobOpportunities.Repositories
         Task<IEnumerable<T>> GetAllAsync();
         Task<T?> GetByIdAsync(Guid id);
         Task<T?> FindByConditionAsync(Expression<Func<T, bool>> predicate);
+        Task<IEnumerable<T>> FindAllByConditionAsync(Expression<Func<T, bool>> predicate);
     }
 
-    public interface IRepository<T> : IReadRepository<T>, IWriteRepository<T>
+    public interface IGenericRepository<T> : IReadRepository<T>, IWriteRepository<T>
       where T : IEntity
     {
     }

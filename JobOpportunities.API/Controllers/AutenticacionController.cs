@@ -4,6 +4,12 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace ConsultaAlumnos.API.Controllers
 {
+    public class AuthenticationRequestBody
+    {
+        public string Email { get; set; }
+        public string Password { get; set; }
+    }
+
     [Route("api/authentication")]
     [ApiController]
     public class AuthenticationController : ControllerBase

@@ -2,8 +2,8 @@
 using FluentAssertions;
 using JobOpportunities.Core.Features.JobOffers.Models;
 using JobOpportunities.Core.Features.JobOffers.Queries;
+using JobOpportunities.Data.GenericRepository;
 using JobOpportunities.Domain;
-using JobOpportunities.Repositories;
 using Moq;
 
 namespace JobOpportunities.Core.UnitTests

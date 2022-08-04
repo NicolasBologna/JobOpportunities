@@ -1,5 +1,6 @@
 ﻿using AutoMapper;
 using JobOpportunities.Core.Features.Skills.Commands;
+using JobOpportunities.Core.Features.Skills.Models;
 using JobOpportunities.Domain;
 
 namespace JobOpportunities.Core.Profiles
@@ -9,6 +10,8 @@ namespace JobOpportunities.Core.Profiles
         public SkillProfile()
         {
             CreateMap<CreateSkillCommand, Skill>();
+            CreateMap<Skill, GetSkillResponse>();
+            CreateMap<Skill, GetSkillsResponse>();
         }
 
     }

@@ -1,6 +1,6 @@
 ﻿using AutoMapper;
+using JobOpportunities.Data.GenericRepository;
 using JobOpportunities.Domain;
-using JobOpportunities.Repositories;
 using MediatR;
 
 namespace JobOpportunities.Core.Features.KnowledgeFeatures.Commands
@@ -13,10 +13,10 @@ namespace JobOpportunities.Core.Features.KnowledgeFeatures.Commands
 
     public class CreateKnowledgeCommandHandler : IRequestHandler<CreateKnowledgeCommand>
     {
-        private readonly IRepository<Knowledge> _knowledgeRepository;
+        private readonly IGenericRepository<Knowledge> _knowledgeRepository;
         private readonly IMapper _mapper;
 
-        public CreateKnowledgeCommandHandler(IRepository<Knowledge> knowledgeRepository, IMapper mapper)
+        public CreateKnowledgeCommandHandler(IGenericRepository<Knowledge> knowledgeRepository, IMapper mapper)
         {
             _knowledgeRepository = knowledgeRepository;
             _mapper = mapper;

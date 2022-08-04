@@ -1,7 +1,8 @@
 ﻿using AutoMapper;
+using JobOpportunities.Core.Exceptions;
 using JobOpportunities.Core.Features.JobOffers.Models;
+using JobOpportunities.Data.GenericRepository;
 using JobOpportunities.Domain;
-using JobOpportunities.Repositories;
 using MediatR;
 
 namespace JobOpportunities.Core.Features.JobOffers.Queries;
@@ -24,6 +25,11 @@ public class GetJobOfferQueryHandler : IRequestHandler<GetJobOfferQuery, GetJobO
     public async Task<GetJobOfferResponse> Handle(GetJobOfferQuery request, CancellationToken cancellationToken)
     {
         var jobOffer = await _jobOfferRepository.GetByIdAsync(request.JobOfferId);
+
+        if (jobOffer is null)
+        {
+            throw new NotFoundException(nameof(jobOffer), request.JobOfferId);
+        }
 
         return _mapper.Map<GetJobOfferResponse>(jobOffer);
     }

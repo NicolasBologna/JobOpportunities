@@ -1,12 +1,16 @@
+using FluentValidation;
+using FluentValidation.AspNetCore;
 using JobOpportunities.API.Controllers;
+using JobOpportunities.Core.Behaviours;
 using JobOpportunities.Core.Features.JobOffers.Queries;
+using JobOpportunities.Core.Filters;
 using JobOpportunities.Data;
-using JobOpportunities.Domain;
-using JobOpportunities.Repositories;
+using JobOpportunities.Data.GenericRepository;
+using JobOpportunities.Data.SpecificRepositories;
 using MediatR;
+using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.OpenApi.Models;
-using System.Reflection;
 using System.Text.Json.Serialization;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -33,22 +37,35 @@ builder.Services.AddSwaggerGen(setupAction =>
     });
 });
 
-builder.Services.AddControllers().AddJsonOptions(x =>
-                x.JsonSerializerOptions.ReferenceHandler = ReferenceHandler.IgnoreCycles);
+builder.Services.AddControllers();
 
 
 var connectionString = builder.Configuration.GetConnectionString("JobOpportunitiesContextConnection") ?? throw new InvalidOperationException("Connection string 'JobOpportunitiesContextConnection' not found.");
 builder.Services.AddDbContext<JobOpportunitiesContext>(options =>
     options.UseSqlServer(connectionString));
 
-builder.Services.AddDefaultIdentity<ApplicationUser>(options => options.SignIn.RequireConfirmedAccount = true)
-    .AddEntityFrameworkStores<JobOpportunitiesContext>();
+//builder.Services.AddDefaultIdentity<ApplicationUser>(options => options.SignIn.RequireConfirmedAccount = true)
+//    .AddEntityFrameworkStores<JobOpportunitiesContext>();
 
-//builder.Services.AddTransient<IRepository<Company>, Repository<Company>>();
-builder.Services.AddTransient<IReadRepository<JobOffer>, Repository<JobOffer>>();
-//builder.Services.AddTransient<IRepository<Skill>, Repository<Skill>>();
-builder.Services.AddScoped(typeof(IRepository<>), typeof(Repository<>));
+builder.Services.AddScoped(typeof(IGenericRepository<>), typeof(GenericRepository<>));
 builder.Services.AddScoped(typeof(IReadRepository<>), typeof(ReadOnlyRepository<>));
+
+#region SpecificRepositories
+builder.Services.AddScoped<IJobOfferRepository, JobOfferRepository>();
+builder.Services.AddScoped<ICandidatesRepository, CandidatesRepository>();
+#endregion
+
+builder.Services.AddControllers(options =>
+        options.Filters.Add<ApiExceptionFilterAttribute>() //Agregar validaciones globales a los controladores
+    ).AddJsonOptions(joptions =>
+        joptions.JsonSerializerOptions.ReferenceHandler = ReferenceHandler.IgnoreCycles)
+    .AddFluentValidation();
+
+builder.Services.Configure<ApiBehaviorOptions>(options =>
+    options.SuppressModelStateInvalidFilter = true); //Modificamos la configuración default de ApiBehaviorOptions para que la validación automatica que agrega [ApiController] ya no entre en vigor, ya que queremos usar nuestra validación custom.
+
+builder.Services.AddValidatorsFromAssembly(typeof(GetJobOfferQuery).Assembly);
+builder.Services.AddTransient(typeof(IPipelineBehavior<,>), typeof(ValidationBehaviour<,>));
 
 /*
 builder.Services.AddAuthentication("Bearer")
@@ -80,11 +97,7 @@ builder.Services.AddAuthentication("Bearer")
     }
 );*/
 
-//builder.Services.AddMediatR();
 builder.Services.AddMediatR(typeof(JobOfferController).Assembly, typeof(GetJobOfferQuery).Assembly);
-
-var assembly = Assembly.GetExecutingAssembly();
-var domains = AppDomain.CurrentDomain.GetAssemblies();
 
 builder.Services.AddAutoMapper(AppDomain.CurrentDomain.GetAssemblies());
 

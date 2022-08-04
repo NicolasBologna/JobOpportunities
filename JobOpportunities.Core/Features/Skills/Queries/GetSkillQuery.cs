@@ -1,14 +1,14 @@
 ﻿using AutoMapper;
 using JobOpportunities.Core.Features.Skills.Models;
+using JobOpportunities.Data.GenericRepository;
 using JobOpportunities.Domain;
-using JobOpportunities.Repositories;
 using MediatR;
 
 namespace JobOpportunities.Core.Features.Skills.Queries
 {
     public class GetSkillQuery : IRequest<GetSkillResponse>
     {
-        internal Guid SkillId { get; set; }
+        public Guid SkillId { get; set; }
     }
 
     public class GetSkillQueryHandler : IRequestHandler<GetSkillQuery, GetSkillResponse>

@@ -1,6 +1,6 @@
 ﻿using AutoMapper;
+using JobOpportunities.Data.GenericRepository;
 using JobOpportunities.Domain;
-using JobOpportunities.Repositories;
 using MediatR;
 
 namespace JobOpportunities.Core.Features.JobOffers.Commands
@@ -15,10 +15,10 @@ namespace JobOpportunities.Core.Features.JobOffers.Commands
 
     public class CreateJobOfferCommandHandler : IRequestHandler<CreateJobOfferCommand>
     {
-        private readonly IRepository<JobOffer> _jobOfferRepository;
+        private readonly IGenericRepository<JobOffer> _jobOfferRepository;
         private readonly IMapper _mapper;
 
-        public CreateJobOfferCommandHandler(IRepository<JobOffer> jobOfferRepository, IMapper mapper)
+        public CreateJobOfferCommandHandler(IGenericRepository<JobOffer> jobOfferRepository, IMapper mapper)
         {
             _jobOfferRepository = jobOfferRepository;
             _mapper = mapper;

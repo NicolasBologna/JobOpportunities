@@ -1,6 +1,6 @@
 ﻿using AutoMapper;
+using JobOpportunities.Data.GenericRepository;
 using JobOpportunities.Domain;
-using JobOpportunities.Repositories;
 using MediatR;
 
 namespace JobOpportunities.Core.Features.SkillLevels.Commands
@@ -13,10 +13,10 @@ namespace JobOpportunities.Core.Features.SkillLevels.Commands
 
     public class CreateSkillLevelCommandHandler : IRequestHandler<CreateSkillLevelCommand>
     {
-        private readonly IRepository<SkillLevel> _skillLevelRepository;
+        private readonly IGenericRepository<SkillLevel> _skillLevelRepository;
         private readonly IMapper _mapper;
 
-        public CreateSkillLevelCommandHandler(IRepository<SkillLevel> skillLevelRepository, IMapper mapper)
+        public CreateSkillLevelCommandHandler(IGenericRepository<SkillLevel> skillLevelRepository, IMapper mapper)
         {
             _skillLevelRepository = skillLevelRepository;
             _mapper = mapper;

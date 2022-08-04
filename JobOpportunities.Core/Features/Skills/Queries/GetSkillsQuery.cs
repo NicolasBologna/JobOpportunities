@@ -1,16 +1,16 @@
 ﻿using AutoMapper;
 using JobOpportunities.Core.Features.Skills.Models;
+using JobOpportunities.Data.GenericRepository;
 using JobOpportunities.Domain;
-using JobOpportunities.Repositories;
 using MediatR;
 
 namespace JobOpportunities.Core.Features.Skills.Queries
 {
-    public class GetSkillsQuery : IRequest<GetSkillsResponse>
+    public class GetSkillsQuery : IRequest<List<GetSkillsResponse>>
     {
     }
 
-    public class GetSkillsQueryHandler : IRequestHandler<GetSkillsQuery, GetSkillsResponse>
+    public class GetSkillsQueryHandler : IRequestHandler<GetSkillsQuery, List<GetSkillsResponse>>
     {
         private readonly IReadRepository<Skill> _skillRepository;
         private readonly IMapper _mapper;
@@ -20,11 +20,11 @@ namespace JobOpportunities.Core.Features.Skills.Queries
             _skillRepository = skillRepository;
             _mapper = mapper;
         }
-        public async Task<GetSkillsResponse> Handle(GetSkillsQuery request, CancellationToken cancellationToken)
+        public async Task<List<GetSkillsResponse>> Handle(GetSkillsQuery request, CancellationToken cancellationToken)
         {
             var skills = await _skillRepository.GetAllAsync();
 
-            return _mapper.Map<GetSkillsResponse>(skills);
+            return _mapper.Map<List<GetSkillsResponse>>(skills);
         }
     }
 }

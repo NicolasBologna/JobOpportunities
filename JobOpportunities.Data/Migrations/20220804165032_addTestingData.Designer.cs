@@ -4,6 +4,7 @@ using JobOpportunities.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -11,9 +12,10 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace JobOpportunities.Data.Migrations
 {
     [DbContext(typeof(JobOpportunitiesContext))]
-    partial class JobOpportunitiesContextModelSnapshot : ModelSnapshot
+    [Migration("20220804165032_addTestingData")]
+    partial class addTestingData
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -56,11 +58,6 @@ namespace JobOpportunities.Data.Migrations
                         {
                             CandidatesId = new Guid("f47890b6-a3ce-4057-94a9-af862d2c01de"),
                             SkillsId = new Guid("70068d37-d9e3-48d9-a390-e85a11f2f31f")
-                        },
-                        new
-                        {
-                            CandidatesId = new Guid("f47890b6-a3ce-4057-94a9-af862d2c01de"),
-                            SkillsId = new Guid("2f8ce28b-8641-426e-98ba-eef98cc9f8a0")
                         },
                         new
                         {
@@ -128,7 +125,7 @@ namespace JobOpportunities.Data.Migrations
                         new
                         {
                             Id = new Guid("f47890b6-a3ce-4057-94a9-af862d2c01de"),
-                            CreationDate = new DateTime(2022, 8, 4, 16, 31, 31, 903, DateTimeKind.Local).AddTicks(2678),
+                            CreationDate = new DateTime(2022, 8, 4, 13, 50, 32, 558, DateTimeKind.Local).AddTicks(417),
                             Email = "pepito@endava.com",
                             Name = "Pepito Juarez",
                             Password = "123456UltraSecure"
@@ -136,7 +133,7 @@ namespace JobOpportunities.Data.Migrations
                         new
                         {
                             Id = new Guid("f29d1608-f324-4432-8e44-5ee320909b9d"),
-                            CreationDate = new DateTime(2022, 8, 4, 16, 31, 31, 903, DateTimeKind.Local).AddTicks(2692),
+                            CreationDate = new DateTime(2022, 8, 4, 13, 50, 32, 558, DateTimeKind.Local).AddTicks(429),
                             Email = "marcelo@endava.com",
                             Name = "Marcelo Reynoso",
                             Password = "320909b967uythgfd@434$%&"
@@ -171,7 +168,7 @@ namespace JobOpportunities.Data.Migrations
                         new
                         {
                             Id = new Guid("9ee1f9a2-201a-4351-abc1-c056932a1165"),
-                            CreationDate = new DateTime(2022, 8, 4, 16, 31, 31, 903, DateTimeKind.Local).AddTicks(1901),
+                            CreationDate = new DateTime(2022, 8, 4, 13, 50, 32, 557, DateTimeKind.Local).AddTicks(9844),
                             Email = "company@endava.com",
                             Name = "Endava"
                         });
@@ -219,10 +216,10 @@ namespace JobOpportunities.Data.Migrations
                         {
                             Id = new Guid("5cfe1935-3a8e-418a-a260-38d0551d5027"),
                             CompanyId = new Guid("9ee1f9a2-201a-4351-abc1-c056932a1165"),
-                            CreationDate = new DateTime(2022, 8, 4, 16, 31, 31, 903, DateTimeKind.Local).AddTicks(1921),
+                            CreationDate = new DateTime(2022, 8, 4, 13, 50, 32, 557, DateTimeKind.Local).AddTicks(9876),
                             Description = "Una posición para pasarla bien",
                             Title = ".NET FullStack FullTime",
-                            ValidUntil = new DateTime(2022, 11, 2, 16, 31, 31, 903, DateTimeKind.Local).AddTicks(1923)
+                            ValidUntil = new DateTime(2022, 11, 2, 13, 50, 32, 557, DateTimeKind.Local).AddTicks(9877)
                         });
                 });
 
@@ -253,14 +250,14 @@ namespace JobOpportunities.Data.Migrations
                         new
                         {
                             Id = new Guid("b20501eb-5f36-4ed4-96ac-cf32817dce06"),
-                            CreationDate = new DateTime(2022, 8, 4, 16, 31, 31, 903, DateTimeKind.Local).AddTicks(1838),
+                            CreationDate = new DateTime(2022, 8, 4, 13, 50, 32, 557, DateTimeKind.Local).AddTicks(9789),
                             Description = "Versión 6 + todo el ecosistema",
                             Title = ".NET"
                         },
                         new
                         {
                             Id = new Guid("3f374542-7711-4581-80c3-6f1a0a7c1105"),
-                            CreationDate = new DateTime(2022, 8, 4, 16, 31, 31, 903, DateTimeKind.Local).AddTicks(1851),
+                            CreationDate = new DateTime(2022, 8, 4, 13, 50, 32, 557, DateTimeKind.Local).AddTicks(9797),
                             Description = "Versión 13",
                             Title = "Angular"
                         });
@@ -296,14 +293,14 @@ namespace JobOpportunities.Data.Migrations
                         new
                         {
                             Id = new Guid("70068d37-d9e3-48d9-a390-e85a11f2f31f"),
-                            CreationDate = new DateTime(2022, 8, 4, 16, 31, 31, 903, DateTimeKind.Local).AddTicks(1872),
+                            CreationDate = new DateTime(2022, 8, 4, 13, 50, 32, 557, DateTimeKind.Local).AddTicks(9812),
                             KnowleadgeId = new Guid("b20501eb-5f36-4ed4-96ac-cf32817dce06"),
                             SkillLevelId = new Guid("78867f5c-44fb-470d-9946-3da97e6ae2a7")
                         },
                         new
                         {
                             Id = new Guid("2f8ce28b-8641-426e-98ba-eef98cc9f8a0"),
-                            CreationDate = new DateTime(2022, 8, 4, 16, 31, 31, 903, DateTimeKind.Local).AddTicks(1882),
+                            CreationDate = new DateTime(2022, 8, 4, 13, 50, 32, 557, DateTimeKind.Local).AddTicks(9823),
                             KnowleadgeId = new Guid("3f374542-7711-4581-80c3-6f1a0a7c1105"),
                             SkillLevelId = new Guid("248b45b9-bf4a-4815-844d-ec02daaeb638")
                         });
@@ -336,21 +333,21 @@ namespace JobOpportunities.Data.Migrations
                         new
                         {
                             Id = new Guid("78867f5c-44fb-470d-9946-3da97e6ae2a7"),
-                            CreationDate = new DateTime(2022, 8, 4, 16, 31, 31, 903, DateTimeKind.Local).AddTicks(1784),
+                            CreationDate = new DateTime(2022, 8, 4, 13, 50, 32, 557, DateTimeKind.Local).AddTicks(9736),
                             Description = "Lower skills required",
                             Name = "Intern"
                         },
                         new
                         {
                             Id = new Guid("a9be5506-3f5e-403a-b113-73fba517f3c6"),
-                            CreationDate = new DateTime(2022, 8, 4, 16, 31, 31, 903, DateTimeKind.Local).AddTicks(1810),
+                            CreationDate = new DateTime(2022, 8, 4, 13, 50, 32, 557, DateTimeKind.Local).AddTicks(9763),
                             Description = "Lower skills required, but can finish some tasks",
                             Name = "Junior"
                         },
                         new
                         {
                             Id = new Guid("248b45b9-bf4a-4815-844d-ec02daaeb638"),
-                            CreationDate = new DateTime(2022, 8, 4, 16, 31, 31, 903, DateTimeKind.Local).AddTicks(1818),
+                            CreationDate = new DateTime(2022, 8, 4, 13, 50, 32, 557, DateTimeKind.Local).AddTicks(9777),
                             Description = "higher skills required, but less responsabilities",
                             Name = "Semi-Senior"
                         });

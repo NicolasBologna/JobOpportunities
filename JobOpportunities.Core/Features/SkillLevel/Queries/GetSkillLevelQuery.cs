@@ -1,7 +1,7 @@
 ﻿using AutoMapper;
 using JobOpportunities.Core.Features.SkillLevels.Models;
+using JobOpportunities.Data.GenericRepository;
 using JobOpportunities.Domain;
-using JobOpportunities.Repositories;
 using MediatR;
 
 namespace JobOpportunities.Core.Features.SkillLevels.Queries;

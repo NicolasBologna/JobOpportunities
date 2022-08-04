@@ -1,9 +1,8 @@
 ﻿using JobOpportunities.Domain;
-using JobOpportunities.Repositories;
 using Microsoft.EntityFrameworkCore;
 using System.Linq.Expressions;
 
-namespace JobOpportunities.Data
+namespace JobOpportunities.Data.GenericRepository
 {
     public class ReadOnlyRepository<T> : IReadRepository<T> where T : class, IEntity
     {
@@ -22,12 +21,17 @@ namespace JobOpportunities.Data
 
         public async Task<T?> GetByIdAsync(Guid id)
         {
-            return await _dbSet.AsNoTracking().SingleAsync(item => item.Id == id);
+            return await _dbSet.AsNoTracking().SingleOrDefaultAsync(item => item.Id == id);
         }
 
         public async Task<T?> FindByConditionAsync(Expression<Func<T, bool>> predicate)
         {
-            return await _dbContext.Set<T>().AsNoTracking().FirstOrDefaultAsync(predicate);
+            return await _dbSet.AsNoTracking().FirstOrDefaultAsync(predicate);
+        }
+
+        public async Task<IEnumerable<T>> FindAllByConditionAsync(Expression<Func<T, bool>> predicate)
+        {
+            return await _dbSet.AsNoTracking().Where(predicate).ToListAsync();
         }
     }
 }

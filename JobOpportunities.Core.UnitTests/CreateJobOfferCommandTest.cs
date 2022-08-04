@@ -1,8 +1,8 @@
 ﻿using AutoMapper;
 using FluentAssertions;
 using JobOpportunities.Core.Features.JobOffers.Commands;
+using JobOpportunities.Data.GenericRepository;
 using JobOpportunities.Domain;
-using JobOpportunities.Repositories;
 using Moq;
 
 namespace JobOpportunities.Core.UnitTests
@@ -36,7 +36,7 @@ namespace JobOpportunities.Core.UnitTests
         public async Task ShouldCreateANewJobOffer()
         {
             var mockMapper = new Mock<IMapper>();
-            var mockRepository = new Mock<IRepository<JobOffer>>();
+            var mockRepository = new Mock<IGenericRepository<JobOffer>>();
 
             mockRepository.Setup(x => x.Add(It.IsAny<JobOffer>()));
             mockMapper.Setup(x => x.Map<JobOffer>(It.IsAny<CreateJobOfferCommand>())).Returns(newJobOffer);
