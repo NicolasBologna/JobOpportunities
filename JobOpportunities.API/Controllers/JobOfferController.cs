@@ -1,4 +1,6 @@
-﻿using JobOpportunities.Core.Features.JobOffers.Commands;
+﻿using JobOpportunities.Core.Features.JobOfferMatches.Models;
+using JobOpportunities.Core.Features.JobOfferMatches.Queries;
+using JobOpportunities.Core.Features.JobOffers.Commands;
 using JobOpportunities.Core.Features.JobOffers.Models;
 using JobOpportunities.Core.Features.JobOffers.Queries;
 using MediatR;
@@ -21,6 +23,7 @@ namespace JobOpportunities.API.Controllers
 
         [HttpGet]
         public async Task<IEnumerable<GetJobOffersResponse>> Get() => await _mediator.Send(new GetJobOffersQuery());
+
         [HttpGet("{id}")]
         public async Task<GetJobOfferResponse> Get(Guid id) => await _mediator.Send(new GetJobOfferQuery { JobOfferId = id });
 
@@ -30,6 +33,10 @@ namespace JobOpportunities.API.Controllers
             await _mediator.Send(command);
             return Ok();
         }
+
+        [HttpGet]
+        [Route("potentialcandidates/{id}")]
+        public async Task<IEnumerable<GetJobOfferCandidatesResponse>> GetJobOfferCandidates(Guid id) => await _mediator.Send(new GetJobOfferCandidatesQuery { JobOfferId = id });
 
         //[HttpPut("{id}")]
         //public void Put(int id, [FromBody] string value)

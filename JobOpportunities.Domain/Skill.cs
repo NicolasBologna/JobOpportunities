@@ -2,7 +2,7 @@
 {
     public class Skill : EntityBase
     {
-        public Knowleadge Knowleadge { get; set; }
+        public Knowledge Knowleadge { get; set; }
         public Guid KnowleadgeId { get; set; }
         public SkillLevel SkillLevel { get; set; }
         public Guid SkillLevelId { get; set; }

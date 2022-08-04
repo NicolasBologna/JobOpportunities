@@ -1,5 +1,5 @@
+using JobOpportunities.Data.GenericRepository;
 using JobOpportunities.Domain;
-using JobOpportunities.Repositories;
 using Moq;
 
 namespace JobOpportunities.Data.Test
@@ -16,7 +16,7 @@ namespace JobOpportunities.Data.Test
         {
             Mock<JobOpportunitiesContext> mockValidator = new Mock<JobOpportunitiesContext>();
 
-            var sut = new Repository<JobOffer>(mockValidator.Object);
+            var sut = new GenericRepository<JobOffer>(mockValidator.Object);
 
             var jobOffer = new JobOffer
             {

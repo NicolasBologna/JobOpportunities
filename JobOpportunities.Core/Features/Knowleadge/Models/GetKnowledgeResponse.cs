@@ -1,6 +1,6 @@
-﻿namespace JobOpportunities.Domain
+﻿namespace JobOpportunities.Core.Features.KnowledgeFeatures.Models
 {
-    public class Knowleadge : EntityBase
+    public class GetKnowledgeResponse
     {
         public string Title { get; set; }
         public string? Description { get; set; }

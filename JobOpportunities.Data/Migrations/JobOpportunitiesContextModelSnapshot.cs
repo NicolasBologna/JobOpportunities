@@ -24,8 +24,8 @@ namespace JobOpportunities.Data.Migrations
 
             modelBuilder.Entity("CandidateJobOffer", b =>
                 {
-                    b.Property<string>("CandidatesId")
-                        .HasColumnType("nvarchar(450)");
+                    b.Property<Guid>("CandidatesId")
+                        .HasColumnType("uniqueidentifier");
 
                     b.Property<Guid>("OffersAppliedId")
                         .HasColumnType("uniqueidentifier");
@@ -39,8 +39,8 @@ namespace JobOpportunities.Data.Migrations
 
             modelBuilder.Entity("CandidateSkill", b =>
                 {
-                    b.Property<string>("CandidatesId")
-                        .HasColumnType("nvarchar(450)");
+                    b.Property<Guid>("CandidatesId")
+                        .HasColumnType("uniqueidentifier");
 
                     b.Property<Guid>("SkillsId")
                         .HasColumnType("uniqueidentifier");
@@ -49,7 +49,24 @@ namespace JobOpportunities.Data.Migrations
 
                     b.HasIndex("SkillsId");
 
-                    b.ToTable("CandidateSkill");
+                    b.ToTable("CandidateSkill", (string)null);
+
+                    b.HasData(
+                        new
+                        {
+                            CandidatesId = new Guid("f47890b6-a3ce-4057-94a9-af862d2c01de"),
+                            SkillsId = new Guid("70068d37-d9e3-48d9-a390-e85a11f2f31f")
+                        },
+                        new
+                        {
+                            CandidatesId = new Guid("f47890b6-a3ce-4057-94a9-af862d2c01de"),
+                            SkillsId = new Guid("2f8ce28b-8641-426e-98ba-eef98cc9f8a0")
+                        },
+                        new
+                        {
+                            CandidatesId = new Guid("f29d1608-f324-4432-8e44-5ee320909b9d"),
+                            SkillsId = new Guid("2f8ce28b-8641-426e-98ba-eef98cc9f8a0")
+                        });
                 });
 
             modelBuilder.Entity("JobOfferSkill", b =>
@@ -64,78 +81,66 @@ namespace JobOpportunities.Data.Migrations
 
                     b.HasIndex("RequiredSkillsId");
 
-                    b.ToTable("JobOfferSkill");
+                    b.ToTable("JobOfferSkill", (string)null);
+
+                    b.HasData(
+                        new
+                        {
+                            JobOffersId = new Guid("5cfe1935-3a8e-418a-a260-38d0551d5027"),
+                            RequiredSkillsId = new Guid("70068d37-d9e3-48d9-a390-e85a11f2f31f")
+                        },
+                        new
+                        {
+                            JobOffersId = new Guid("5cfe1935-3a8e-418a-a260-38d0551d5027"),
+                            RequiredSkillsId = new Guid("2f8ce28b-8641-426e-98ba-eef98cc9f8a0")
+                        });
                 });
 
-            modelBuilder.Entity("JobOpportunities.Domain.ApplicationUser", b =>
+            modelBuilder.Entity("JobOpportunities.Domain.Candidate", b =>
                 {
-                    b.Property<string>("Id")
-                        .HasColumnType("nvarchar(450)");
+                    b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("uniqueidentifier");
 
-                    b.Property<int>("AccessFailedCount")
-                        .HasColumnType("int");
+                    b.Property<DateTime>("CreationDate")
+                        .HasColumnType("datetime2");
 
-                    b.Property<string>("ConcurrencyStamp")
-                        .IsConcurrencyToken()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("Discriminator")
+                    b.Property<string>("Email")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<string>("Email")
-                        .HasMaxLength(256)
-                        .HasColumnType("nvarchar(256)");
+                    b.Property<DateTime?>("LastUpdate")
+                        .HasColumnType("datetime2");
 
-                    b.Property<bool>("EmailConfirmed")
-                        .HasColumnType("bit");
-
-                    b.Property<bool>("LockoutEnabled")
-                        .HasColumnType("bit");
-
-                    b.Property<DateTimeOffset?>("LockoutEnd")
-                        .HasColumnType("datetimeoffset");
-
-                    b.Property<string>("NormalizedEmail")
-                        .HasMaxLength(256)
-                        .HasColumnType("nvarchar(256)");
-
-                    b.Property<string>("NormalizedUserName")
-                        .HasMaxLength(256)
-                        .HasColumnType("nvarchar(256)");
-
-                    b.Property<string>("PasswordHash")
+                    b.Property<string>("Name")
+                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<string>("PhoneNumber")
+                    b.Property<string>("Password")
+                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
-
-                    b.Property<bool>("PhoneNumberConfirmed")
-                        .HasColumnType("bit");
-
-                    b.Property<string>("SecurityStamp")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<bool>("TwoFactorEnabled")
-                        .HasColumnType("bit");
-
-                    b.Property<string>("UserName")
-                        .HasMaxLength(256)
-                        .HasColumnType("nvarchar(256)");
 
                     b.HasKey("Id");
 
-                    b.HasIndex("NormalizedEmail")
-                        .HasDatabaseName("EmailIndex");
+                    b.ToTable("Candidates");
 
-                    b.HasIndex("NormalizedUserName")
-                        .IsUnique()
-                        .HasDatabaseName("UserNameIndex")
-                        .HasFilter("[NormalizedUserName] IS NOT NULL");
-
-                    b.ToTable("AspNetUsers", (string)null);
-
-                    b.HasDiscriminator<string>("Discriminator").HasValue("ApplicationUser");
+                    b.HasData(
+                        new
+                        {
+                            Id = new Guid("f47890b6-a3ce-4057-94a9-af862d2c01de"),
+                            CreationDate = new DateTime(2022, 8, 4, 16, 31, 31, 903, DateTimeKind.Local).AddTicks(2678),
+                            Email = "pepito@endava.com",
+                            Name = "Pepito Juarez",
+                            Password = "123456UltraSecure"
+                        },
+                        new
+                        {
+                            Id = new Guid("f29d1608-f324-4432-8e44-5ee320909b9d"),
+                            CreationDate = new DateTime(2022, 8, 4, 16, 31, 31, 903, DateTimeKind.Local).AddTicks(2692),
+                            Email = "marcelo@endava.com",
+                            Name = "Marcelo Reynoso",
+                            Password = "320909b967uythgfd@434$%&"
+                        });
                 });
 
             modelBuilder.Entity("JobOpportunities.Domain.Company", b =>
@@ -161,6 +166,15 @@ namespace JobOpportunities.Data.Migrations
                     b.HasKey("Id");
 
                     b.ToTable("Companies");
+
+                    b.HasData(
+                        new
+                        {
+                            Id = new Guid("9ee1f9a2-201a-4351-abc1-c056932a1165"),
+                            CreationDate = new DateTime(2022, 8, 4, 16, 31, 31, 903, DateTimeKind.Local).AddTicks(1901),
+                            Email = "company@endava.com",
+                            Name = "Endava"
+                        });
                 });
 
             modelBuilder.Entity("JobOpportunities.Domain.JobOffer", b =>
@@ -199,9 +213,20 @@ namespace JobOpportunities.Data.Migrations
                     b.ToTable("JobOffers");
 
                     b.HasDiscriminator<string>("Discriminator").HasValue("JobOffer");
+
+                    b.HasData(
+                        new
+                        {
+                            Id = new Guid("5cfe1935-3a8e-418a-a260-38d0551d5027"),
+                            CompanyId = new Guid("9ee1f9a2-201a-4351-abc1-c056932a1165"),
+                            CreationDate = new DateTime(2022, 8, 4, 16, 31, 31, 903, DateTimeKind.Local).AddTicks(1921),
+                            Description = "Una posición para pasarla bien",
+                            Title = ".NET FullStack FullTime",
+                            ValidUntil = new DateTime(2022, 11, 2, 16, 31, 31, 903, DateTimeKind.Local).AddTicks(1923)
+                        });
                 });
 
-            modelBuilder.Entity("JobOpportunities.Domain.Knowleadge", b =>
+            modelBuilder.Entity("JobOpportunities.Domain.Knowledge", b =>
                 {
                     b.Property<Guid>("Id")
                         .ValueGeneratedOnAdd()
@@ -223,6 +248,22 @@ namespace JobOpportunities.Data.Migrations
                     b.HasKey("Id");
 
                     b.ToTable("Knowleadges");
+
+                    b.HasData(
+                        new
+                        {
+                            Id = new Guid("b20501eb-5f36-4ed4-96ac-cf32817dce06"),
+                            CreationDate = new DateTime(2022, 8, 4, 16, 31, 31, 903, DateTimeKind.Local).AddTicks(1838),
+                            Description = "Versión 6 + todo el ecosistema",
+                            Title = ".NET"
+                        },
+                        new
+                        {
+                            Id = new Guid("3f374542-7711-4581-80c3-6f1a0a7c1105"),
+                            CreationDate = new DateTime(2022, 8, 4, 16, 31, 31, 903, DateTimeKind.Local).AddTicks(1851),
+                            Description = "Versión 13",
+                            Title = "Angular"
+                        });
                 });
 
             modelBuilder.Entity("JobOpportunities.Domain.Skill", b =>
@@ -250,6 +291,22 @@ namespace JobOpportunities.Data.Migrations
                     b.HasIndex("SkillLevelId");
 
                     b.ToTable("Skills");
+
+                    b.HasData(
+                        new
+                        {
+                            Id = new Guid("70068d37-d9e3-48d9-a390-e85a11f2f31f"),
+                            CreationDate = new DateTime(2022, 8, 4, 16, 31, 31, 903, DateTimeKind.Local).AddTicks(1872),
+                            KnowleadgeId = new Guid("b20501eb-5f36-4ed4-96ac-cf32817dce06"),
+                            SkillLevelId = new Guid("78867f5c-44fb-470d-9946-3da97e6ae2a7")
+                        },
+                        new
+                        {
+                            Id = new Guid("2f8ce28b-8641-426e-98ba-eef98cc9f8a0"),
+                            CreationDate = new DateTime(2022, 8, 4, 16, 31, 31, 903, DateTimeKind.Local).AddTicks(1882),
+                            KnowleadgeId = new Guid("3f374542-7711-4581-80c3-6f1a0a7c1105"),
+                            SkillLevelId = new Guid("248b45b9-bf4a-4815-844d-ec02daaeb638")
+                        });
                 });
 
             modelBuilder.Entity("JobOpportunities.Domain.SkillLevel", b =>
@@ -274,150 +331,29 @@ namespace JobOpportunities.Data.Migrations
                     b.HasKey("Id");
 
                     b.ToTable("SkillLevels");
-                });
 
-            modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRole", b =>
-                {
-                    b.Property<string>("Id")
-                        .HasColumnType("nvarchar(450)");
-
-                    b.Property<string>("ConcurrencyStamp")
-                        .IsConcurrencyToken()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("Name")
-                        .HasMaxLength(256)
-                        .HasColumnType("nvarchar(256)");
-
-                    b.Property<string>("NormalizedName")
-                        .HasMaxLength(256)
-                        .HasColumnType("nvarchar(256)");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("NormalizedName")
-                        .IsUnique()
-                        .HasDatabaseName("RoleNameIndex")
-                        .HasFilter("[NormalizedName] IS NOT NULL");
-
-                    b.ToTable("AspNetRoles", (string)null);
-                });
-
-            modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<string>", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
-
-                    b.Property<string>("ClaimType")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("ClaimValue")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("RoleId")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(450)");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("RoleId");
-
-                    b.ToTable("AspNetRoleClaims", (string)null);
-                });
-
-            modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserClaim<string>", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
-
-                    b.Property<string>("ClaimType")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("ClaimValue")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("UserId")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(450)");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("UserId");
-
-                    b.ToTable("AspNetUserClaims", (string)null);
-                });
-
-            modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserLogin<string>", b =>
-                {
-                    b.Property<string>("LoginProvider")
-                        .HasMaxLength(128)
-                        .HasColumnType("nvarchar(128)");
-
-                    b.Property<string>("ProviderKey")
-                        .HasMaxLength(128)
-                        .HasColumnType("nvarchar(128)");
-
-                    b.Property<string>("ProviderDisplayName")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("UserId")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(450)");
-
-                    b.HasKey("LoginProvider", "ProviderKey");
-
-                    b.HasIndex("UserId");
-
-                    b.ToTable("AspNetUserLogins", (string)null);
-                });
-
-            modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserRole<string>", b =>
-                {
-                    b.Property<string>("UserId")
-                        .HasColumnType("nvarchar(450)");
-
-                    b.Property<string>("RoleId")
-                        .HasColumnType("nvarchar(450)");
-
-                    b.HasKey("UserId", "RoleId");
-
-                    b.HasIndex("RoleId");
-
-                    b.ToTable("AspNetUserRoles", (string)null);
-                });
-
-            modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserToken<string>", b =>
-                {
-                    b.Property<string>("UserId")
-                        .HasColumnType("nvarchar(450)");
-
-                    b.Property<string>("LoginProvider")
-                        .HasMaxLength(128)
-                        .HasColumnType("nvarchar(128)");
-
-                    b.Property<string>("Name")
-                        .HasMaxLength(128)
-                        .HasColumnType("nvarchar(128)");
-
-                    b.Property<string>("Value")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.HasKey("UserId", "LoginProvider", "Name");
-
-                    b.ToTable("AspNetUserTokens", (string)null);
-                });
-
-            modelBuilder.Entity("JobOpportunities.Domain.Candidate", b =>
-                {
-                    b.HasBaseType("JobOpportunities.Domain.ApplicationUser");
-
-                    b.HasDiscriminator().HasValue("Candidate");
+                    b.HasData(
+                        new
+                        {
+                            Id = new Guid("78867f5c-44fb-470d-9946-3da97e6ae2a7"),
+                            CreationDate = new DateTime(2022, 8, 4, 16, 31, 31, 903, DateTimeKind.Local).AddTicks(1784),
+                            Description = "Lower skills required",
+                            Name = "Intern"
+                        },
+                        new
+                        {
+                            Id = new Guid("a9be5506-3f5e-403a-b113-73fba517f3c6"),
+                            CreationDate = new DateTime(2022, 8, 4, 16, 31, 31, 903, DateTimeKind.Local).AddTicks(1810),
+                            Description = "Lower skills required, but can finish some tasks",
+                            Name = "Junior"
+                        },
+                        new
+                        {
+                            Id = new Guid("248b45b9-bf4a-4815-844d-ec02daaeb638"),
+                            CreationDate = new DateTime(2022, 8, 4, 16, 31, 31, 903, DateTimeKind.Local).AddTicks(1818),
+                            Description = "higher skills required, but less responsabilities",
+                            Name = "Semi-Senior"
+                        });
                 });
 
             modelBuilder.Entity("JobOpportunities.Domain.FullTimeJob", b =>
@@ -492,7 +428,7 @@ namespace JobOpportunities.Data.Migrations
 
             modelBuilder.Entity("JobOpportunities.Domain.Skill", b =>
                 {
-                    b.HasOne("JobOpportunities.Domain.Knowleadge", "Knowleadge")
+                    b.HasOne("JobOpportunities.Domain.Knowledge", "Knowleadge")
                         .WithMany()
                         .HasForeignKey("KnowleadgeId")
                         .OnDelete(DeleteBehavior.Cascade)
@@ -507,57 +443,6 @@ namespace JobOpportunities.Data.Migrations
                     b.Navigation("Knowleadge");
 
                     b.Navigation("SkillLevel");
-                });
-
-            modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<string>", b =>
-                {
-                    b.HasOne("Microsoft.AspNetCore.Identity.IdentityRole", null)
-                        .WithMany()
-                        .HasForeignKey("RoleId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-                });
-
-            modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserClaim<string>", b =>
-                {
-                    b.HasOne("JobOpportunities.Domain.ApplicationUser", null)
-                        .WithMany()
-                        .HasForeignKey("UserId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-                });
-
-            modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserLogin<string>", b =>
-                {
-                    b.HasOne("JobOpportunities.Domain.ApplicationUser", null)
-                        .WithMany()
-                        .HasForeignKey("UserId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-                });
-
-            modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserRole<string>", b =>
-                {
-                    b.HasOne("Microsoft.AspNetCore.Identity.IdentityRole", null)
-                        .WithMany()
-                        .HasForeignKey("RoleId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.HasOne("JobOpportunities.Domain.ApplicationUser", null)
-                        .WithMany()
-                        .HasForeignKey("UserId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-                });
-
-            modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserToken<string>", b =>
-                {
-                    b.HasOne("JobOpportunities.Domain.ApplicationUser", null)
-                        .WithMany()
-                        .HasForeignKey("UserId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
                 });
 
             modelBuilder.Entity("JobOpportunities.Domain.Company", b =>
