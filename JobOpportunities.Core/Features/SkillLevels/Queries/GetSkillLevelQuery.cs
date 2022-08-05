@@ -1,4 +1,5 @@
 ﻿using AutoMapper;
+using JobOpportunities.Core.Exceptions;
 using JobOpportunities.Core.Features.SkillLevels.Models;
 using JobOpportunities.Data.GenericRepository;
 using JobOpportunities.Domain;
@@ -24,6 +25,9 @@ public class GetSkillLevelQueryHandler : IRequestHandler<GetSkillLevelQuery, Get
     public async Task<GetSkillLevelResponse> Handle(GetSkillLevelQuery request, CancellationToken cancellationToken)
     {
         var skillLevel = await _skillLevelRepository.GetByIdAsync(request.SkillLevelId);
+
+        if (skillLevel is null)
+            throw new NotFoundException();
 
         return _mapper.Map<GetSkillLevelResponse>(skillLevel);
     }

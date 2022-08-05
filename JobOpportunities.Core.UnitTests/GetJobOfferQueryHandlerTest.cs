@@ -1,5 +1,6 @@
 ﻿using AutoMapper;
 using FluentAssertions;
+using JobOpportunities.Core.Exceptions;
 using JobOpportunities.Core.Features.JobOffers.Models;
 using JobOpportunities.Core.Features.JobOffers.Queries;
 using JobOpportunities.Data.GenericRepository;
@@ -57,13 +58,12 @@ namespace JobOpportunities.Core.UnitTests
         }
 
         [Test]
-        public async Task ShouldReturnNullJobOffer()
+        public async Task ShouldThrowNotFoundJobOffer()
         {
             var mockMapper = new Mock<IMapper>();
             var mockRepository = new Mock<IReadRepository<JobOffer>>();
 
             mockRepository.Setup(x => x.GetByIdAsync(It.IsAny<Guid>())).Returns(Task.FromResult((JobOffer?)null));
-            mockMapper.Setup(x => x.Map<GetJobOfferResponse>(It.IsAny<JobOffer>())).Returns((GetJobOfferResponse?)null);
 
             var getJobOffersQueryHandler = new GetJobOfferQueryHandler(mockRepository.Object, mockMapper.Object);
 
@@ -72,9 +72,7 @@ namespace JobOpportunities.Core.UnitTests
                 JobOfferId = new Guid("38656340-8ea7-427c-8587-3e6c6641cb62")
             };
 
-            var jobOffer = await getJobOffersQueryHandler.Handle(query, new CancellationToken());
-
-            jobOffer.Should().Be(null);
+            await getJobOffersQueryHandler.Invoking(y => y.Handle(query, new CancellationToken())).Should().ThrowAsync<NotFoundException>();
         }
     }
 }
