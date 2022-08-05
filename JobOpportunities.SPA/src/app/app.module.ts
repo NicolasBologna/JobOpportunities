@@ -7,10 +7,10 @@ import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { MaterialModule } from './material.module';
 import { HomeComponent } from './home/home.component';
-import { CoursesComponent } from './courses/courses.component';
+import { JobOffersComponent } from './jobOffers/jobOffers.component';
 import { FormsModule } from '@angular/forms';
-import { CoursesListComponent } from './courses/courses-list/courses-list.component';
-import { CourseDetailsComponent } from './courses/course-details/course-details.component';
+import { JobOffersListComponent } from './jobOffers/jobOffers-list/jobOffers-list.component';
+import { JobOfferDetailsComponent } from './jobOffers/jobOffer-details/jobOffer-details.component';
 
 @NgModule({
   imports: [
@@ -21,7 +21,13 @@ import { CourseDetailsComponent } from './courses/course-details/course-details.
     HttpClientModule,
     FormsModule,
   ],
-  declarations: [AppComponent, HomeComponent, CoursesComponent, CoursesListComponent, CourseDetailsComponent],
+  declarations: [
+    AppComponent,
+    HomeComponent,
+    JobOffersComponent,
+    JobOffersListComponent,
+    JobOfferDetailsComponent,
+  ],
   providers: [],
   bootstrap: [AppComponent],
 })

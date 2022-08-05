@@ -6,10 +6,10 @@ import { Component } from '@angular/core';
   styleUrls: ['./app.component.scss'],
 })
 export class AppComponent {
-  title = 'Angular 13 Fundamentals';
+  title = 'Job Opportunities';
   links = [
     { path: '/home', icon: 'home', title: 'Home' },
-    { path: '/courses', icon: 'view_list', title: 'Courses' },
+    { path: '/jobOffers', icon: 'view_list', title: 'Job Offers' },
   ];
 
   constructor() {}

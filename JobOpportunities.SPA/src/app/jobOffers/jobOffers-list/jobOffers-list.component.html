@@ -1,0 +1,20 @@
+<mat-card>
+  <mat-card-header>
+    <mat-card-title>
+      JobOffer List
+    </mat-card-title>
+  </mat-card-header>
+  <mat-card-content>
+    <mat-list>
+      <mat-list-item *ngFor="let jobOffer of jobOffers" (click)="selected.emit(jobOffer)">
+        <h3 matLine>{{ jobOffer.title | titlecase }}</h3>
+        <p matLine>
+          {{ jobOffer.description }}
+        </p>
+        <button mat-icon-button color="warn" (click)="deleted.emit(jobOffer.id); $event.stopImmediatePropagation() ">
+          <mat-icon>delete</mat-icon>
+        </button>
+      </mat-list-item>
+    </mat-list>
+  </mat-card-content>
+</mat-card>

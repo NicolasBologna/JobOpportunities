@@ -7,16 +7,16 @@ import { LessonsService } from '../common/services/lessons.service';
   styleUrls: ['./home.component.scss'],
 })
 export class HomeComponent implements OnInit {
-  courseLessons$;
-  courseLessons = [];
+  jobOfferLessons$;
+  jobOfferLessons = [];
 
   selectedLesson: any;
 
   constructor(private lessonsService: LessonsService) {}
 
   ngOnInit() {
-    this.courseLessons = this.lessonsService.lessons;
-    this.courseLessons$ = Array.of(this.lessonsService.lessons$);
+    this.jobOfferLessons = this.lessonsService.lessons;
+    this.jobOfferLessons$ = Array.of(this.lessonsService.lessons$);
   }
 
   selectLesson(lesson) {

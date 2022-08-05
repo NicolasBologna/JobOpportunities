@@ -1,14 +1,14 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
-import { Course } from '../models/course';
+import { JobOffer } from '../models/jobOffer';
 
 const BASE_URL = 'https://localhost:7278/api';
 
 @Injectable({
   providedIn: 'root',
 })
-export class CoursesService {
+export class JobOffersService {
   model = 'joboffer';
   constructor(private http: HttpClient) {}
 
@@ -20,16 +20,16 @@ export class CoursesService {
     return this.http.get(this.getUrlWithID(id));
   }
 
-  create(course) {
-    return this.http.post(this.getUrl, course);
+  create(jobOffer: JobOffer) {
+    return this.http.post(this.getUrl, jobOffer);
   }
 
-  update(course) {
-    return this.http.put(this.getUrlWithID(course.id), course);
+  update(jobOffer: JobOffer) {
+    return this.http.put(this.getUrlWithID(jobOffer.id), jobOffer);
   }
 
-  delete(id) {
-    return this.http.delete(this.getUrlWithID(id));
+  delete(Id: string) {
+    return this.http.delete(this.getUrlWithID(Id));
   }
 
   private get getUrl() {

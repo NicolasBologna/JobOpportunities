@@ -113,15 +113,15 @@ mat-card:not(.dashboard-card) {
   width: 100%;
 }
 
-.courses-containers {
+.jobOffers-containers {
   display: flex;
   justify-content: space-around;
 
-  .courses-list {
+  .jobOffers-list {
     width: 49%;
   }
 
-  .course-details {
+  .jobOffer-details {
     width: 49%;
   }
 }
