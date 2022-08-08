@@ -1,5 +1,10 @@
 # Job Opportunities .Net6 + Angular
 
+## Setup
+
+Set both projects (API and SPA) as startup projects
+![](2022-08-08-16-03-01.png)
+
 ## Steps to set up the database
 
 1) update-database
@@ -17,6 +22,8 @@
 * MediatR
 * FluentValidations
 * FluentAssertions
+* Angular 13
+* Angular Material
 
 # Layers
 
