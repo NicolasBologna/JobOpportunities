@@ -9,29 +9,36 @@
 // Be sure that you only ever include this mixin once!
 @include mat.core();
 
-// Define the palettes for your theme using the Material Design palettes available in palette.scss
-// (imported above). For each palette, you can optionally specify a default, lighter, and darker
-// hue. Available color palettes: https://material.io/design/color/
-$angular13-fundamentals-workshop-primary: mat.define-palette(mat.$indigo-palette);
-$angular13-fundamentals-workshop-accent: mat.define-palette(mat.$pink-palette, A200, A100, A400);
+$angular-primary: mat.define-palette(mat.$teal-palette, 500, 100, 900);
+$angular-accent: mat.define-palette(mat.$pink-palette, A200, A100, A400);
 
-// The warn palette is optional (defaults to red).
-$angular13-fundamentals-workshop-warn: mat.define-palette(mat.$red-palette);
+$angular-warn: mat.define-palette(mat.$red-palette);
 
-// Create the theme object. A theme consists of configurations for individual
-// theming systems such as "color" or "typography".
-$angular13-fundamentals-workshop-theme: mat.define-light-theme((
-  color: (
-    primary: $angular13-fundamentals-workshop-primary,
-    accent: $angular13-fundamentals-workshop-accent,
-    warn: $angular13-fundamentals-workshop-warn,
+$angular-default-theme: mat.define-light-theme(
+  (
+    color: (
+      primary: $angular-primary,
+      accent: $angular-accent,
+      warn: $angular-warn,
+    ),
   )
-));
+);
 
-// Include theme styles for core and each component used in your app.
-// Alternatively, you can import and @include the theme mixins for each component
-// that you are using.
-@include mat.all-component-themes($angular13-fundamentals-workshop-theme);
+@include mat.all-component-themes($angular-default-theme);
+
+$angular-dark-theme: mat.define-dark-theme(
+  (
+    color: (
+      primary: $angular-primary,
+      accent: $angular-accent,
+      warn: $angular-warn,
+    ),
+  )
+);
+
+.darkMode {
+  @include mat.all-component-colors($angular-dark-theme);
+}
 
 html {
   height: 100%;
@@ -206,7 +213,6 @@ mat-form-field {
 
 mat-list-item:hover {
   cursor: pointer;
-  background: whitesmoke;
 }
 
 mat-list-item:not(:first-of-type) {
@@ -404,3 +410,13 @@ mat-toolbar {
 
 html, body { height: 100%; }
 body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
+
+//Common
+
+.mr-1{
+  margin-right: 1rem;
+}
+
+.mr-2{
+  margin-right: 2rem;
+}
