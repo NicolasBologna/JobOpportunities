@@ -8,7 +8,7 @@ import { AppComponent } from './app.component';
 import { MaterialModule } from './material.module';
 import { HomeComponent } from './home/home.component';
 import { JobOffersComponent } from './jobOffers/jobOffers.component';
-import { FormsModule } from '@angular/forms';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { JobOffersListComponent } from './jobOffers/jobOffers-list/jobOffers-list.component';
 import { JobOfferDetailsComponent } from './jobOffers/jobOffer-details/jobOffer-details.component';
 
@@ -20,6 +20,7 @@ import { JobOfferDetailsComponent } from './jobOffers/jobOffer-details/jobOffer-
     MaterialModule,
     HttpClientModule,
     FormsModule,
+    ReactiveFormsModule,
   ],
   declarations: [
     AppComponent,
