@@ -1,6 +1,7 @@
 using FluentValidation;
 using FluentValidation.AspNetCore;
 using JobOpportunities.API.Controllers;
+using JobOpportunities.API.Extensions;
 using JobOpportunities.Core.Behaviours;
 using JobOpportunities.Core.Features.JobOffers.Queries;
 using JobOpportunities.Core.Filters;
@@ -84,6 +85,9 @@ var app = builder.Build();
 // Configure the HTTP request pipeline.
 if (app.Environment.IsDevelopment())
 {
+    string tsDefinitionsFullPath = app.Environment.ContentRootPath.Replace(@"\JobOpportunities.API", @"\JobOpportunities.SPA\src\app\common\models");
+    app.GenerateTypeScriptInterfaces(tsDefinitionsFullPath);
+
     app.UseSwagger();
     app.UseSwaggerUI();
 }
