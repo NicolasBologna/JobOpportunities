@@ -33,5 +33,10 @@ namespace JobOpportunities.Data.GenericRepository
         {
             return await _dbSet.AsNoTracking().Where(predicate).ToListAsync();
         }
+
+        public async Task<bool> ItemExists(Guid id)
+        {
+            return await _dbSet.AsNoTracking().SingleOrDefaultAsync(item => item.Id == id) is null;
+        }
     }
 }

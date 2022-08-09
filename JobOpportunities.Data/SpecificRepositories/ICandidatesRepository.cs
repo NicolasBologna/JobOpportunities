@@ -1,9 +1,8 @@
-﻿using JobOpportunities.Data.GenericRepository;
-using JobOpportunities.Domain;
+﻿using JobOpportunities.Domain;
 
 namespace JobOpportunities.Data.SpecificRepositories
 {
-    public interface ICandidatesRepository : IGenericRepository<Candidate>
+    public interface ICandidatesRepository
     {
         Task<IEnumerable<Candidate>> GetallWithSkills();
     }

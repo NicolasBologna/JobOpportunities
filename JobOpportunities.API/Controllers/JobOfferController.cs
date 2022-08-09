@@ -4,6 +4,7 @@ using JobOpportunities.Core.Features.JobOffers.Commands;
 using JobOpportunities.Core.Features.JobOffers.Models;
 using JobOpportunities.Core.Features.JobOffers.Queries;
 using MediatR;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 // For more information on enabling Web API for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
@@ -27,6 +28,7 @@ namespace JobOpportunities.API.Controllers
         [HttpGet("{id}")]
         public async Task<GetJobOfferResponse> Get(Guid id) => await _mediator.Send(new GetJobOfferQuery { JobOfferId = id });
 
+        [Authorize(Roles = "Admin")]
         [HttpPost]
         public async Task<IActionResult> Post(CreateJobOfferCommand command)
         {
