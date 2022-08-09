@@ -1,4 +1,5 @@
 ﻿using AutoMapper;
+using JobOpportunities.Core.Exceptions;
 using JobOpportunities.Data.GenericRepository;
 using JobOpportunities.Domain;
 using MediatR;
@@ -17,20 +18,25 @@ namespace JobOpportunities.Core.Features.JobOffers.Commands
     {
         private readonly IGenericRepository<JobOffer> _jobOfferRepository;
         private readonly IMapper _mapper;
+        private readonly IGenericRepository<Company> _companyRepository;
 
-        public CreateJobOfferCommandHandler(IGenericRepository<JobOffer> jobOfferRepository, IMapper mapper)
+        public CreateJobOfferCommandHandler(IGenericRepository<JobOffer> jobOfferRepository, IMapper mapper, IGenericRepository<Company> companyRepository)
         {
             _jobOfferRepository = jobOfferRepository;
             _mapper = mapper;
+            _companyRepository = companyRepository;
         }
         public async Task<Unit> Handle(CreateJobOfferCommand request, CancellationToken cancellationToken)
         {
             var newJobOffer = _mapper.Map<JobOffer>(request);
 
+            if (!await _companyRepository.ItemExists(request.CompanyId))
+                throw new NotFoundException();
+
             _jobOfferRepository.Add(newJobOffer);
             if (!await _jobOfferRepository.SaveAsync())
             {
-                //
+                //What happen if Company Id doesn't exists
             }
 
             return Unit.Value;

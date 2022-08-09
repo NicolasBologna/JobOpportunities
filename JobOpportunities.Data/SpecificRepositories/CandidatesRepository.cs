@@ -1,18 +1,12 @@
-﻿using JobOpportunities.Data.GenericRepository;
-using JobOpportunities.Domain;
-using Microsoft.EntityFrameworkCore;
+﻿using JobOpportunities.Domain;
 
 namespace JobOpportunities.Data.SpecificRepositories
 {
-    public class CandidatesRepository : GenericRepository<Candidate>, ICandidatesRepository
+    public class CandidatesRepository : ICandidatesRepository
     {
-        public CandidatesRepository(JobOpportunitiesContext dbContext) : base(dbContext)
-        {
-        }
-
         public async Task<IEnumerable<Candidate>> GetallWithSkills()
         {
-            return await _dbSet.Include(c => c.Skills).ToListAsync();
+            throw new NotImplementedException();//return await _dbSet.Include(c => c.Skills).ToListAsync();
         }
     }
 }

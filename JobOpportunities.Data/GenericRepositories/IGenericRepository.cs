@@ -16,6 +16,7 @@ namespace JobOpportunities.Data.GenericRepository
         Task<T?> GetByIdAsync(Guid id);
         Task<T?> FindByConditionAsync(Expression<Func<T, bool>> predicate);
         Task<IEnumerable<T>> FindAllByConditionAsync(Expression<Func<T, bool>> predicate);
+        Task<bool> ItemExists(Guid id);
     }
 
     public interface IGenericRepository<T> : IReadRepository<T>, IWriteRepository<T>

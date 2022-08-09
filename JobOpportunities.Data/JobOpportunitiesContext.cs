@@ -1,9 +1,10 @@
 ﻿using JobOpportunities.Domain;
+using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
 
 namespace JobOpportunities.Data
 {
-    public class JobOpportunitiesContext : DbContext
+    public class JobOpportunitiesContext : IdentityDbContext<ApplicationUser>
     {
 
         public DbSet<JobOffer> JobOffers => Set<JobOffer>();
@@ -151,21 +152,23 @@ namespace JobOpportunities.Data
             builder.Entity<Candidate>().HasData(
                 new Candidate
                 {
-                    Id = new Guid("f47890b6-a3ce-4057-94a9-af862d2c01de"),
-                    CreationDate = DateTime.Now,
+                    Id = "f47890b6-a3ce-4057-94a9-af862d2c01de",
                     Email = "pepito@endava.com",
-                    Name = "Pepito Juarez",
-                    Password = "123456UltraSecure",
+                    UserName = "PepitoJuarez",
+                    FirstName = "Pepito",
+                    LastName = "Juarez",
+                    PasswordHash = "123456UltraSecure",
                 });
 
             builder.Entity<Candidate>().HasData(
                 new Candidate
                 {
-                    Id = new Guid("f29d1608-f324-4432-8e44-5ee320909b9d"),
-                    CreationDate = DateTime.Now,
+                    Id = "f29d1608-f324-4432-8e44-5ee320909b9d",
                     Email = "marcelo@endava.com",
-                    Name = "Marcelo Reynoso",
-                    Password = "320909b967uythgfd@434$%&",
+                    UserName = "MarceloReynoso",
+                    FirstName = "Marcelo",
+                    LastName = "Reynoso",
+                    PasswordHash = "320909b967uythgfd@434$%&",
                 });
         }
         private static void SeedCandidateSkills(ModelBuilder builder)
@@ -177,9 +180,9 @@ namespace JobOpportunities.Data
                     .ToTable("CandidateSkill")
                     .HasData(new[]
                         {
-                            new { SkillsId = new Guid("70068d37-d9e3-48d9-a390-e85a11f2f31f"), CandidatesId = new Guid("f47890b6-a3ce-4057-94a9-af862d2c01de")},
-                            new { SkillsId = new Guid("2f8ce28b-8641-426e-98ba-eef98cc9f8a0"), CandidatesId = new Guid("f47890b6-a3ce-4057-94a9-af862d2c01de")},
-                            new { SkillsId = new Guid("2f8ce28b-8641-426e-98ba-eef98cc9f8a0"), CandidatesId = new Guid("f29d1608-f324-4432-8e44-5ee320909b9d")},
+                            new { SkillsId = new Guid("70068d37-d9e3-48d9-a390-e85a11f2f31f"), CandidatesId = "f47890b6-a3ce-4057-94a9-af862d2c01de"},
+                            new { SkillsId = new Guid("2f8ce28b-8641-426e-98ba-eef98cc9f8a0"), CandidatesId = "f47890b6-a3ce-4057-94a9-af862d2c01de"},
+                            new { SkillsId = new Guid("2f8ce28b-8641-426e-98ba-eef98cc9f8a0"), CandidatesId = "f29d1608-f324-4432-8e44-5ee320909b9d"},
                         }
                     ));
         }

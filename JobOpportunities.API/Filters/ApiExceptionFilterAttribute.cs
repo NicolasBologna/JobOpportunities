@@ -1,9 +1,8 @@
 ﻿using JobOpportunities.Core.Exceptions;
-using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Filters;
 
-namespace JobOpportunities.Core.Filters
+namespace JobOpportunities.API.Filters
 {
     public class ApiExceptionFilterAttribute : ExceptionFilterAttribute
     {
@@ -20,6 +19,9 @@ namespace JobOpportunities.Core.Filters
                 case ForbiddenAccessException:
                     HandleForbiddenAccessException(context);
                     break;
+                case UnauthorizedException:
+                    HandleUnauthorizedException(context);
+                    break;
                 default:
                     HandleUnknownException(context);
                     break;
@@ -28,6 +30,21 @@ namespace JobOpportunities.Core.Filters
             base.OnException(context);
         }
 
+        private void HandleUnauthorizedException(ExceptionContext context)
+        {
+            var details = new ProblemDetails()
+            {
+                Type = "https://www.rfc-editor.org/rfc/rfc7235#section-3.1",
+                Title = "Unauthorized",
+            };
+
+            context.Result = new ObjectResult(details)
+            {
+                StatusCode = StatusCodes.Status401Unauthorized
+            };
+
+            context.ExceptionHandled = true;
+        }
 
         private void HandleValidationException(ExceptionContext context, ValidationException exception)
         {
