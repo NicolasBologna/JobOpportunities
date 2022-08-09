@@ -1,5 +1,6 @@
 ﻿using AutoMapper;
 using FluentAssertions;
+using JobOpportunities.Core.Exceptions;
 using JobOpportunities.Core.Features.JobOffers.Commands;
 using JobOpportunities.Data.GenericRepository;
 using JobOpportunities.Domain;
@@ -36,17 +37,34 @@ namespace JobOpportunities.Core.UnitTests
         public async Task ShouldCreateANewJobOffer()
         {
             var mockMapper = new Mock<IMapper>();
-            var mockRepository = new Mock<IGenericRepository<JobOffer>>();
+            var mockCompanyRepository = new Mock<IGenericRepository<Company>>();
+            var mockJobOfferRepository = new Mock<IGenericRepository<JobOffer>>();
 
-            mockRepository.Setup(x => x.Add(It.IsAny<JobOffer>()));
+            mockCompanyRepository.Setup(x => x.ItemExists(It.IsAny<Guid>())).ReturnsAsync(true);
+            mockJobOfferRepository.Setup(x => x.Add(It.IsAny<JobOffer>()));
             mockMapper.Setup(x => x.Map<JobOffer>(It.IsAny<CreateJobOfferCommand>())).Returns(newJobOffer);
 
-            var getJobOffersQueryHandler = new CreateJobOfferCommandHandler(mockRepository.Object, mockMapper.Object);
+            var getJobOffersQueryHandler = new CreateJobOfferCommandHandler(mockJobOfferRepository.Object, mockMapper.Object, mockCompanyRepository.Object);
 
-            var jobOffer = await getJobOffersQueryHandler.Handle(createJobOfferCommand, new CancellationToken());
+            var response = await getJobOffersQueryHandler.Handle(createJobOfferCommand, new CancellationToken());
 
-            jobOffer.Should().NotBeNull();
-            //jobOffer.Id.Should().Be("38656340-8ea7-427c-8587-3e6c6641cb62");
+            response.Should().NotBeNull();
+        }
+
+        [Test]
+        public async Task ShouldThrowNotFoundExceptionWhenCompanyDoesntExists()
+        {
+            var mockMapper = new Mock<IMapper>();
+            var mockCompanyRepository = new Mock<IGenericRepository<Company>>();
+            var mockJobOfferRepository = new Mock<IGenericRepository<JobOffer>>();
+
+            mockCompanyRepository.Setup(x => x.ItemExists(It.IsAny<Guid>())).ReturnsAsync(false);
+            mockJobOfferRepository.Setup(x => x.Add(It.IsAny<JobOffer>()));
+            mockMapper.Setup(x => x.Map<JobOffer>(It.IsAny<CreateJobOfferCommand>())).Returns(newJobOffer);
+
+            var createJobOffersQueryHandler = new CreateJobOfferCommandHandler(mockJobOfferRepository.Object, mockMapper.Object, mockCompanyRepository.Object);
+
+            await createJobOffersQueryHandler.Invoking(y => y.Handle(createJobOfferCommand, new CancellationToken())).Should().ThrowAsync<NotFoundException>();
         }
     }
 }
