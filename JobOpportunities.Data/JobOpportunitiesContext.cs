@@ -1,4 +1,5 @@
-﻿using JobOpportunities.Domain;
+﻿using JobOpportunities.Data.Identity;
+using JobOpportunities.Domain;
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
 
@@ -6,6 +7,7 @@ namespace JobOpportunities.Data
 {
     public class JobOpportunitiesContext : IdentityDbContext<ApplicationUser>
     {
+        private readonly CurrentUser _user;
 
         public DbSet<JobOffer> JobOffers => Set<JobOffer>();
         public DbSet<FullTimeJob> FullTimeJobs => Set<FullTimeJob>();
@@ -16,17 +18,36 @@ namespace JobOpportunities.Data
         public DbSet<Knowledge> Knowleadges => Set<Knowledge>();
         public DbSet<Skill> Skills => Set<Skill>();
 
-        public JobOpportunitiesContext(DbContextOptions<JobOpportunitiesContext> options)
+        public JobOpportunitiesContext(DbContextOptions<JobOpportunitiesContext> options, ICurrentUserService currentUserService)
             : base(options)
         {
-            //Database.EnsureCreated();
+            _user = currentUserService.User;
         }
-
 
         protected override void OnModelCreating(ModelBuilder builder)
         {
             SeedData(builder);
             base.OnModelCreating(builder);
+        }
+        public override async Task<int> SaveChangesAsync(CancellationToken cancellationToken = default)
+        {
+            foreach (var entry in ChangeTracker.Entries<EntityBase>())
+            {
+                switch (entry.State)
+                {
+                    case EntityState.Added:
+                        entry.Entity.CreatedBy = _user.Id;
+                        entry.Entity.CreatedAt = DateTime.UtcNow;
+                        break;
+
+                    case EntityState.Modified:
+                        entry.Entity.LastModifiedBy = _user.Id;
+                        entry.Entity.LastModifiedByAt = DateTime.UtcNow;
+                        break;
+                }
+            }
+
+            return await base.SaveChangesAsync(cancellationToken);
         }
 
         private static void SeedData(ModelBuilder builder)
@@ -47,7 +68,6 @@ namespace JobOpportunities.Data
                 new SkillLevel
                 {
                     Id = new Guid("78867f5c-44fb-470d-9946-3da97e6ae2a7"),
-                    CreationDate = DateTime.Now,
                     Description = "Lower skills required",
                     Name = "Intern"
                 });
@@ -56,7 +76,6 @@ namespace JobOpportunities.Data
                 new SkillLevel
                 {
                     Id = new Guid("a9be5506-3f5e-403a-b113-73fba517f3c6"),
-                    CreationDate = DateTime.Now,
                     Description = "Lower skills required, but can finish some tasks",
                     Name = "Junior"
                 });
@@ -65,7 +84,6 @@ namespace JobOpportunities.Data
                 new SkillLevel
                 {
                     Id = new Guid("248b45b9-bf4a-4815-844d-ec02daaeb638"),
-                    CreationDate = DateTime.Now,
                     Description = "higher skills required, but less responsabilities",
                     Name = "Semi-Senior"
                 });
@@ -78,7 +96,6 @@ namespace JobOpportunities.Data
                     Id = new Guid("b20501eb-5f36-4ed4-96ac-cf32817dce06"),
                     Title = ".NET",
                     Description = "Versión 6 + todo el ecosistema",
-                    CreationDate = DateTime.Now
                 });
 
             builder.Entity<Knowledge>().HasData(
@@ -87,7 +104,6 @@ namespace JobOpportunities.Data
                     Id = new Guid("3f374542-7711-4581-80c3-6f1a0a7c1105"),
                     Title = "Angular",
                     Description = "Versión 13",
-                    CreationDate = DateTime.Now
                 });
         }
         private static void SeedSkills(ModelBuilder builder)
@@ -96,7 +112,6 @@ namespace JobOpportunities.Data
                 new Skill
                 {
                     Id = new Guid("70068d37-d9e3-48d9-a390-e85a11f2f31f"),
-                    CreationDate = DateTime.Now,
                     KnowleadgeId = new Guid("b20501eb-5f36-4ed4-96ac-cf32817dce06"),
                     SkillLevelId = new Guid("78867f5c-44fb-470d-9946-3da97e6ae2a7"),
                 });
@@ -105,7 +120,6 @@ namespace JobOpportunities.Data
                 new Skill
                 {
                     Id = new Guid("2f8ce28b-8641-426e-98ba-eef98cc9f8a0"),
-                    CreationDate = DateTime.Now,
                     KnowleadgeId = new Guid("3f374542-7711-4581-80c3-6f1a0a7c1105"),
                     SkillLevelId = new Guid("248b45b9-bf4a-4815-844d-ec02daaeb638"),
                 });
@@ -116,7 +130,6 @@ namespace JobOpportunities.Data
                             new Company
                             {
                                 Id = new Guid("9ee1f9a2-201a-4351-abc1-c056932a1165"),
-                                CreationDate = DateTime.Now,
                                 Email = "company@endava.com",
                                 Name = "Endava"
                             });
@@ -127,7 +140,6 @@ namespace JobOpportunities.Data
                 new JobOffer
                 {
                     Id = new Guid("5cfe1935-3a8e-418a-a260-38d0551d5027"),
-                    CreationDate = DateTime.Now,
                     CompanyId = new Guid("9ee1f9a2-201a-4351-abc1-c056932a1165"),
                     Description = "Una posición para pasarla bien",
                     Title = ".NET FullStack FullTime",
@@ -143,31 +155,27 @@ namespace JobOpportunities.Data
                 .ToTable("JobOfferSkill")
                 .HasData(new[]
                     {
-                                    new { RequiredSkillsId = new Guid("70068d37-d9e3-48d9-a390-e85a11f2f31f"), JobOffersId = new Guid("5cfe1935-3a8e-418a-a260-38d0551d5027")},
-                                    new { RequiredSkillsId = new Guid("2f8ce28b-8641-426e-98ba-eef98cc9f8a0"), JobOffersId = new Guid("5cfe1935-3a8e-418a-a260-38d0551d5027")},
+                        new { RequiredSkillsId = new Guid("70068d37-d9e3-48d9-a390-e85a11f2f31f"), JobOffersId = new Guid("5cfe1935-3a8e-418a-a260-38d0551d5027")},
+                        new { RequiredSkillsId = new Guid("2f8ce28b-8641-426e-98ba-eef98cc9f8a0"), JobOffersId = new Guid("5cfe1935-3a8e-418a-a260-38d0551d5027")},
                     }));
         }
         private static void SeedCandidates(ModelBuilder builder)
         {
             builder.Entity<Candidate>().HasData(
-                new Candidate
+                new Candidate("Pepito", "Juarez")
                 {
                     Id = "f47890b6-a3ce-4057-94a9-af862d2c01de",
                     Email = "pepito@endava.com",
                     UserName = "PepitoJuarez",
-                    FirstName = "Pepito",
-                    LastName = "Juarez",
                     PasswordHash = "123456UltraSecure",
                 });
 
             builder.Entity<Candidate>().HasData(
-                new Candidate
+                new Candidate("Marcelo", "Reynoso")
                 {
                     Id = "f29d1608-f324-4432-8e44-5ee320909b9d",
                     Email = "marcelo@endava.com",
                     UserName = "MarceloReynoso",
-                    FirstName = "Marcelo",
-                    LastName = "Reynoso",
                     PasswordHash = "320909b967uythgfd@434$%&",
                 });
         }

@@ -5,6 +5,7 @@ using MediatR;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.Extensions.Configuration;
 using Microsoft.IdentityModel.Tokens;
+using System.ComponentModel;
 using System.IdentityModel.Tokens.Jwt;
 using System.Security.Claims;
 using System.Text;
@@ -13,7 +14,9 @@ namespace JobOpportunities.Core.Features.Auth.Commands
 {
     public class TokenCommand : IRequest<TokenCommandResponse>
     {
+        [DefaultValue("test.demo")]
         public string UserName { get; set; } = default!;
+        [DefaultValue("P@ss.W0rd")]
         public string Password { get; set; } = default!;
     }
 

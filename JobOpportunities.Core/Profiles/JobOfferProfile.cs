@@ -12,7 +12,7 @@ namespace JobOpportunities.Core.Profiles
             CreateMap<JobOffer, GetJobOfferResponse>();
             CreateMap<JobOffer, GetJobOffersResponse>();
             CreateMap<CreateJobOfferCommand, JobOffer>();
-
+            CreateMap<UpdateJobOfferCommand, JobOffer>();
         }
     }
 }

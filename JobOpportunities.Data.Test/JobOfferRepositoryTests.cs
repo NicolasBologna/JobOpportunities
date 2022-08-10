@@ -21,9 +21,7 @@ namespace JobOpportunities.Data.UnitTest
             var jobOffer = new JobOffer
             {
                 CompanyId = new Guid("cb3e09cf-e829-4c22-b8cc-d491e04ee55a"),
-                CreationDate = DateTime.Now,
                 Description = "asdsadas",
-                LastUpdate = DateTime.Now,
                 Title = "puesto 1",
                 ValidUntil = DateTime.Now.AddDays(20),
             };

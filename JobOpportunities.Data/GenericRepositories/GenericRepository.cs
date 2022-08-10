@@ -35,6 +35,11 @@ namespace JobOpportunities.Data.GenericRepository
             _dbSet.Remove(item);
         }
 
+        public async Task<bool> SaveAsync(CancellationToken cancellationToken)
+        {
+            return await _dbContext.SaveChangesAsync(cancellationToken) > 0;
+        }
+
         public async Task<bool> SaveAsync()
         {
             return await _dbContext.SaveChangesAsync() > 0;

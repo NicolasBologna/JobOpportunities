@@ -7,6 +7,7 @@ namespace JobOpportunities.Data.GenericRepository
     {
         void Add(T item);
         void Remove(T item);
+        Task<bool> SaveAsync(CancellationToken cancellationToken);
         Task<bool> SaveAsync();
     }
 

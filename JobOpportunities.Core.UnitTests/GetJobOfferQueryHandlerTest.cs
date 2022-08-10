@@ -20,7 +20,6 @@ namespace JobOpportunities.Core.UnitTests
             this.jobOffer = new JobOffer
             {
                 Id = new Guid("38656340-8ea7-427c-8587-3e6c6641cb62"),
-                CreationDate = DateTime.Now,
                 Title = "test offer",
                 ValidUntil = DateTime.Now.AddDays(20),
                 Description = "test Description",

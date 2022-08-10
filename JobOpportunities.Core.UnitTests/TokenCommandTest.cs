@@ -27,12 +27,10 @@ namespace JobOpportunities.Core.UnitTests
             var mockUserManager = new Mock<UserManager<ApplicationUser>>(Mock.Of<IUserStore<ApplicationUser>>(), null, null, null, null, null, null, null, null);
             var mockConfiguration = new Mock<IConfiguration>();
 
-            mockUserManager.Setup(x => x.FindByNameAsync(It.IsAny<string>())).ReturnsAsync(new ApplicationUser()
+            mockUserManager.Setup(x => x.FindByNameAsync(It.IsAny<string>())).ReturnsAsync(new ApplicationUser("TestFirstName", "TestLastName")
             {
                 UserName = "MyUserName",
                 Id = "asdasdasd-21345-f2f24f42-424244",
-                FirstName = "TestFirstName",
-                LastName = "TestLastName"
             });
             mockUserManager.Setup(x => x.CheckPasswordAsync(It.IsAny<ApplicationUser>(), It.IsAny<string>())).ReturnsAsync(true);
             mockUserManager.Setup(x => x.GetRolesAsync(It.IsAny<ApplicationUser>())).ReturnsAsync(new List<string> { "Admin" });
@@ -70,12 +68,10 @@ namespace JobOpportunities.Core.UnitTests
             var mockUserManager = new Mock<UserManager<ApplicationUser>>(Mock.Of<IUserStore<ApplicationUser>>(), null, null, null, null, null, null, null, null);
             var mockConfiguration = new Mock<IConfiguration>();
 
-            mockUserManager.Setup(x => x.FindByNameAsync(It.IsAny<string>())).ReturnsAsync(new ApplicationUser()
+            mockUserManager.Setup(x => x.FindByNameAsync(It.IsAny<string>())).ReturnsAsync(new ApplicationUser("TestFirstName", "TestLastName")
             {
                 UserName = "MyUserName",
                 Id = "asdasdasd-21345-f2f24f42-424244",
-                FirstName = "TestFirstName",
-                LastName = "TestLastName"
             });
             mockUserManager.Setup(x => x.CheckPasswordAsync(It.IsAny<ApplicationUser>(), It.IsAny<string>())).ReturnsAsync(false);
 

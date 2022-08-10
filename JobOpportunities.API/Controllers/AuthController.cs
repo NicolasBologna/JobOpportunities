@@ -1,7 +1,7 @@
 ﻿using JobOpportunities.Core.Features.Auth.Commands;
 using JobOpportunities.Core.Features.Auth.Models;
 using JobOpportunities.Core.Features.Auth.Queries;
-using JobOpportunities.Core.Services;
+using JobOpportunities.Data.Identity;
 using JobOpportunities.Domain;
 using MediatR;
 using Microsoft.AspNetCore.Authorization;
