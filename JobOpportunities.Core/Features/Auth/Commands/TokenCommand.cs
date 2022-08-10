@@ -1,4 +1,5 @@
-﻿using JobOpportunities.Core.Exceptions;
+﻿using JobOpportunities.Core.Common.Attributes;
+using JobOpportunities.Core.Exceptions;
 using JobOpportunities.Core.Features.Auth.Models;
 using JobOpportunities.Domain;
 using MediatR;
@@ -12,6 +13,7 @@ using System.Text;
 
 namespace JobOpportunities.Core.Features.Auth.Commands
 {
+    [AuditLog]
     public class TokenCommand : IRequest<TokenCommandResponse>
     {
         [DefaultValue("test.demo")]

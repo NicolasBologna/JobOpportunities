@@ -1,10 +1,12 @@
 ﻿using AutoMapper;
+using JobOpportunities.Core.Common.Attributes;
 using JobOpportunities.Data.GenericRepository;
 using JobOpportunities.Domain;
 using MediatR;
 
 namespace JobOpportunities.Core.Features.SkillLevels.Commands
 {
+    [AuditLog]
     public class CreateSkillLevelCommand : IRequest
     {
         public string Name { get; set; }

@@ -1,10 +1,12 @@
 ﻿using AutoMapper;
+using JobOpportunities.Core.Common.Attributes;
 using JobOpportunities.Data.GenericRepository;
 using JobOpportunities.Domain;
 using MediatR;
 
 namespace JobOpportunities.Core.Features.KnowledgeFeatures.Commands
 {
+    [AuditLog]
     public class CreateKnowledgeCommand : IRequest
     {
         public string Title { get; set; }

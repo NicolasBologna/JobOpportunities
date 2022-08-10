@@ -65,7 +65,7 @@ async Task SeedData()
             Name = "AnotherRole"
         });
 
-        //await userManager.AddToRoleAsync(newUser, "Admin");
+        await userManager.AddToRoleAsync(newUser, "Admin");
         await userManager.AddToRoleAsync(newUser, "AnotherRole");
     }
 }

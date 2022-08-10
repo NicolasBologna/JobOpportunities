@@ -1,4 +1,5 @@
 ﻿using AutoMapper;
+using JobOpportunities.Core.Common.Attributes;
 using JobOpportunities.Core.Exceptions;
 using JobOpportunities.Data.GenericRepository;
 using JobOpportunities.Domain;
@@ -6,6 +7,7 @@ using MediatR;
 
 namespace JobOpportunities.Core.Features.JobOffers.Commands
 {
+    [AuditLog]
     public class UpdateJobOfferCommand : IRequest
     {
         public Guid Id { get; set; }
@@ -28,14 +30,14 @@ namespace JobOpportunities.Core.Features.JobOffers.Commands
 
         public async Task<Unit> Handle(UpdateJobOfferCommand request, CancellationToken cancellationToken)
         {
-            var product = await _repository.GetByIdAsync(request.Id);
+            var jobOffer = await _repository.GetByIdAsync(request.Id);
 
-            if (product is null)
+            if (jobOffer is null)
             {
                 throw new NotFoundException();
             }
 
-            _mapper.Map(request, product);
+            _mapper.Map(request, jobOffer);
 
             await _repository.SaveAsync(cancellationToken);
 

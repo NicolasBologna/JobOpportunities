@@ -1,4 +1,5 @@
 ﻿using AutoMapper;
+using JobOpportunities.Core.Common.Attributes;
 using JobOpportunities.Core.Exceptions;
 using JobOpportunities.Data.GenericRepository;
 using JobOpportunities.Domain;
@@ -6,6 +7,7 @@ using MediatR;
 
 namespace JobOpportunities.Core.Features.JobOffers.Commands
 {
+    [AuditLog]
     public class CreateJobOfferCommand : IRequest
     {
         public string Title { get; set; }

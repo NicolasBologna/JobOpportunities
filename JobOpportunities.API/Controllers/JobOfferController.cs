@@ -28,9 +28,18 @@ namespace JobOpportunities.API.Controllers
         [HttpGet("{id}")]
         public async Task<GetJobOfferResponse> Get(Guid id) => await _mediator.Send(new GetJobOfferQuery { JobOfferId = id });
 
-        [Authorize(Roles = "Admin")]
+
         [HttpPost]
+        [Authorize(Roles = "Admin")]
         public async Task<IActionResult> Post(CreateJobOfferCommand command)
+        {
+            await _mediator.Send(command);
+            return Ok();
+        }
+
+        [HttpPut]
+        [Authorize(Roles = "Admin")]
+        public async Task<IActionResult> Put(UpdateJobOfferCommand command)
         {
             await _mediator.Send(command);
             return Ok();
@@ -40,10 +49,7 @@ namespace JobOpportunities.API.Controllers
         [Route("{id}/potentialcandidates")]
         public async Task<IEnumerable<GetJobOfferCandidatesResponse>> GetJobOfferCandidates(Guid id) => await _mediator.Send(new GetJobOfferCandidatesQuery { JobOfferId = id });
 
-        //[HttpPut("{id}")]
-        //public void Put(int id, [FromBody] string value)
-        //{
-        //}
+
 
         //[HttpDelete("{id}")]
         //public void Delete(int id)

@@ -1,4 +1,5 @@
-﻿using JobOpportunities.Data.GenericRepository;
+﻿using Audit.Core;
+using JobOpportunities.Data.GenericRepository;
 using JobOpportunities.Data.Identity;
 using JobOpportunities.Data.SpecificRepositories;
 using JobOpportunities.Domain;
@@ -19,6 +20,18 @@ public static class DependencyInjection
             .AddIdentityCore<ApplicationUser>()
             .AddRoles<IdentityRole>()
             .AddEntityFrameworkStores<JobOpportunitiesContext>();
+
+        Configuration.Setup()
+        .UseAzureStorageBlobs(configuration => configuration
+            .WithConnectionString(config["AuditLogs:ConnectionString"])
+            .ContainerName(ev => $"mediatrcommandlogs{DateTime.Today:yyyyMMdd}")
+            .BlobName(ev =>
+            {
+                var currentUser = ev.CustomFields["User"] as CurrentUser;
+
+                return $"{ev.EventType}/{currentUser?.Id}_{DateTime.UtcNow.Ticks}.json";
+            })
+        );
 
         services.AddScoped<ICurrentUserService, CurrentUserService>();
 

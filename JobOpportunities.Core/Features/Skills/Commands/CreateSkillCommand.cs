@@ -1,10 +1,12 @@
 ﻿using AutoMapper;
+using JobOpportunities.Core.Common.Attributes;
 using JobOpportunities.Data.GenericRepository;
 using JobOpportunities.Domain;
 using MediatR;
 
 namespace JobOpportunities.Core.Features.Skills.Commands
 {
+    [AuditLog]
     public class CreateSkillCommand : IRequest
     {
         public Guid KnowleadgeId { get; set; }
