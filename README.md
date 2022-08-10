@@ -6,6 +6,14 @@ Set both projects (API and SPA) as startup projects
 
 ![Startup projects](2022-08-08-16-03-01.png)
 
+Install Windows Azure Storage Emulator
+
+Run:
+
+```bash
+    AzureStorageEmulator.exe start
+```
+
 ## Steps to set up the database
 
 1) update-database
@@ -26,6 +34,8 @@ Set both projects (API and SPA) as startup projects
 * FluentAssertions
 * Angular 13
 * Angular Material
+* [Audit.NET](https://github.com/thepirat000/Audit.NET)
+* AzureStorageBlobs (Audit.NET.AzureStorageBlobs)
 
 ## Layers
 
@@ -43,11 +53,23 @@ Generic Repository
 
 ### Core
 
+Audit.NET: Track only commands with [AuditLog] attribute.
+
 ### Domain
 
 (In Progress)
 
 ![Domain Model](2022-08-04-16-44-22.png)
+
+## Features
+
+### Log
+
+To open local storage in azure storage explorer and avoid problems:
+
+![add by name](2022-08-10-16-05-03.png)
+
+search "mediatr".
 
 ## Resources
 
