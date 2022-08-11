@@ -10,8 +10,8 @@ namespace JobOpportunities.Core.Features.JobOffers.Commands
     [AuditLog]
     public class CreateJobOfferCommand : IRequest
     {
-        public string Title { get; set; }
-        public string Description { get; set; }
+        public string Title { get; set; } = default!;
+        public string? Description { get; set; }
         public DateTime ValidUntil { get; set; }
         public Guid CompanyId { get; set; }
     }
@@ -36,7 +36,7 @@ namespace JobOpportunities.Core.Features.JobOffers.Commands
                 throw new NotFoundException();
 
             _jobOfferRepository.Add(newJobOffer);
-            if (!await _jobOfferRepository.SaveAsync())
+            if (!await _jobOfferRepository.SaveAsync(cancellationToken))
             {
                 //What happen if Company Id doesn't exists
             }
