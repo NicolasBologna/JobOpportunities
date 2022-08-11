@@ -36,6 +36,7 @@ Run:
 * Angular Material
 * [Audit.NET](https://github.com/thepirat000/Audit.NET)
 * AzureStorageBlobs (Audit.NET.AzureStorageBlobs)
+* Serilog
 
 ## Layers
 
@@ -71,6 +72,15 @@ To open local storage in azure storage explorer and avoid problems:
 
 search "mediatr".
 
+---
+
+Audit.NET loguea solo commands en Azure Storage. Ver de tener AuditLogs:Enabled en el appSettings y el emulador de azure storage local corriendo.
+Se crea un blob container por día con formato: "mediatrcommandlogs{DateTime.Today:yyyyMMdd}"
+Y luego un registro en formato json por cada command con el formato: "{ev.EventType}/{currentUser?.Id}_{DateTime.UtcNow.Ticks}.json"
+
+Serilog está en la pipeline de MediatR y hace un log de cada request con el siguiente formato:
+{RequetsName}: {@User} with request {@Request}
+
 ## Resources
 
 ### Inspired by
@@ -101,3 +111,8 @@ search "mediatr".
 
 * [Middleware vs Filters](https://www.thetechplatform.com/post/middleware-and-filters-power-in-asp-net-core)
 * [Interesting article about extension methods](https://weblogs.asp.net/scottgu/new-orcas-language-feature-extension-methods)
+* [OpenID (OpenID Connect (OIDC)), OAuth 2.0](https://dev.to/isaacojeda/aspnet-core-servidor-de-autenticacion-con-openid-connect-59kh)
+
+### To watch
+
+[![You are doing .NET logging wrong](https://img.youtube.com/vi/bnVfrd3lRv8/0.jpg)](https://www.youtube.com/watch?v=bnVfrd3lRv8)
