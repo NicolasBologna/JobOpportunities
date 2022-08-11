@@ -34,14 +34,12 @@ namespace ConsultaAlumnos.API.Controllers
 
         [HttpGet("me")]
         [Authorize]
-        public async Task<ActionResult<TokenInfoQueryResponse>> Me([FromServices] ICurrentUserService currentUser)
-        {
-            return Ok(new
+        public ActionResult<TokenInfoQueryResponse> Me([FromServices] ICurrentUserService currentUser) =>
+            Ok(new
             {
                 currentUser.User,
                 IsAdmin = currentUser.IsInRole("Admin")
             });
-        }
     }
 
 

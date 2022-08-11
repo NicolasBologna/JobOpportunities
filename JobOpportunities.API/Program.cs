@@ -3,10 +3,24 @@ using JobOpportunities.Core;
 using JobOpportunities.Data;
 using JobOpportunities.Domain;
 using Microsoft.AspNetCore.Identity;
+using MongoDB.Driver;
+using Serilog;
+using Serilog.Events;
 
 var builder = WebApplication.CreateBuilder(args);
 
-builder.Services.AddWebApiServices(builder.Configuration);
+builder.Host.UseSerilog();
+
+Log.Logger = new LoggerConfiguration()
+    .MinimumLevel.Override("Microsoft", LogEventLevel.Warning)
+    .Enrich.FromLogContext()
+    .WriteTo.Console()
+    .WriteTo.File("log.txt", rollingInterval: RollingInterval.Day)
+    .WriteTo.MongoDBBson("mongodb://localhost:27017/JobOpportunities", collectionName: "Logs")
+    //.WriteTo.MongoDBBson(databaseUrl: "mongodb://serilogMongo:<PASSWORD>@ac-tz1xyaf-shard-00-00.vzwjbbc.mongodb.net/JobOpportunities", collectionName: "JobOpportunitiesLogs")
+    .CreateLogger();
+
+builder.Services.AddWebApiServices();
 builder.Services.AddDataServices(builder.Configuration);
 builder.Services.AddCoreServices();
 builder.Services.AddSecurityServices(builder.Configuration);
@@ -29,9 +43,30 @@ app.MapControllers();
 
 app.UseCors("AllowOrigin");
 
-await SeedData();
+try
+{
+    Log.Information("Iniciando Web API");
 
-app.Run();
+    await SeedData();
+
+    Log.Information("Corriendo en:");
+    Log.Information("https://localhost:7278");
+    Log.Information("http://localhost:5278");
+
+    app.Run();
+
+}
+catch (Exception ex)
+{
+    Log.Fatal(ex, "Host terminated unexpectedly");
+
+    return;
+}
+finally
+{
+    Log.CloseAndFlush();
+}
+
 
 async Task SeedData()
 {

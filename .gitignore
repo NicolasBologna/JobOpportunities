@@ -362,3 +362,4 @@ MigrationBackup/
 # Fody - auto-generated XML schema
 FodyWeavers.xsd
 /JobOpportunities.SPA/.angular/cache
+/JobOpportunities.API/log20220811.txt

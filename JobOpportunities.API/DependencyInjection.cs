@@ -11,7 +11,7 @@ namespace JobOpportunities.API;
 
 public static class DependencyInjection
 {
-    public static IServiceCollection AddWebApiServices(this IServiceCollection services, IConfiguration config)
+    public static IServiceCollection AddWebApiServices(this IServiceCollection services)
     {
         services.AddControllers(options =>
                     options.Filters.Add<ApiExceptionFilterAttribute>() //Agregar validaciones globales a los controladores
