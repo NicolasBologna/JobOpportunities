@@ -40,6 +40,9 @@ namespace ConsultaAlumnos.API.Controllers
                 currentUser.User,
                 IsAdmin = currentUser.IsInRole("Admin")
             });
+
+        [HttpPost("refresh")]
+        public Task<RefreshTokenCommandResponse> RefreshToken([FromBody] RefreshTokenCommand command) => _mediatr.Send(command);
     }
 
 

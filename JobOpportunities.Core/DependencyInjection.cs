@@ -1,5 +1,6 @@
 ﻿using FluentValidation;
 using JobOpportunities.Core.Behaviours;
+using JobOpportunities.Core.Common.Services;
 using JobOpportunities.Core.Features.JobOffers.Queries;
 using MediatR;
 using Microsoft.Extensions.DependencyInjection;
@@ -15,6 +16,8 @@ public static class DependencyInjection
 
         services.AddTransient(typeof(IPipelineBehavior<,>), typeof(ValidationBehaviour<,>));
         services.AddTransient(typeof(IPipelineBehavior<,>), typeof(AuditLogsBehavior<,>));
+
+        services.AddTransient<IAuthService, AuthService>();
 
         services.AddMediatR(Assembly.GetExecutingAssembly(), typeof(GetJobOfferQuery).Assembly);
 

@@ -3,5 +3,6 @@
     public class TokenCommandResponse
     {
         public string AccessToken { get; set; } = default!;
+        public Guid RefreshToken { get; set; } = default!;
     }
 }
