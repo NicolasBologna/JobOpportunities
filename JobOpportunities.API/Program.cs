@@ -1,6 +1,8 @@
 using JobOpportunities.API;
+using JobOpportunities.API.Middlewares;
 using JobOpportunities.Core;
 using JobOpportunities.Data;
+using JobOpportunities.DataNoSql;
 using JobOpportunities.Domain;
 using Microsoft.AspNetCore.Identity;
 using MongoDB.Driver;
@@ -24,10 +26,13 @@ builder.Services.AddWebApiServices();
 builder.Services.AddDataServices(builder.Configuration);
 builder.Services.AddCoreServices();
 builder.Services.AddSecurityServices(builder.Configuration);
+builder.Services.AddNoSqlServices();
+
 
 var app = builder.Build();
 
-// Configure the HTTP request pipeline.
+app.UseMiddleware<ResponseTimeMiddleware>();
+
 if (app.Environment.IsDevelopment())
 {
     app.UseSwagger();

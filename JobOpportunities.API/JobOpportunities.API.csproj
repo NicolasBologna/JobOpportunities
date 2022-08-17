@@ -35,6 +35,7 @@
   </ItemGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\DataNoSql\JobOpportunities.DataNoSql.csproj" />
     <ProjectReference Include="..\JobOpportunities.Core\JobOpportunities.Core.csproj" />
   </ItemGroup>
 

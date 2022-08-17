@@ -37,6 +37,7 @@ Run:
 * [Audit.NET](https://github.com/thepirat000/Audit.NET)
 * AzureStorageBlobs (Audit.NET.AzureStorageBlobs)
 * Serilog
+* Rabbitmq
 
 ## Layers
 
@@ -55,6 +56,8 @@ Generic Repository
 ### Core
 
 Audit.NET: Track only commands with [AuditLog] attribute.
+
+Auth: Access token + Refresh tokens
 
 ### Domain
 
@@ -80,6 +83,8 @@ Y luego un registro en formato json por cada command con el formato: "{ev.EventT
 
 Serilog está en la pipeline de MediatR y hace un log de cada request con el siguiente formato:
 {RequetsName}: {@User} with request {@Request}
+
+Hay un custom logger puesto en un middleware que mide tiempo de respuestas de cada endpoint
 
 ## Resources
 
