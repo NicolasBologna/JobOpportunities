@@ -1,7 +1,9 @@
 ﻿using JobOpportunities.Data.Identity;
 using JobOpportunities.Domain;
+using JobOpportunities.Domain.Users;
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
+using System.Reflection;
 
 namespace JobOpportunities.Data
 {
@@ -17,6 +19,7 @@ namespace JobOpportunities.Data
         public DbSet<Candidate> Candidates => Set<Candidate>();
         public DbSet<Knowledge> Knowleadges => Set<Knowledge>();
         public DbSet<Skill> Skills => Set<Skill>();
+        public DbSet<RefreshToken> RefreshTokens => Set<RefreshToken>();
 
         public JobOpportunitiesContext(DbContextOptions<JobOpportunitiesContext> options, ICurrentUserService currentUserService)
             : base(options)
@@ -28,6 +31,7 @@ namespace JobOpportunities.Data
         {
             SeedData(builder);
             base.OnModelCreating(builder);
+            builder.ApplyConfigurationsFromAssembly(Assembly.GetExecutingAssembly());
         }
         public override async Task<int> SaveChangesAsync(CancellationToken cancellationToken = default)
         {

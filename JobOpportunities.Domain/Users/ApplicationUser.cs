@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Identity;
+﻿using JobOpportunities.Domain.Users;
+using Microsoft.AspNetCore.Identity;
 
 namespace JobOpportunities.Domain
 {
@@ -9,6 +10,8 @@ namespace JobOpportunities.Domain
             FirstName = firstName;
             LastName = lastName;
         }
+
+        public ICollection<RefreshToken> AccessTokens { get; set; } = new HashSet<RefreshToken>();
 
         public string FirstName { get; set; }
         public string LastName { get; set; }

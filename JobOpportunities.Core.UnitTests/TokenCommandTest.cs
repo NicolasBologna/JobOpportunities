@@ -1,7 +1,9 @@
 ﻿using FluentAssertions;
+using JobOpportunities.Core.Common.Services;
 using JobOpportunities.Core.Exceptions;
 using JobOpportunities.Core.Features.Auth.Commands;
 using JobOpportunities.Domain;
+using JobOpportunities.Domain.Users;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.Extensions.Configuration;
 using Moq;
@@ -25,7 +27,6 @@ namespace JobOpportunities.Core.UnitTests
         public async Task ShouldLoginAndCreateToken()
         {
             var mockUserManager = new Mock<UserManager<ApplicationUser>>(Mock.Of<IUserStore<ApplicationUser>>(), null, null, null, null, null, null, null, null);
-            var mockConfiguration = new Mock<IConfiguration>();
 
             mockUserManager.Setup(x => x.FindByNameAsync(It.IsAny<string>())).ReturnsAsync(new ApplicationUser("TestFirstName", "TestLastName")
             {
@@ -35,11 +36,18 @@ namespace JobOpportunities.Core.UnitTests
             mockUserManager.Setup(x => x.CheckPasswordAsync(It.IsAny<ApplicationUser>(), It.IsAny<string>())).ReturnsAsync(true);
             mockUserManager.Setup(x => x.GetRolesAsync(It.IsAny<ApplicationUser>())).ReturnsAsync(new List<string> { "Admin" });
 
+            var mockConfiguration = new Mock<IConfiguration>();
+
             mockConfiguration.Setup(c => c["Jwt:Issuer"]).Returns("issuer");
             mockConfiguration.Setup(c => c["Jwt:Audience"]).Returns("audience");
             mockConfiguration.Setup(c => c["Jwt:Key"]).Returns("xyqr6qy23vdruyrsvytsjuyd1swk0e4t");
 
-            var tokenCommandHandler = new TokenCommandHandler(mockUserManager.Object, mockConfiguration.Object);
+            var mockAuthService = new Mock<IAuthService>();
+
+            mockAuthService.Setup(authService => authService.GenerateAccessToken(It.IsAny<ApplicationUser>())).ReturnsAsync("token");
+            mockAuthService.Setup(authService => authService.GenerateRefreshToken(It.IsAny<string>())).ReturnsAsync(new RefreshToken());
+
+            var tokenCommandHandler = new TokenCommandHandler(mockUserManager.Object, mockAuthService.Object);
 
             var jobOffer = await tokenCommandHandler.Handle(_tokenCommand, new CancellationToken());
 
@@ -57,7 +65,12 @@ namespace JobOpportunities.Core.UnitTests
 
             mockUserManager.Setup(x => x.FindByNameAsync(It.IsAny<string>())).Returns(Task.FromResult((ApplicationUser)null));
 
-            var tokenCommandHandler = new TokenCommandHandler(mockUserManager.Object, mockConfiguration.Object);
+            var mockAuthService = new Mock<IAuthService>();
+
+            mockAuthService.Setup(authService => authService.GenerateAccessToken(It.IsAny<ApplicationUser>())).ReturnsAsync("token");
+            mockAuthService.Setup(authService => authService.GenerateRefreshToken(It.IsAny<string>())).ReturnsAsync(new RefreshToken());
+
+            var tokenCommandHandler = new TokenCommandHandler(mockUserManager.Object, mockAuthService.Object);
 
             await tokenCommandHandler.Invoking(y => y.Handle(_tokenCommand, new CancellationToken())).Should().ThrowAsync<UnauthorizedException>();
         }
@@ -75,7 +88,14 @@ namespace JobOpportunities.Core.UnitTests
             });
             mockUserManager.Setup(x => x.CheckPasswordAsync(It.IsAny<ApplicationUser>(), It.IsAny<string>())).ReturnsAsync(false);
 
-            var tokenCommandHandler = new TokenCommandHandler(mockUserManager.Object, mockConfiguration.Object);
+
+            var mockAuthService = new Mock<IAuthService>();
+
+            mockAuthService.Setup(authService => authService.GenerateAccessToken(It.IsAny<ApplicationUser>())).ReturnsAsync("token");
+            mockAuthService.Setup(authService => authService.GenerateRefreshToken(It.IsAny<string>())).ReturnsAsync(new RefreshToken());
+
+
+            var tokenCommandHandler = new TokenCommandHandler(mockUserManager.Object, mockAuthService.Object);
 
             await tokenCommandHandler.Invoking(y => y.Handle(_tokenCommand, new CancellationToken())).Should().ThrowAsync<UnauthorizedException>();
         }
