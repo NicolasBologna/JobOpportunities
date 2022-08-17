@@ -22,12 +22,29 @@ namespace JobOpportunities.API.Filters
                 case UnauthorizedException:
                     HandleUnauthorizedException(context);
                     break;
+                case FKNotFoundException notFoundEx:
+                    HandleFKNotFoundException(context, notFoundEx);
+                    break;
                 default:
                     HandleUnknownException(context);
                     break;
             }
 
             base.OnException(context);
+        }
+
+        private void HandleFKNotFoundException(ExceptionContext context, FKNotFoundException exception)
+        {
+            var details = new ProblemDetails()
+            {
+                Type = "https://tools.ietf.org/html/rfc7231#section-6.5.4",
+                Title = "The specified related resource was not found.",
+                Detail = exception.Message
+            };
+
+            context.Result = new NotFoundObjectResult(details);
+
+            context.ExceptionHandled = true;
         }
 
         private void HandleUnauthorizedException(ExceptionContext context)

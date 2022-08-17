@@ -4,6 +4,7 @@ using JobOpportunities.Core.Exceptions;
 using JobOpportunities.Data.GenericRepository;
 using JobOpportunities.Domain;
 using MediatR;
+using Microsoft.EntityFrameworkCore;
 
 namespace JobOpportunities.Core.Features.JobOffers.Commands
 {
@@ -32,13 +33,16 @@ namespace JobOpportunities.Core.Features.JobOffers.Commands
         {
             var newJobOffer = _mapper.Map<JobOffer>(request);
 
-            if (!await _companyRepository.ItemExists(request.CompanyId))
-                throw new NotFoundException();
-
             _jobOfferRepository.Add(newJobOffer);
-            if (!await _jobOfferRepository.SaveAsync(cancellationToken))
+
+            try
             {
-                //What happen if Company Id doesn't exists
+                await _jobOfferRepository.SaveAsync(cancellationToken);
+            }
+            catch (DbUpdateException ex)
+            {
+                if (ex.InnerException.Message.Contains("FOREIGN KEY"))
+                    throw new FKNotFoundException(typeof(Company).Name, request.CompanyId);
             }
 
             return Unit.Value;
