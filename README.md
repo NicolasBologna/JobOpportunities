@@ -6,13 +6,24 @@ Set both projects (API and SPA) as startup projects
 
 ![Startup projects](2022-08-08-16-03-01.png)
 
-Install Windows Azure Storage Emulator
+If you want to use Serilog:
 
-Run:
+1) Install Windows Azure Storage Emulator
+
+2) Run:
 
 ```bash
     AzureStorageEmulator.exe start
 ```
+
+3) set:
+
+```json
+    "AuditLogs": {
+    "Enabled": true}
+```
+
+in appsettings.json
 
 ## Steps to set up the database
 
@@ -86,7 +97,35 @@ Serilog está en la pipeline de MediatR y hace un log de cada request con el sig
 
 Hay un custom logger puesto en un middleware que mide tiempo de respuestas de cada endpoint
 
+## Queues and workers
+
+### Enable RabbitMQ Management Plugin
+
+Go to the directory where the RabbitMQ is installed.
+
+Now, enable the rabbitmq_management plugin using the rabbitmq-plugins command as shown below.
+
+```bash
+sbin/rabbitmq-plugins enable rabbitmq_management
+```
+
+After enabling the rabbitmq_management plugin you should restart the RabbitMQ server as shown below.
+
+```bash
+sbin/rabbitmqctl stop
+
+sbin/rabbitmq-server -detached
+```
+
+By default the management plugin runs on 15672 HTTP port.
+
+From your browser go to <http://localhost:15672>
+
+The default username and password for RabbitMQ management plugin is: **guest**
+
 ## Resources
+
+:bulb: **Tip:** Some resources are in Spanish
 
 ### Inspired by
 
@@ -97,6 +136,11 @@ Hay un custom logger puesto en un middleware que mide tiempo de respuestas de ca
 * [Angular 13 Fundamentals](https://frontendmasters.com/courses/angular-13/) by Lukas Ruebbelke
 * [Angular dark mode](https://zoaibkhan.com/blog/angular-material-dark-mode-in-3-steps) by Zoaib Khan
 * [JWT Authentication](https://www.codemag.com/Article/2105051/Implementing-JWT-Authentication-in-ASP.NET-Core-5) by Joydip Kanjilal
+* [RabbitMQ tutorials](https://www.rabbitmq.com/tutorials/tutorial-one-dotnet.html)
+* [rabbitmq data serialisation](https://dotnetcodr.com/2014/06/05/rabbitmq-in-net-data-serialisation/) by Andras Nemes
+* [Graphql doc](https://graphql-dotnet.github.io/docs)
+* [Net 5 api with graphql](https://dev.to/moe23/net-5-api-with-graphql-step-by-step-2b20) by Mohamad Lawand
+* [Using dapper with asp net](https://code-maze.com/using-dapper-with-asp-net-core-web-api/) by Marinko Spasojevic
   
 ### Pending
 
@@ -111,12 +155,14 @@ Hay un custom logger puesto en un middleware que mide tiempo de respuestas de ca
 ### References
 
 * [CQRS](https://garywoodfine.com/what-is-cqrs/) by Gary Woodfine
+* [ASP.NET + rabbitmq](https://hamedfathi.me/a-professional-asp.net-core-api-rabbitmq/)
 
 ### To read
 
 * [Middleware vs Filters](https://www.thetechplatform.com/post/middleware-and-filters-power-in-asp-net-core)
 * [Interesting article about extension methods](https://weblogs.asp.net/scottgu/new-orcas-language-feature-extension-methods)
 * [OpenID (OpenID Connect (OIDC)), OAuth 2.0](https://dev.to/isaacojeda/aspnet-core-servidor-de-autenticacion-con-openid-connect-59kh)
+* [Dapper Migrations with Fluentmigrator in Aspnetcore](https://code-maze.com/dapper-migrations-fluentmigrator-aspnetcore/)
 
 ### To watch
 
