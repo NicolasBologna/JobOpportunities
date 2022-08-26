@@ -125,7 +125,7 @@ The default username and password for RabbitMQ management plugin is: **guest**
 
 ## Resources
 
-:bulb: **Tip:** Some resources are in Spanish
+:bulb: **Notice:** Some resources are in Spanish
 
 ### Inspired by
 
@@ -163,7 +163,13 @@ The default username and password for RabbitMQ management plugin is: **guest**
 * [Interesting article about extension methods](https://weblogs.asp.net/scottgu/new-orcas-language-feature-extension-methods)
 * [OpenID (OpenID Connect (OIDC)), OAuth 2.0](https://dev.to/isaacojeda/aspnet-core-servidor-de-autenticacion-con-openid-connect-59kh)
 * [Dapper Migrations with Fluentmigrator in Aspnetcore](https://code-maze.com/dapper-migrations-fluentmigrator-aspnetcore/)
+* [Error Handling](https://code-maze.com/global-error-handling-aspnetcore/)
+* [GUID as clustering key](https://stackoverflow.com/questions/20463798/uniqueidentifier-vs-identity-vs-material-code-which-is-the-best-choice-for-p)
 
 ### To watch
 
 [![You are doing .NET logging wrong](https://img.youtube.com/vi/bnVfrd3lRv8/0.jpg)](https://www.youtube.com/watch?v=bnVfrd3lRv8)
+
+### Tools
+
+[DBeaver](https://dbeaver.io/)
