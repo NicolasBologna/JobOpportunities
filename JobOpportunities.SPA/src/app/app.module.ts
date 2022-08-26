@@ -11,6 +11,7 @@ import { JobOffersComponent } from './jobOffers/jobOffers.component';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { JobOffersListComponent } from './jobOffers/jobOffers-list/jobOffers-list.component';
 import { JobOfferDetailsComponent } from './jobOffers/jobOffer-details/jobOffer-details.component';
+import { KnowledgeComponent } from './knowledge/knowledge.component';
 
 @NgModule({
   imports: [
@@ -28,6 +29,7 @@ import { JobOfferDetailsComponent } from './jobOffers/jobOffer-details/jobOffer-
     JobOffersComponent,
     JobOffersListComponent,
     JobOfferDetailsComponent,
+    KnowledgeComponent,
   ],
   providers: [],
   bootstrap: [AppComponent],

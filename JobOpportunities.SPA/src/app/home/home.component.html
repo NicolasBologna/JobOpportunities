@@ -1,15 +1,6 @@
-<mat-card>
-  <mat-card-header>
-    <mat-card-title> jobOffer Outline </mat-card-title>
-  </mat-card-header>
-  <mat-card-content>
-    <mat-list>
-      <mat-list-item *ngFor="let lesson of jobOfferLessons" (click)="selectLesson(lesson)">
-        <h3 matLine>{{ lesson.title | titlecase }}</h3>
-        <button mat-icon-button color="warn" (click)="deleteLesson(lesson); $event.stopImmediatePropagation() ">
-          <mat-icon>delete</mat-icon>
-        </button>
-      </mat-list-item>
-    </mat-list>
-  </mat-card-content>
-</mat-card>
+<mat-grid-list cols="4" rowHeight="100px" gutterSize="10px">
+  <mat-grid-tile *ngFor="let tile of tiles" [colspan]="tile.cols" [rowspan]="tile.rows" [style.background]="tile.color"
+    class="clickable-tile" [routerLink]="tile.path">
+    {{tile.text | uppercase}}
+  </mat-grid-tile>
+</mat-grid-list>
