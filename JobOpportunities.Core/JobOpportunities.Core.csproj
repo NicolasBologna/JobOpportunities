@@ -1,5 +1,10 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
-
+	<PropertyGroup>
+		<TargetFramework>net6.0</TargetFramework>
+		<ImplicitUsings>enable</ImplicitUsings>
+		<Nullable>enable</Nullable>
+	</PropertyGroup>
+	
 	<ItemGroup>
         <PackageReference Include="Audit.NET" Version="19.2.1" />
         <PackageReference Include="Audit.NET.AzureStorageBlobs" Version="19.2.1" />
@@ -17,10 +22,6 @@
 	  <Folder Include="Helpers\" />
 	  <Folder Include="Adapters\" />
 	</ItemGroup>
-  <PropertyGroup>
-    <TargetFramework>net6.0</TargetFramework>
-    <ImplicitUsings>enable</ImplicitUsings>
-    <Nullable>enable</Nullable>
-  </PropertyGroup>
+
 
 </Project>
