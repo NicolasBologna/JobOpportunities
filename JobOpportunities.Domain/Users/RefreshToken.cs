@@ -2,7 +2,7 @@
 {
     public class RefreshToken : EntityBase
     {
-        public RefreshToken(ApplicationUser user, string userId, Guid refreshTokenValue)
+        public RefreshToken(ApplicationUser user, Guid userId, Guid refreshTokenValue)
         {
             User = user;
             UserId = userId;
@@ -19,6 +19,6 @@
         public DateTime Expiration { get; set; }
         public bool Used { get; set; }
         public ApplicationUser User { get; set; }
-        public string UserId { get; set; }
+        public Guid UserId { get; set; }
     }
 }
