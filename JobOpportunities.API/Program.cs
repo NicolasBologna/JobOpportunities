@@ -4,6 +4,7 @@ using JobOpportunities.Core;
 using JobOpportunities.Data;
 using JobOpportunities.DataNoSql;
 using JobOpportunities.Domain;
+using JobOpportunities.Domain.Users;
 using Microsoft.AspNetCore.Identity;
 using MongoDB.Driver;
 using Serilog;
@@ -80,7 +81,7 @@ async Task SeedData()
 
     var context = scope.ServiceProvider.GetRequiredService<JobOpportunitiesContext>();
     var userManager = scope.ServiceProvider.GetRequiredService<UserManager<ApplicationUser>>();
-    var roleManager = scope.ServiceProvider.GetRequiredService<RoleManager<IdentityRole>>();
+    var roleManager = scope.ServiceProvider.GetRequiredService<RoleManager<IdentityRole<Guid>>>();
     var logger = scope.ServiceProvider.GetRequiredService<ILogger<Program>>();
 
     context.Database.EnsureCreated();
@@ -89,18 +90,18 @@ async Task SeedData()
     {
         logger.LogInformation("Creando usuario de prueba");
 
-        var newUser = new ApplicationUser("Test", "User")
+        var newUser = new Admin("Test", "User")
         {
             Email = "test@demo.com",
             UserName = "test.demo"
         };
 
         await userManager.CreateAsync(newUser, "P@ss.W0rd");
-        await roleManager.CreateAsync(new IdentityRole
+        await roleManager.CreateAsync(new IdentityRole<Guid>
         {
             Name = "Admin"
         });
-        await roleManager.CreateAsync(new IdentityRole
+        await roleManager.CreateAsync(new IdentityRole<Guid>
         {
             Name = "AnotherRole"
         });

@@ -1,9 +1,15 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
+	
 	<PropertyGroup>
 		<TargetFramework>net6.0</TargetFramework>
 		<ImplicitUsings>enable</ImplicitUsings>
 		<Nullable>enable</Nullable>
 	</PropertyGroup>
+
+	<ItemGroup>
+		<Folder Include="Helpers\" />
+		<Folder Include="Adapters\" />
+	</ItemGroup>
 	
 	<ItemGroup>
         <PackageReference Include="Audit.NET" Version="19.2.1" />
@@ -17,11 +23,4 @@
 	  <ProjectReference Include="..\JobOpportunities.Data\JobOpportunities.Data.csproj" />
 	  <ProjectReference Include="..\JobOpportunities.Domain\JobOpportunities.Domain.csproj" />
 	</ItemGroup>
-
-	<ItemGroup>
-	  <Folder Include="Helpers\" />
-	  <Folder Include="Adapters\" />
-	</ItemGroup>
-
-
 </Project>

@@ -1,6 +1,7 @@
 ﻿using JobOpportunities.Core.Exceptions;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Filters;
+using System;
 
 namespace JobOpportunities.API.Filters
 {
@@ -25,12 +26,30 @@ namespace JobOpportunities.API.Filters
                 case FKNotFoundException notFoundEx:
                     HandleFKNotFoundException(context, notFoundEx);
                     break;
+                case IdentityErrorException identityEx:
+                    HandleIdentityErrorException(context, identityEx);
+                    break;
                 default:
                     HandleUnknownException(context);
                     break;
             }
 
             base.OnException(context);
+        }
+
+        private void HandleIdentityErrorException(ExceptionContext context, IdentityErrorException identityEx)
+        {
+            IDictionary<string, string[]> errors = new Dictionary<string, string[]>();
+
+            errors.Add("User Errors: ", identityEx.Errors.Select(e => e.Description).ToArray());
+            var details = new HttpValidationProblemDetails(errors)
+            {
+                Type = "https://tools.ietf.org/html/rfc7231#section-6.5.1"
+            };
+
+            context.Result = new BadRequestObjectResult(details);
+
+            context.ExceptionHandled = true;
         }
 
         private void HandleFKNotFoundException(ExceptionContext context, FKNotFoundException exception)

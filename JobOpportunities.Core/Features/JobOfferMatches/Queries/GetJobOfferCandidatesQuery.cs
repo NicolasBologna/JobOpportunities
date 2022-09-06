@@ -2,7 +2,7 @@
 using JobOpportunities.Core.Exceptions;
 using JobOpportunities.Core.Features.JobOfferMatches.Models;
 using JobOpportunities.Data.GenericRepository;
-using JobOpportunities.Data.SpecificRepositories;
+using JobOpportunities.Data.SpecificRepositories.Abstractions;
 using JobOpportunities.Domain;
 using MediatR;
 

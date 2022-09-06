@@ -27,7 +27,7 @@ public class AuthService : IAuthService
     {
         var claims = new List<Claim>
         {
-            new Claim(ClaimTypes.Sid, user.Id),
+            new Claim(ClaimTypes.Sid, user.Id.ToString()),
             new Claim(ClaimTypes.Name, user.UserName)
         };
 
@@ -50,7 +50,7 @@ public class AuthService : IAuthService
         return new JwtSecurityTokenHandler().WriteToken(tokenDescriptor);
     }
 
-    public async Task<RefreshToken> GenerateRefreshToken(string userId)
+    public async Task<RefreshToken> GenerateRefreshToken(Guid userId)
     {
 
         var newRefreshToken = new RefreshToken
@@ -59,7 +59,7 @@ public class AuthService : IAuthService
             Expiration = DateTime.UtcNow.AddDays(7),
             RefreshTokenValue = Guid.NewGuid(),
             Used = false,
-            UserId = userId
+            UserId = userId,
         };
 
         _refreshTokenRepository.Add(newRefreshToken);

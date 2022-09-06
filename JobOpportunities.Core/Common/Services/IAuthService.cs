@@ -7,6 +7,6 @@ namespace JobOpportunities.Core.Common.Services
     {
         Task<string> GenerateAccessToken(ApplicationUser user);
 
-        Task<RefreshToken> GenerateRefreshToken(string userId);
+        Task<RefreshToken> GenerateRefreshToken(Guid userId);
     }
 }

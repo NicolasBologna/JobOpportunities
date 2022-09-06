@@ -1,7 +1,11 @@
 ﻿using FluentValidation.AspNetCore;
 using JobOpportunities.API.Filters;
+using JobOpportunities.Data;
+using JobOpportunities.Domain;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.Extensions.DependencyInjection;
 using Microsoft.IdentityModel.Tokens;
 using Microsoft.OpenApi.Models;
 using System.Text;
@@ -47,6 +51,14 @@ public static class DependencyInjection
         services.AddEndpointsApiExplorer();
 
 
+        services.AddIdentity<ApplicationUser, IdentityRole<Guid>>(opt =>
+             {
+                 opt.Password.RequiredLength = 6;
+                 opt.Password.RequireDigit = false;
+                 opt.Password.RequireUppercase = false;
+                 opt.User.RequireUniqueEmail = true;
+             })
+            .AddEntityFrameworkStores<JobOpportunitiesContext>();
 
         return services;
     }

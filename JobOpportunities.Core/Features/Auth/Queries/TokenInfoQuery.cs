@@ -16,7 +16,7 @@ namespace JobOpportunities.Core.Features.Auth.Queries
         {
             _contextAccessor = contextAccessor;
         }
-        public async Task<TokenInfoQueryResponse> Handle(TokenInfoQuery request, CancellationToken cancellationToken)
+        public Task<TokenInfoQueryResponse> Handle(TokenInfoQuery request, CancellationToken cancellationToken)
         {
             var user = _contextAccessor.HttpContext!.User;
 
@@ -35,7 +35,7 @@ namespace JobOpportunities.Core.Features.Auth.Queries
                 user.Identity.AuthenticationType
             };
 
-            return new TokenInfoQueryResponse { Claims = claims };
+            return Task.FromResult(new TokenInfoQueryResponse { Claims = claims });
         }
     }
 }
