@@ -28,10 +28,10 @@ namespace JobOpportunities.Core.UnitTests
         {
             var mockUserManager = new Mock<UserManager<ApplicationUser>>(Mock.Of<IUserStore<ApplicationUser>>(), null, null, null, null, null, null, null, null);
 
-            mockUserManager.Setup(x => x.FindByNameAsync(It.IsAny<string>())).ReturnsAsync(new ApplicationUser("TestFirstName", "TestLastName")
+            mockUserManager.Setup(x => x.FindByNameAsync(It.IsAny<string>())).ReturnsAsync(new Candidate("TestFirstName", "TestLastName")
             {
                 UserName = "MyUserName",
-                Id = "asdasdasd-21345-f2f24f42-424244",
+                Id = new Guid("asdasdasd-21345-f2f24f42-424244"),
             });
             mockUserManager.Setup(x => x.CheckPasswordAsync(It.IsAny<ApplicationUser>(), It.IsAny<string>())).ReturnsAsync(true);
             mockUserManager.Setup(x => x.GetRolesAsync(It.IsAny<ApplicationUser>())).ReturnsAsync(new List<string> { "Admin" });
@@ -45,7 +45,7 @@ namespace JobOpportunities.Core.UnitTests
             var mockAuthService = new Mock<IAuthService>();
 
             mockAuthService.Setup(authService => authService.GenerateAccessToken(It.IsAny<ApplicationUser>())).ReturnsAsync("token");
-            mockAuthService.Setup(authService => authService.GenerateRefreshToken(It.IsAny<string>())).ReturnsAsync(new RefreshToken());
+            mockAuthService.Setup(authService => authService.GenerateRefreshToken(It.IsAny<Guid>())).ReturnsAsync(new RefreshToken());
 
             var tokenCommandHandler = new TokenCommandHandler(mockUserManager.Object, mockAuthService.Object);
 
@@ -68,7 +68,7 @@ namespace JobOpportunities.Core.UnitTests
             var mockAuthService = new Mock<IAuthService>();
 
             mockAuthService.Setup(authService => authService.GenerateAccessToken(It.IsAny<ApplicationUser>())).ReturnsAsync("token");
-            mockAuthService.Setup(authService => authService.GenerateRefreshToken(It.IsAny<string>())).ReturnsAsync(new RefreshToken());
+            mockAuthService.Setup(authService => authService.GenerateRefreshToken(It.IsAny<Guid>())).ReturnsAsync(new RefreshToken());
 
             var tokenCommandHandler = new TokenCommandHandler(mockUserManager.Object, mockAuthService.Object);
 
@@ -81,10 +81,10 @@ namespace JobOpportunities.Core.UnitTests
             var mockUserManager = new Mock<UserManager<ApplicationUser>>(Mock.Of<IUserStore<ApplicationUser>>(), null, null, null, null, null, null, null, null);
             var mockConfiguration = new Mock<IConfiguration>();
 
-            mockUserManager.Setup(x => x.FindByNameAsync(It.IsAny<string>())).ReturnsAsync(new ApplicationUser("TestFirstName", "TestLastName")
+            mockUserManager.Setup(x => x.FindByNameAsync(It.IsAny<string>())).ReturnsAsync(new Candidate("TestFirstName", "TestLastName")
             {
                 UserName = "MyUserName",
-                Id = "asdasdasd-21345-f2f24f42-424244",
+                Id = new Guid("asdasdasd-21345-f2f24f42-424244"),
             });
             mockUserManager.Setup(x => x.CheckPasswordAsync(It.IsAny<ApplicationUser>(), It.IsAny<string>())).ReturnsAsync(false);
 
@@ -92,7 +92,7 @@ namespace JobOpportunities.Core.UnitTests
             var mockAuthService = new Mock<IAuthService>();
 
             mockAuthService.Setup(authService => authService.GenerateAccessToken(It.IsAny<ApplicationUser>())).ReturnsAsync("token");
-            mockAuthService.Setup(authService => authService.GenerateRefreshToken(It.IsAny<string>())).ReturnsAsync(new RefreshToken());
+            mockAuthService.Setup(authService => authService.GenerateRefreshToken(It.IsAny<Guid>())).ReturnsAsync(new RefreshToken());
 
 
             var tokenCommandHandler = new TokenCommandHandler(mockUserManager.Object, mockAuthService.Object);
