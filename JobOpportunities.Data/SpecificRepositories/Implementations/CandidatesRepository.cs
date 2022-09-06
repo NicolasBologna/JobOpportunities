@@ -1,4 +1,5 @@
-﻿using JobOpportunities.Domain;
+﻿using JobOpportunities.Data.SpecificRepositories.Abstractions;
+using JobOpportunities.Domain;
 
 namespace JobOpportunities.Data.SpecificRepositories
 {

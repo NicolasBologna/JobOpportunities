@@ -5,7 +5,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 
 namespace JobOpportunities.Data.Migrations
 {
-    public partial class InitAndAddIdentity : Migration
+    public partial class Test : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
@@ -13,7 +13,7 @@ namespace JobOpportunities.Data.Migrations
                 name: "AspNetRoles",
                 columns: table => new
                 {
-                    Id = table.Column<string>(type: "nvarchar(450)", nullable: false),
+                    Id = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
                     Name = table.Column<string>(type: "nvarchar(256)", maxLength: 256, nullable: true),
                     NormalizedName = table.Column<string>(type: "nvarchar(256)", maxLength: 256, nullable: true),
                     ConcurrencyStamp = table.Column<string>(type: "nvarchar(max)", nullable: true)
@@ -27,13 +27,15 @@ namespace JobOpportunities.Data.Migrations
                 name: "AspNetUsers",
                 columns: table => new
                 {
-                    Id = table.Column<string>(type: "nvarchar(450)", nullable: false),
+                    Id = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
                     FirstName = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     LastName = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    Email = table.Column<string>(type: "nvarchar(256)", maxLength: 256, nullable: false),
                     Discriminator = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    Cuil = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    Cuit = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     UserName = table.Column<string>(type: "nvarchar(256)", maxLength: 256, nullable: true),
                     NormalizedUserName = table.Column<string>(type: "nvarchar(256)", maxLength: 256, nullable: true),
+                    Email = table.Column<string>(type: "nvarchar(256)", maxLength: 256, nullable: true),
                     NormalizedEmail = table.Column<string>(type: "nvarchar(256)", maxLength: 256, nullable: true),
                     EmailConfirmed = table.Column<bool>(type: "bit", nullable: false),
                     PasswordHash = table.Column<string>(type: "nvarchar(max)", nullable: true),
@@ -52,29 +54,16 @@ namespace JobOpportunities.Data.Migrations
                 });
 
             migrationBuilder.CreateTable(
-                name: "Companies",
-                columns: table => new
-                {
-                    Id = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
-                    Name = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    Email = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    CreationDate = table.Column<DateTime>(type: "datetime2", nullable: false),
-                    LastUpdate = table.Column<DateTime>(type: "datetime2", nullable: true)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_Companies", x => x.Id);
-                });
-
-            migrationBuilder.CreateTable(
                 name: "Knowleadges",
                 columns: table => new
                 {
                     Id = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
                     Title = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     Description = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    CreationDate = table.Column<DateTime>(type: "datetime2", nullable: false),
-                    LastUpdate = table.Column<DateTime>(type: "datetime2", nullable: true)
+                    CreatedAt = table.Column<DateTime>(type: "datetime2", nullable: true),
+                    CreatedBy = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    LastModifiedByAt = table.Column<DateTime>(type: "datetime2", nullable: true),
+                    LastModifiedBy = table.Column<string>(type: "nvarchar(max)", nullable: true)
                 },
                 constraints: table =>
                 {
@@ -88,8 +77,10 @@ namespace JobOpportunities.Data.Migrations
                     Id = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
                     Name = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     Description = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    CreationDate = table.Column<DateTime>(type: "datetime2", nullable: false),
-                    LastUpdate = table.Column<DateTime>(type: "datetime2", nullable: true)
+                    CreatedAt = table.Column<DateTime>(type: "datetime2", nullable: true),
+                    CreatedBy = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    LastModifiedByAt = table.Column<DateTime>(type: "datetime2", nullable: true),
+                    LastModifiedBy = table.Column<string>(type: "nvarchar(max)", nullable: true)
                 },
                 constraints: table =>
                 {
@@ -102,7 +93,7 @@ namespace JobOpportunities.Data.Migrations
                 {
                     Id = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
-                    RoleId = table.Column<string>(type: "nvarchar(450)", nullable: false),
+                    RoleId = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
                     ClaimType = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     ClaimValue = table.Column<string>(type: "nvarchar(max)", nullable: true)
                 },
@@ -123,7 +114,7 @@ namespace JobOpportunities.Data.Migrations
                 {
                     Id = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
-                    UserId = table.Column<string>(type: "nvarchar(450)", nullable: false),
+                    UserId = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
                     ClaimType = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     ClaimValue = table.Column<string>(type: "nvarchar(max)", nullable: true)
                 },
@@ -142,10 +133,10 @@ namespace JobOpportunities.Data.Migrations
                 name: "AspNetUserLogins",
                 columns: table => new
                 {
-                    LoginProvider = table.Column<string>(type: "nvarchar(450)", nullable: false),
-                    ProviderKey = table.Column<string>(type: "nvarchar(450)", nullable: false),
+                    LoginProvider = table.Column<string>(type: "nvarchar(128)", maxLength: 128, nullable: false),
+                    ProviderKey = table.Column<string>(type: "nvarchar(128)", maxLength: 128, nullable: false),
                     ProviderDisplayName = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    UserId = table.Column<string>(type: "nvarchar(450)", nullable: false)
+                    UserId = table.Column<Guid>(type: "uniqueidentifier", nullable: false)
                 },
                 constraints: table =>
                 {
@@ -162,8 +153,8 @@ namespace JobOpportunities.Data.Migrations
                 name: "AspNetUserRoles",
                 columns: table => new
                 {
-                    UserId = table.Column<string>(type: "nvarchar(450)", nullable: false),
-                    RoleId = table.Column<string>(type: "nvarchar(450)", nullable: false)
+                    UserId = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
+                    RoleId = table.Column<Guid>(type: "uniqueidentifier", nullable: false)
                 },
                 constraints: table =>
                 {
@@ -186,9 +177,9 @@ namespace JobOpportunities.Data.Migrations
                 name: "AspNetUserTokens",
                 columns: table => new
                 {
-                    UserId = table.Column<string>(type: "nvarchar(450)", nullable: false),
-                    LoginProvider = table.Column<string>(type: "nvarchar(450)", nullable: false),
-                    Name = table.Column<string>(type: "nvarchar(450)", nullable: false),
+                    UserId = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
+                    LoginProvider = table.Column<string>(type: "nvarchar(128)", maxLength: 128, nullable: false),
+                    Name = table.Column<string>(type: "nvarchar(128)", maxLength: 128, nullable: false),
                     Value = table.Column<string>(type: "nvarchar(max)", nullable: true)
                 },
                 constraints: table =>
@@ -212,16 +203,45 @@ namespace JobOpportunities.Data.Migrations
                     ValidUntil = table.Column<DateTime>(type: "datetime2", nullable: false),
                     CompanyId = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
                     Discriminator = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    CreationDate = table.Column<DateTime>(type: "datetime2", nullable: false),
-                    LastUpdate = table.Column<DateTime>(type: "datetime2", nullable: true)
+                    CreatedAt = table.Column<DateTime>(type: "datetime2", nullable: true),
+                    CreatedBy = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    LastModifiedByAt = table.Column<DateTime>(type: "datetime2", nullable: true),
+                    LastModifiedBy = table.Column<string>(type: "nvarchar(max)", nullable: true)
                 },
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_JobOffers", x => x.Id);
                     table.ForeignKey(
-                        name: "FK_JobOffers_Companies_CompanyId",
+                        name: "FK_JobOffers_AspNetUsers_CompanyId",
                         column: x => x.CompanyId,
-                        principalTable: "Companies",
+                        principalTable: "AspNetUsers",
+                        principalColumn: "Id");
+                });
+
+            migrationBuilder.CreateTable(
+                name: "RefreshTokens",
+                columns: table => new
+                {
+                    RefreshTokenId = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    RefreshTokenValue = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
+                    Active = table.Column<bool>(type: "bit", nullable: false),
+                    Expiration = table.Column<DateTime>(type: "datetime2", nullable: false),
+                    Used = table.Column<bool>(type: "bit", nullable: false),
+                    UserId = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
+                    Id = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
+                    CreatedAt = table.Column<DateTime>(type: "datetime2", nullable: true),
+                    CreatedBy = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    LastModifiedByAt = table.Column<DateTime>(type: "datetime2", nullable: true),
+                    LastModifiedBy = table.Column<string>(type: "nvarchar(max)", nullable: true)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_RefreshTokens", x => x.RefreshTokenId);
+                    table.ForeignKey(
+                        name: "FK_RefreshTokens_AspNetUsers_UserId",
+                        column: x => x.UserId,
+                        principalTable: "AspNetUsers",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
                 });
@@ -233,8 +253,10 @@ namespace JobOpportunities.Data.Migrations
                     Id = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
                     KnowleadgeId = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
                     SkillLevelId = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
-                    CreationDate = table.Column<DateTime>(type: "datetime2", nullable: false),
-                    LastUpdate = table.Column<DateTime>(type: "datetime2", nullable: true)
+                    CreatedAt = table.Column<DateTime>(type: "datetime2", nullable: true),
+                    CreatedBy = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    LastModifiedByAt = table.Column<DateTime>(type: "datetime2", nullable: true),
+                    LastModifiedBy = table.Column<string>(type: "nvarchar(max)", nullable: true)
                 },
                 constraints: table =>
                 {
@@ -257,12 +279,12 @@ namespace JobOpportunities.Data.Migrations
                 name: "CandidateJobOffer",
                 columns: table => new
                 {
-                    CandidatesId = table.Column<string>(type: "nvarchar(450)", nullable: false),
-                    OffersAppliedId = table.Column<Guid>(type: "uniqueidentifier", nullable: false)
+                    CandidatesId = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
+                    JobOfferApplicationsId = table.Column<Guid>(type: "uniqueidentifier", nullable: false)
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_CandidateJobOffer", x => new { x.CandidatesId, x.OffersAppliedId });
+                    table.PrimaryKey("PK_CandidateJobOffer", x => new { x.CandidatesId, x.JobOfferApplicationsId });
                     table.ForeignKey(
                         name: "FK_CandidateJobOffer_AspNetUsers_CandidatesId",
                         column: x => x.CandidatesId,
@@ -270,8 +292,8 @@ namespace JobOpportunities.Data.Migrations
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
                     table.ForeignKey(
-                        name: "FK_CandidateJobOffer_JobOffers_OffersAppliedId",
-                        column: x => x.OffersAppliedId,
+                        name: "FK_CandidateJobOffer_JobOffers_JobOfferApplicationsId",
+                        column: x => x.JobOfferApplicationsId,
                         principalTable: "JobOffers",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
@@ -281,7 +303,7 @@ namespace JobOpportunities.Data.Migrations
                 name: "CandidateSkill",
                 columns: table => new
                 {
-                    CandidatesId = table.Column<string>(type: "nvarchar(450)", nullable: false),
+                    CandidatesId = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
                     SkillsId = table.Column<Guid>(type: "uniqueidentifier", nullable: false)
                 },
                 constraints: table =>
@@ -327,60 +349,69 @@ namespace JobOpportunities.Data.Migrations
 
             migrationBuilder.InsertData(
                 table: "AspNetUsers",
-                columns: new[] { "Id", "AccessFailedCount", "ConcurrencyStamp", "Discriminator", "Email", "EmailConfirmed", "FirstName", "LastName", "LockoutEnabled", "LockoutEnd", "NormalizedEmail", "NormalizedUserName", "PasswordHash", "PhoneNumber", "PhoneNumberConfirmed", "SecurityStamp", "TwoFactorEnabled", "UserName" },
+                columns: new[] { "Id", "AccessFailedCount", "ConcurrencyStamp", "Cuil", "Discriminator", "Email", "EmailConfirmed", "FirstName", "LastName", "LockoutEnabled", "LockoutEnd", "NormalizedEmail", "NormalizedUserName", "PasswordHash", "PhoneNumber", "PhoneNumberConfirmed", "SecurityStamp", "TwoFactorEnabled", "UserName" },
                 values: new object[,]
                 {
-                    { "f29d1608-f324-4432-8e44-5ee320909b9d", 0, "89fd39fd-e04e-46cf-90aa-bb48a2513d46", "Candidate", "marcelo@endava.com", false, "Marcelo", "Reynoso", false, null, null, null, "320909b967uythgfd@434$%&", null, false, "0483801c-6bf9-4129-bab9-4e56a0fc6b2d", false, "MarceloReynoso" },
-                    { "f47890b6-a3ce-4057-94a9-af862d2c01de", 0, "66f946b4-b63f-4f38-9514-ef3384f7683f", "Candidate", "pepito@endava.com", false, "Pepito", "Juarez", false, null, null, null, "123456UltraSecure", null, false, "e3f89708-86e5-42f0-bf3b-34e5bb42b940", false, "PepitoJuarez" }
+                    { new Guid("f29d1608-f324-4432-8e44-5ee320909b9d"), 0, "8c1373b0-88f2-4197-97d2-b3df48f58833", "20-65723443-3", "Candidate", "marcelo@endava.com", false, "Marcelo", "Reynoso", false, null, null, null, "320909b967uythgfd@434$%&", null, false, null, false, "MarceloReynoso" },
+                    { new Guid("f47890b6-a3ce-4057-94a9-af862d2c01de"), 0, "d8d80dd5-d0ce-4b89-9034-547eb614ddf6", "20-45323443-3", "Candidate", "pepito@endava.com", false, "Pepito", "Juarez", false, null, null, null, "123456UltraSecure", null, false, null, false, "PepitoJuarez" }
                 });
 
             migrationBuilder.InsertData(
-                table: "Companies",
-                columns: new[] { "Id", "CreationDate", "Email", "LastUpdate", "Name" },
-                values: new object[] { new Guid("9ee1f9a2-201a-4351-abc1-c056932a1165"), new DateTime(2022, 8, 8, 17, 21, 57, 706, DateTimeKind.Local).AddTicks(7611), "company@endava.com", null, "Endava" });
+                table: "AspNetUsers",
+                columns: new[] { "Id", "AccessFailedCount", "ConcurrencyStamp", "Cuit", "Discriminator", "Email", "EmailConfirmed", "FirstName", "LastName", "LockoutEnabled", "LockoutEnd", "NormalizedEmail", "NormalizedUserName", "PasswordHash", "PhoneNumber", "PhoneNumberConfirmed", "SecurityStamp", "TwoFactorEnabled", "UserName" },
+                values: new object[] { new Guid("1b1d13dd-afb4-474f-a60a-bf6ab3474898"), 0, "4d0d8229-6fa2-4812-a9a6-2d51b18045c1", "34-523445345-4", "CompanyAgent", null, false, "José María", "endava", false, null, null, null, null, null, false, null, false, null });
 
             migrationBuilder.InsertData(
                 table: "Knowleadges",
-                columns: new[] { "Id", "CreationDate", "Description", "LastUpdate", "Title" },
+                columns: new[] { "Id", "CreatedAt", "CreatedBy", "Description", "LastModifiedBy", "LastModifiedByAt", "Title" },
                 values: new object[,]
                 {
-                    { new Guid("3f374542-7711-4581-80c3-6f1a0a7c1105"), new DateTime(2022, 8, 8, 17, 21, 57, 706, DateTimeKind.Local).AddTicks(7565), "Versión 13", null, "Angular" },
-                    { new Guid("b20501eb-5f36-4ed4-96ac-cf32817dce06"), new DateTime(2022, 8, 8, 17, 21, 57, 706, DateTimeKind.Local).AddTicks(7555), "Versión 6 + todo el ecosistema", null, ".NET" }
+                    { new Guid("3f374542-7711-4581-80c3-6f1a0a7c1105"), null, null, "Versión 13", null, null, "Angular" },
+                    { new Guid("b20501eb-5f36-4ed4-96ac-cf32817dce06"), null, null, "Versión 6 + todo el ecosistema", null, null, ".NET" }
                 });
 
             migrationBuilder.InsertData(
                 table: "SkillLevels",
-                columns: new[] { "Id", "CreationDate", "Description", "LastUpdate", "Name" },
+                columns: new[] { "Id", "CreatedAt", "CreatedBy", "Description", "LastModifiedBy", "LastModifiedByAt", "Name" },
                 values: new object[,]
                 {
-                    { new Guid("248b45b9-bf4a-4815-844d-ec02daaeb638"), new DateTime(2022, 8, 8, 17, 21, 57, 706, DateTimeKind.Local).AddTicks(7543), "higher skills required, but less responsabilities", null, "Semi-Senior" },
-                    { new Guid("78867f5c-44fb-470d-9946-3da97e6ae2a7"), new DateTime(2022, 8, 8, 17, 21, 57, 706, DateTimeKind.Local).AddTicks(7514), "Lower skills required", null, "Intern" },
-                    { new Guid("a9be5506-3f5e-403a-b113-73fba517f3c6"), new DateTime(2022, 8, 8, 17, 21, 57, 706, DateTimeKind.Local).AddTicks(7535), "Lower skills required, but can finish some tasks", null, "Junior" }
+                    { new Guid("248b45b9-bf4a-4815-844d-ec02daaeb638"), null, null, "higher skills required, but less responsabilities", null, null, "Semi-Senior" },
+                    { new Guid("78867f5c-44fb-470d-9946-3da97e6ae2a7"), null, null, "Lower skills required", null, null, "Intern" },
+                    { new Guid("a9be5506-3f5e-403a-b113-73fba517f3c6"), null, null, "Lower skills required, but can finish some tasks", null, null, "Junior" }
                 });
 
             migrationBuilder.InsertData(
                 table: "JobOffers",
-                columns: new[] { "Id", "CompanyId", "CreationDate", "Description", "Discriminator", "LastUpdate", "Title", "ValidUntil" },
-                values: new object[] { new Guid("5cfe1935-3a8e-418a-a260-38d0551d5027"), new Guid("9ee1f9a2-201a-4351-abc1-c056932a1165"), new DateTime(2022, 8, 8, 17, 21, 57, 706, DateTimeKind.Local).AddTicks(7625), "Una posición para pasarla bien", "JobOffer", null, ".NET FullStack FullTime", new DateTime(2022, 11, 6, 17, 21, 57, 706, DateTimeKind.Local).AddTicks(7627) });
+                columns: new[] { "Id", "CompanyId", "CreatedAt", "CreatedBy", "Description", "Discriminator", "LastModifiedBy", "LastModifiedByAt", "Title", "ValidUntil" },
+                values: new object[] { new Guid("5cfe1935-3a8e-418a-a260-38d0551d5027"), new Guid("1b1d13dd-afb4-474f-a60a-bf6ab3474898"), null, null, "Una posición para pasarla bien", "JobOffer", null, null, ".NET FullStack FullTime", new DateTime(2022, 12, 5, 16, 19, 4, 473, DateTimeKind.Local).AddTicks(4929) });
 
             migrationBuilder.InsertData(
                 table: "Skills",
-                columns: new[] { "Id", "CreationDate", "KnowleadgeId", "LastUpdate", "SkillLevelId" },
-                values: new object[] { new Guid("2f8ce28b-8641-426e-98ba-eef98cc9f8a0"), new DateTime(2022, 8, 8, 17, 21, 57, 706, DateTimeKind.Local).AddTicks(7596), new Guid("3f374542-7711-4581-80c3-6f1a0a7c1105"), null, new Guid("248b45b9-bf4a-4815-844d-ec02daaeb638") });
+                columns: new[] { "Id", "CreatedAt", "CreatedBy", "KnowleadgeId", "LastModifiedBy", "LastModifiedByAt", "SkillLevelId" },
+                values: new object[] { new Guid("2f8ce28b-8641-426e-98ba-eef98cc9f8a0"), null, null, new Guid("3f374542-7711-4581-80c3-6f1a0a7c1105"), null, null, new Guid("248b45b9-bf4a-4815-844d-ec02daaeb638") });
 
             migrationBuilder.InsertData(
                 table: "Skills",
-                columns: new[] { "Id", "CreationDate", "KnowleadgeId", "LastUpdate", "SkillLevelId" },
-                values: new object[] { new Guid("70068d37-d9e3-48d9-a390-e85a11f2f31f"), new DateTime(2022, 8, 8, 17, 21, 57, 706, DateTimeKind.Local).AddTicks(7586), new Guid("b20501eb-5f36-4ed4-96ac-cf32817dce06"), null, new Guid("78867f5c-44fb-470d-9946-3da97e6ae2a7") });
+                columns: new[] { "Id", "CreatedAt", "CreatedBy", "KnowleadgeId", "LastModifiedBy", "LastModifiedByAt", "SkillLevelId" },
+                values: new object[] { new Guid("70068d37-d9e3-48d9-a390-e85a11f2f31f"), null, null, new Guid("b20501eb-5f36-4ed4-96ac-cf32817dce06"), null, null, new Guid("78867f5c-44fb-470d-9946-3da97e6ae2a7") });
+
+            migrationBuilder.InsertData(
+                table: "CandidateJobOffer",
+                columns: new[] { "CandidatesId", "JobOfferApplicationsId" },
+                values: new object[,]
+                {
+                    { new Guid("f29d1608-f324-4432-8e44-5ee320909b9d"), new Guid("5cfe1935-3a8e-418a-a260-38d0551d5027") },
+                    { new Guid("f47890b6-a3ce-4057-94a9-af862d2c01de"), new Guid("5cfe1935-3a8e-418a-a260-38d0551d5027") }
+                });
 
             migrationBuilder.InsertData(
                 table: "CandidateSkill",
                 columns: new[] { "CandidatesId", "SkillsId" },
                 values: new object[,]
                 {
-                    { "f29d1608-f324-4432-8e44-5ee320909b9d", new Guid("2f8ce28b-8641-426e-98ba-eef98cc9f8a0") },
-                    { "f47890b6-a3ce-4057-94a9-af862d2c01de", new Guid("2f8ce28b-8641-426e-98ba-eef98cc9f8a0") },
-                    { "f47890b6-a3ce-4057-94a9-af862d2c01de", new Guid("70068d37-d9e3-48d9-a390-e85a11f2f31f") }
+                    { new Guid("f29d1608-f324-4432-8e44-5ee320909b9d"), new Guid("2f8ce28b-8641-426e-98ba-eef98cc9f8a0") },
+                    { new Guid("f47890b6-a3ce-4057-94a9-af862d2c01de"), new Guid("2f8ce28b-8641-426e-98ba-eef98cc9f8a0") },
+                    { new Guid("f47890b6-a3ce-4057-94a9-af862d2c01de"), new Guid("70068d37-d9e3-48d9-a390-e85a11f2f31f") }
                 });
 
             migrationBuilder.InsertData(
@@ -432,9 +463,9 @@ namespace JobOpportunities.Data.Migrations
                 filter: "[NormalizedUserName] IS NOT NULL");
 
             migrationBuilder.CreateIndex(
-                name: "IX_CandidateJobOffer_OffersAppliedId",
+                name: "IX_CandidateJobOffer_JobOfferApplicationsId",
                 table: "CandidateJobOffer",
-                column: "OffersAppliedId");
+                column: "JobOfferApplicationsId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_CandidateSkill_SkillsId",
@@ -450,6 +481,11 @@ namespace JobOpportunities.Data.Migrations
                 name: "IX_JobOfferSkill_RequiredSkillsId",
                 table: "JobOfferSkill",
                 column: "RequiredSkillsId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_RefreshTokens_UserId",
+                table: "RefreshTokens",
+                column: "UserId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_Skills_KnowleadgeId",
@@ -489,10 +525,10 @@ namespace JobOpportunities.Data.Migrations
                 name: "JobOfferSkill");
 
             migrationBuilder.DropTable(
-                name: "AspNetRoles");
+                name: "RefreshTokens");
 
             migrationBuilder.DropTable(
-                name: "AspNetUsers");
+                name: "AspNetRoles");
 
             migrationBuilder.DropTable(
                 name: "JobOffers");
@@ -501,7 +537,7 @@ namespace JobOpportunities.Data.Migrations
                 name: "Skills");
 
             migrationBuilder.DropTable(
-                name: "Companies");
+                name: "AspNetUsers");
 
             migrationBuilder.DropTable(
                 name: "Knowleadges");

@@ -1,8 +1,9 @@
 ﻿using JobOpportunities.Data.GenericRepository;
+using JobOpportunities.Data.SpecificRepositories.Abstractions;
 using JobOpportunities.Domain;
 using Microsoft.EntityFrameworkCore;
 
-namespace JobOpportunities.Data.SpecificRepositories
+namespace JobOpportunities.Data.SpecificRepositories.Implementations
 {
     public class JobOfferRepository : GenericRepository<JobOffer>, IJobOfferRepository
     {

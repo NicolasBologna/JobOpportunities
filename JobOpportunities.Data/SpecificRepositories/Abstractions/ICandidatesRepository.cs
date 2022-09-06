@@ -1,6 +1,6 @@
 ﻿using JobOpportunities.Domain;
 
-namespace JobOpportunities.Data.SpecificRepositories
+namespace JobOpportunities.Data.SpecificRepositories.Abstractions
 {
     public interface ICandidatesRepository
     {

@@ -24,23 +24,35 @@ namespace JobOpportunities.Data.Migrations
 
             modelBuilder.Entity("CandidateJobOffer", b =>
                 {
-                    b.Property<string>("CandidatesId")
-                        .HasColumnType("nvarchar(450)");
-
-                    b.Property<Guid>("OffersAppliedId")
+                    b.Property<Guid>("CandidatesId")
                         .HasColumnType("uniqueidentifier");
 
-                    b.HasKey("CandidatesId", "OffersAppliedId");
+                    b.Property<Guid>("JobOfferApplicationsId")
+                        .HasColumnType("uniqueidentifier");
 
-                    b.HasIndex("OffersAppliedId");
+                    b.HasKey("CandidatesId", "JobOfferApplicationsId");
 
-                    b.ToTable("CandidateJobOffer");
+                    b.HasIndex("JobOfferApplicationsId");
+
+                    b.ToTable("CandidateJobOffer", (string)null);
+
+                    b.HasData(
+                        new
+                        {
+                            CandidatesId = new Guid("f47890b6-a3ce-4057-94a9-af862d2c01de"),
+                            JobOfferApplicationsId = new Guid("5cfe1935-3a8e-418a-a260-38d0551d5027")
+                        },
+                        new
+                        {
+                            CandidatesId = new Guid("f29d1608-f324-4432-8e44-5ee320909b9d"),
+                            JobOfferApplicationsId = new Guid("5cfe1935-3a8e-418a-a260-38d0551d5027")
+                        });
                 });
 
             modelBuilder.Entity("CandidateSkill", b =>
                 {
-                    b.Property<string>("CandidatesId")
-                        .HasColumnType("nvarchar(450)");
+                    b.Property<Guid>("CandidatesId")
+                        .HasColumnType("uniqueidentifier");
 
                     b.Property<Guid>("SkillsId")
                         .HasColumnType("uniqueidentifier");
@@ -54,17 +66,17 @@ namespace JobOpportunities.Data.Migrations
                     b.HasData(
                         new
                         {
-                            CandidatesId = "f47890b6-a3ce-4057-94a9-af862d2c01de",
+                            CandidatesId = new Guid("f47890b6-a3ce-4057-94a9-af862d2c01de"),
                             SkillsId = new Guid("70068d37-d9e3-48d9-a390-e85a11f2f31f")
                         },
                         new
                         {
-                            CandidatesId = "f47890b6-a3ce-4057-94a9-af862d2c01de",
+                            CandidatesId = new Guid("f47890b6-a3ce-4057-94a9-af862d2c01de"),
                             SkillsId = new Guid("2f8ce28b-8641-426e-98ba-eef98cc9f8a0")
                         },
                         new
                         {
-                            CandidatesId = "f29d1608-f324-4432-8e44-5ee320909b9d",
+                            CandidatesId = new Guid("f29d1608-f324-4432-8e44-5ee320909b9d"),
                             SkillsId = new Guid("2f8ce28b-8641-426e-98ba-eef98cc9f8a0")
                         });
                 });
@@ -98,8 +110,9 @@ namespace JobOpportunities.Data.Migrations
 
             modelBuilder.Entity("JobOpportunities.Domain.ApplicationUser", b =>
                 {
-                    b.Property<string>("Id")
-                        .HasColumnType("nvarchar(450)");
+                    b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("uniqueidentifier");
 
                     b.Property<int>("AccessFailedCount")
                         .HasColumnType("int");
@@ -175,45 +188,6 @@ namespace JobOpportunities.Data.Migrations
                     b.HasDiscriminator<string>("Discriminator").HasValue("ApplicationUser");
                 });
 
-            modelBuilder.Entity("JobOpportunities.Domain.Company", b =>
-                {
-                    b.Property<Guid>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("uniqueidentifier");
-
-                    b.Property<DateTime?>("CreatedAt")
-                        .HasColumnType("datetime2");
-
-                    b.Property<string>("CreatedBy")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("Email")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("LastModifiedBy")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<DateTime?>("LastModifiedByAt")
-                        .HasColumnType("datetime2");
-
-                    b.Property<string>("Name")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.HasKey("Id");
-
-                    b.ToTable("Companies");
-
-                    b.HasData(
-                        new
-                        {
-                            Id = new Guid("9ee1f9a2-201a-4351-abc1-c056932a1165"),
-                            Email = "company@endava.com",
-                            Name = "Endava"
-                        });
-                });
-
             modelBuilder.Entity("JobOpportunities.Domain.JobOffer", b =>
                 {
                     b.Property<Guid>("Id")
@@ -261,10 +235,10 @@ namespace JobOpportunities.Data.Migrations
                         new
                         {
                             Id = new Guid("5cfe1935-3a8e-418a-a260-38d0551d5027"),
-                            CompanyId = new Guid("9ee1f9a2-201a-4351-abc1-c056932a1165"),
+                            CompanyId = new Guid("1b1d13dd-afb4-474f-a60a-bf6ab3474898"),
                             Description = "Una posición para pasarla bien",
                             Title = ".NET FullStack FullTime",
-                            ValidUntil = new DateTime(2022, 11, 14, 17, 52, 1, 882, DateTimeKind.Local).AddTicks(3806)
+                            ValidUntil = new DateTime(2022, 12, 5, 16, 19, 4, 473, DateTimeKind.Local).AddTicks(4929)
                         });
                 });
 
@@ -444,9 +418,8 @@ namespace JobOpportunities.Data.Migrations
                     b.Property<bool>("Used")
                         .HasColumnType("bit");
 
-                    b.Property<string>("UserId")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(450)");
+                    b.Property<Guid>("UserId")
+                        .HasColumnType("uniqueidentifier");
 
                     b.HasKey("RefreshTokenId");
 
@@ -455,10 +428,11 @@ namespace JobOpportunities.Data.Migrations
                     b.ToTable("RefreshTokens");
                 });
 
-            modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRole", b =>
+            modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRole<System.Guid>", b =>
                 {
-                    b.Property<string>("Id")
-                        .HasColumnType("nvarchar(450)");
+                    b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("uniqueidentifier");
 
                     b.Property<string>("ConcurrencyStamp")
                         .IsConcurrencyToken()
@@ -482,7 +456,7 @@ namespace JobOpportunities.Data.Migrations
                     b.ToTable("AspNetRoles", (string)null);
                 });
 
-            modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<string>", b =>
+            modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<System.Guid>", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
@@ -496,9 +470,8 @@ namespace JobOpportunities.Data.Migrations
                     b.Property<string>("ClaimValue")
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<string>("RoleId")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(450)");
+                    b.Property<Guid>("RoleId")
+                        .HasColumnType("uniqueidentifier");
 
                     b.HasKey("Id");
 
@@ -507,7 +480,7 @@ namespace JobOpportunities.Data.Migrations
                     b.ToTable("AspNetRoleClaims", (string)null);
                 });
 
-            modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserClaim<string>", b =>
+            modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserClaim<System.Guid>", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
@@ -521,9 +494,8 @@ namespace JobOpportunities.Data.Migrations
                     b.Property<string>("ClaimValue")
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<string>("UserId")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(450)");
+                    b.Property<Guid>("UserId")
+                        .HasColumnType("uniqueidentifier");
 
                     b.HasKey("Id");
 
@@ -532,20 +504,21 @@ namespace JobOpportunities.Data.Migrations
                     b.ToTable("AspNetUserClaims", (string)null);
                 });
 
-            modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserLogin<string>", b =>
+            modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserLogin<System.Guid>", b =>
                 {
                     b.Property<string>("LoginProvider")
-                        .HasColumnType("nvarchar(450)");
+                        .HasMaxLength(128)
+                        .HasColumnType("nvarchar(128)");
 
                     b.Property<string>("ProviderKey")
-                        .HasColumnType("nvarchar(450)");
+                        .HasMaxLength(128)
+                        .HasColumnType("nvarchar(128)");
 
                     b.Property<string>("ProviderDisplayName")
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<string>("UserId")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(450)");
+                    b.Property<Guid>("UserId")
+                        .HasColumnType("uniqueidentifier");
 
                     b.HasKey("LoginProvider", "ProviderKey");
 
@@ -554,13 +527,13 @@ namespace JobOpportunities.Data.Migrations
                     b.ToTable("AspNetUserLogins", (string)null);
                 });
 
-            modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserRole<string>", b =>
+            modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserRole<System.Guid>", b =>
                 {
-                    b.Property<string>("UserId")
-                        .HasColumnType("nvarchar(450)");
+                    b.Property<Guid>("UserId")
+                        .HasColumnType("uniqueidentifier");
 
-                    b.Property<string>("RoleId")
-                        .HasColumnType("nvarchar(450)");
+                    b.Property<Guid>("RoleId")
+                        .HasColumnType("uniqueidentifier");
 
                     b.HasKey("UserId", "RoleId");
 
@@ -569,16 +542,18 @@ namespace JobOpportunities.Data.Migrations
                     b.ToTable("AspNetUserRoles", (string)null);
                 });
 
-            modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserToken<string>", b =>
+            modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserToken<System.Guid>", b =>
                 {
-                    b.Property<string>("UserId")
-                        .HasColumnType("nvarchar(450)");
+                    b.Property<Guid>("UserId")
+                        .HasColumnType("uniqueidentifier");
 
                     b.Property<string>("LoginProvider")
-                        .HasColumnType("nvarchar(450)");
+                        .HasMaxLength(128)
+                        .HasColumnType("nvarchar(128)");
 
                     b.Property<string>("Name")
-                        .HasColumnType("nvarchar(450)");
+                        .HasMaxLength(128)
+                        .HasColumnType("nvarchar(128)");
 
                     b.Property<string>("Value")
                         .HasColumnType("nvarchar(max)");
@@ -592,14 +567,18 @@ namespace JobOpportunities.Data.Migrations
                 {
                     b.HasBaseType("JobOpportunities.Domain.ApplicationUser");
 
+                    b.Property<string>("Cuil")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
                     b.HasDiscriminator().HasValue("Candidate");
 
                     b.HasData(
                         new
                         {
-                            Id = "f47890b6-a3ce-4057-94a9-af862d2c01de",
+                            Id = new Guid("f47890b6-a3ce-4057-94a9-af862d2c01de"),
                             AccessFailedCount = 0,
-                            ConcurrencyStamp = "a09efd38-5d5f-4e28-bf15-7d6993170d51",
+                            ConcurrencyStamp = "d8d80dd5-d0ce-4b89-9034-547eb614ddf6",
                             Email = "pepito@endava.com",
                             EmailConfirmed = false,
                             FirstName = "Pepito",
@@ -607,15 +586,15 @@ namespace JobOpportunities.Data.Migrations
                             LockoutEnabled = false,
                             PasswordHash = "123456UltraSecure",
                             PhoneNumberConfirmed = false,
-                            SecurityStamp = "7cec901b-c66d-4978-a7ef-1298456023ae",
                             TwoFactorEnabled = false,
-                            UserName = "PepitoJuarez"
+                            UserName = "PepitoJuarez",
+                            Cuil = "20-45323443-3"
                         },
                         new
                         {
-                            Id = "f29d1608-f324-4432-8e44-5ee320909b9d",
+                            Id = new Guid("f29d1608-f324-4432-8e44-5ee320909b9d"),
                             AccessFailedCount = 0,
-                            ConcurrencyStamp = "9aade53a-1d48-415e-8fbc-8811ec80a86d",
+                            ConcurrencyStamp = "8c1373b0-88f2-4197-97d2-b3df48f58833",
                             Email = "marcelo@endava.com",
                             EmailConfirmed = false,
                             FirstName = "Marcelo",
@@ -623,9 +602,9 @@ namespace JobOpportunities.Data.Migrations
                             LockoutEnabled = false,
                             PasswordHash = "320909b967uythgfd@434$%&",
                             PhoneNumberConfirmed = false,
-                            SecurityStamp = "2459415e-1edc-4502-aad6-06117a16ddcb",
                             TwoFactorEnabled = false,
-                            UserName = "MarceloReynoso"
+                            UserName = "MarceloReynoso",
+                            Cuil = "20-65723443-3"
                         });
                 });
 
@@ -643,6 +622,39 @@ namespace JobOpportunities.Data.Migrations
                     b.HasDiscriminator().HasValue("Intership");
                 });
 
+            modelBuilder.Entity("JobOpportunities.Domain.Users.Admin", b =>
+                {
+                    b.HasBaseType("JobOpportunities.Domain.ApplicationUser");
+
+                    b.HasDiscriminator().HasValue("Admin");
+                });
+
+            modelBuilder.Entity("JobOpportunities.Domain.Users.CompanyAgent", b =>
+                {
+                    b.HasBaseType("JobOpportunities.Domain.ApplicationUser");
+
+                    b.Property<string>("Cuit")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasDiscriminator().HasValue("CompanyAgent");
+
+                    b.HasData(
+                        new
+                        {
+                            Id = new Guid("1b1d13dd-afb4-474f-a60a-bf6ab3474898"),
+                            AccessFailedCount = 0,
+                            ConcurrencyStamp = "4d0d8229-6fa2-4812-a9a6-2d51b18045c1",
+                            EmailConfirmed = false,
+                            FirstName = "José María",
+                            LastName = "endava",
+                            LockoutEnabled = false,
+                            PhoneNumberConfirmed = false,
+                            TwoFactorEnabled = false,
+                            Cuit = "34-523445345-4"
+                        });
+                });
+
             modelBuilder.Entity("CandidateJobOffer", b =>
                 {
                     b.HasOne("JobOpportunities.Domain.Candidate", null)
@@ -653,7 +665,7 @@ namespace JobOpportunities.Data.Migrations
 
                     b.HasOne("JobOpportunities.Domain.JobOffer", null)
                         .WithMany()
-                        .HasForeignKey("OffersAppliedId")
+                        .HasForeignKey("JobOfferApplicationsId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
                 });
@@ -690,10 +702,10 @@ namespace JobOpportunities.Data.Migrations
 
             modelBuilder.Entity("JobOpportunities.Domain.JobOffer", b =>
                 {
-                    b.HasOne("JobOpportunities.Domain.Company", "Company")
+                    b.HasOne("JobOpportunities.Domain.Users.CompanyAgent", "Company")
                         .WithMany("Offers")
                         .HasForeignKey("CompanyId")
-                        .OnDelete(DeleteBehavior.Cascade)
+                        .OnDelete(DeleteBehavior.ClientCascade)
                         .IsRequired();
 
                     b.Navigation("Company");
@@ -729,16 +741,16 @@ namespace JobOpportunities.Data.Migrations
                     b.Navigation("User");
                 });
 
-            modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<string>", b =>
+            modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<System.Guid>", b =>
                 {
-                    b.HasOne("Microsoft.AspNetCore.Identity.IdentityRole", null)
+                    b.HasOne("Microsoft.AspNetCore.Identity.IdentityRole<System.Guid>", null)
                         .WithMany()
                         .HasForeignKey("RoleId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
                 });
 
-            modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserClaim<string>", b =>
+            modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserClaim<System.Guid>", b =>
                 {
                     b.HasOne("JobOpportunities.Domain.ApplicationUser", null)
                         .WithMany()
@@ -747,7 +759,7 @@ namespace JobOpportunities.Data.Migrations
                         .IsRequired();
                 });
 
-            modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserLogin<string>", b =>
+            modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserLogin<System.Guid>", b =>
                 {
                     b.HasOne("JobOpportunities.Domain.ApplicationUser", null)
                         .WithMany()
@@ -756,9 +768,9 @@ namespace JobOpportunities.Data.Migrations
                         .IsRequired();
                 });
 
-            modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserRole<string>", b =>
+            modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserRole<System.Guid>", b =>
                 {
-                    b.HasOne("Microsoft.AspNetCore.Identity.IdentityRole", null)
+                    b.HasOne("Microsoft.AspNetCore.Identity.IdentityRole<System.Guid>", null)
                         .WithMany()
                         .HasForeignKey("RoleId")
                         .OnDelete(DeleteBehavior.Cascade)
@@ -771,7 +783,7 @@ namespace JobOpportunities.Data.Migrations
                         .IsRequired();
                 });
 
-            modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserToken<string>", b =>
+            modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserToken<System.Guid>", b =>
                 {
                     b.HasOne("JobOpportunities.Domain.ApplicationUser", null)
                         .WithMany()
@@ -785,7 +797,7 @@ namespace JobOpportunities.Data.Migrations
                     b.Navigation("AccessTokens");
                 });
 
-            modelBuilder.Entity("JobOpportunities.Domain.Company", b =>
+            modelBuilder.Entity("JobOpportunities.Domain.Users.CompanyAgent", b =>
                 {
                     b.Navigation("Offers");
                 });

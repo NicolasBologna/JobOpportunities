@@ -2,6 +2,8 @@
 using JobOpportunities.Data.GenericRepository;
 using JobOpportunities.Data.Identity;
 using JobOpportunities.Data.SpecificRepositories;
+using JobOpportunities.Data.SpecificRepositories.Abstractions;
+using JobOpportunities.Data.SpecificRepositories.Implementations;
 using JobOpportunities.Domain;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
@@ -16,10 +18,7 @@ public static class DependencyInjection
     {
         var connectionString = config.GetConnectionString("JobOpportunitiesContextConnection") ?? throw new InvalidOperationException("Connection string 'JobOpportunitiesContextConnection' not found.");
         services.AddDbContext<JobOpportunitiesContext>(options =>
-            options.UseSqlServer(connectionString))
-            .AddIdentityCore<ApplicationUser>()
-            .AddRoles<IdentityRole>()
-            .AddEntityFrameworkStores<JobOpportunitiesContext>();
+            options.UseSqlServer(connectionString));
 
         Configuration.Setup()
         .UseAzureStorageBlobs(configuration => configuration
@@ -46,6 +45,7 @@ public static class DependencyInjection
         #region SpecificRepositories
         services.AddScoped<IJobOfferRepository, JobOfferRepository>();
         services.AddScoped<ICandidatesRepository, CandidatesRepository>();
+        services.AddScoped<ICompanyAgentRepository, CompanyAgentRepository>();
         #endregion
 
         return services;

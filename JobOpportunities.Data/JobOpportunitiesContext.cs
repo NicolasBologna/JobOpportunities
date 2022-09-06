@@ -1,13 +1,16 @@
 ﻿using JobOpportunities.Data.Identity;
 using JobOpportunities.Domain;
+using JobOpportunities.Domain.Relationships;
 using JobOpportunities.Domain.Users;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
 using System.Reflection;
+using System.Reflection.Emit;
 
 namespace JobOpportunities.Data
 {
-    public class JobOpportunitiesContext : IdentityDbContext<ApplicationUser>
+    public class JobOpportunitiesContext : IdentityDbContext<ApplicationUser, IdentityRole<Guid>, Guid>
     {
         private readonly CurrentUser _user;
 
@@ -15,11 +18,12 @@ namespace JobOpportunities.Data
         public DbSet<FullTimeJob> FullTimeJobs => Set<FullTimeJob>();
         public DbSet<Intership> Interships => Set<Intership>();
         public DbSet<SkillLevel> SkillLevels => Set<SkillLevel>();
-        public DbSet<Company> Companies => Set<Company>();
+        public DbSet<CompanyAgent> Companies => Set<CompanyAgent>();
         public DbSet<Candidate> Candidates => Set<Candidate>();
         public DbSet<Knowledge> Knowleadges => Set<Knowledge>();
         public DbSet<Skill> Skills => Set<Skill>();
         public DbSet<RefreshToken> RefreshTokens => Set<RefreshToken>();
+        public DbSet<Admin> Admins => Set<Admin>();
 
         public JobOpportunitiesContext(DbContextOptions<JobOpportunitiesContext> options, ICurrentUserService currentUserService)
             : base(options)
@@ -29,6 +33,25 @@ namespace JobOpportunities.Data
 
         protected override void OnModelCreating(ModelBuilder builder)
         {
+            //builder
+            //   .Entity<CandidateJobOffer>().HasKey(cj => new { cj.JobOfferId, cj.CandidateId });
+
+            //builder
+            //    .Entity<CandidateJobOffer>()
+            //    .HasOne(c => c.JobOffer)
+            //    .WithMany(c => c.CandidateJobOffer)
+            //    .HasForeignKey(cl => cl.JobOfferId).OnDelete(DeleteBehavior.Cascade);
+
+            //builder
+            //    .Entity<CandidateJobOffer>()
+            //    .HasOne(c => c.Candidate)
+            //    .WithMany(c => c.CandidateJobOffer)
+            //    .HasForeignKey(cl => cl.CandidateId).OnDelete(DeleteBehavior.Cascade);
+
+            builder.Entity<CompanyAgent>().HasMany(x => x.Offers).WithOne(y => y.Company).OnDelete(DeleteBehavior.ClientCascade);
+            builder.Entity<CompanyAgent>().Navigation(ca => ca.Offers).AutoInclude();
+
+
             SeedData(builder);
             base.OnModelCreating(builder);
             builder.ApplyConfigurationsFromAssembly(Assembly.GetExecutingAssembly());
@@ -64,6 +87,7 @@ namespace JobOpportunities.Data
             SeedJobOfferRequiredSkills(builder);
             SeedCandidates(builder);
             SeedCandidateSkills(builder);
+            SeedCandidatesJobOffers(builder);
         }
 
         private static void SeedSkillLevels(ModelBuilder builder)
@@ -128,15 +152,15 @@ namespace JobOpportunities.Data
                     SkillLevelId = new Guid("248b45b9-bf4a-4815-844d-ec02daaeb638"),
                 });
         }
+
         private static void SeedCompanies(ModelBuilder builder)
         {
-            builder.Entity<Company>().HasData(
-                            new Company
+            builder.Entity<CompanyAgent>().HasData(
+                            new CompanyAgent("José María", "endava", "34-523445345-4")
                             {
-                                Id = new Guid("9ee1f9a2-201a-4351-abc1-c056932a1165"),
-                                Email = "company@endava.com",
-                                Name = "Endava"
-                            });
+                                Id = new Guid("1B1D13DD-AFB4-474F-A60A-BF6AB3474898"),
+                            }
+                            );
         }
         private static void SeedJobOffers(ModelBuilder builder)
         {
@@ -144,7 +168,7 @@ namespace JobOpportunities.Data
                 new JobOffer
                 {
                     Id = new Guid("5cfe1935-3a8e-418a-a260-38d0551d5027"),
-                    CompanyId = new Guid("9ee1f9a2-201a-4351-abc1-c056932a1165"),
+                    CompanyId = new Guid("1B1D13DD-AFB4-474F-A60A-BF6AB3474898"),
                     Description = "Una posición para pasarla bien",
                     Title = ".NET FullStack FullTime",
                     ValidUntil = DateTime.Now.AddDays(90),
@@ -168,19 +192,21 @@ namespace JobOpportunities.Data
             builder.Entity<Candidate>().HasData(
                 new Candidate("Pepito", "Juarez")
                 {
-                    Id = "f47890b6-a3ce-4057-94a9-af862d2c01de",
+                    Id = new Guid("f47890b6-a3ce-4057-94a9-af862d2c01de"),
                     Email = "pepito@endava.com",
                     UserName = "PepitoJuarez",
                     PasswordHash = "123456UltraSecure",
+                    Cuil = "20-45323443-3"
                 });
 
             builder.Entity<Candidate>().HasData(
                 new Candidate("Marcelo", "Reynoso")
                 {
-                    Id = "f29d1608-f324-4432-8e44-5ee320909b9d",
+                    Id = new Guid("f29d1608-f324-4432-8e44-5ee320909b9d"),
                     Email = "marcelo@endava.com",
                     UserName = "MarceloReynoso",
                     PasswordHash = "320909b967uythgfd@434$%&",
+                    Cuil = "20-65723443-3"
                 });
         }
         private static void SeedCandidateSkills(ModelBuilder builder)
@@ -192,11 +218,26 @@ namespace JobOpportunities.Data
                     .ToTable("CandidateSkill")
                     .HasData(new[]
                         {
-                            new { SkillsId = new Guid("70068d37-d9e3-48d9-a390-e85a11f2f31f"), CandidatesId = "f47890b6-a3ce-4057-94a9-af862d2c01de"},
-                            new { SkillsId = new Guid("2f8ce28b-8641-426e-98ba-eef98cc9f8a0"), CandidatesId = "f47890b6-a3ce-4057-94a9-af862d2c01de"},
-                            new { SkillsId = new Guid("2f8ce28b-8641-426e-98ba-eef98cc9f8a0"), CandidatesId = "f29d1608-f324-4432-8e44-5ee320909b9d"},
+                            new { SkillsId = new Guid("70068d37-d9e3-48d9-a390-e85a11f2f31f"), CandidatesId = new Guid("f47890b6-a3ce-4057-94a9-af862d2c01de")},
+                            new { SkillsId = new Guid("2f8ce28b-8641-426e-98ba-eef98cc9f8a0"), CandidatesId = new Guid("f47890b6-a3ce-4057-94a9-af862d2c01de")},
+                            new { SkillsId = new Guid("2f8ce28b-8641-426e-98ba-eef98cc9f8a0"), CandidatesId = new Guid("f29d1608-f324-4432-8e44-5ee320909b9d")},
                         }
                     ));
+        }
+
+        private static void SeedCandidatesJobOffers(ModelBuilder builder)
+        {
+            builder.Entity<Candidate>()
+                .HasMany(c => c.JobOfferApplications)
+                .WithMany(j => j.Candidates)
+                .UsingEntity(x => x
+                    .ToTable("CandidateJobOffer")
+                    .HasData(new[]
+                    {
+                         new { CandidatesId = new Guid("f47890b6-a3ce-4057-94a9-af862d2c01de"), JobOfferApplicationsId = new Guid("5cfe1935-3a8e-418a-a260-38d0551d5027") },
+                        new { CandidatesId = new Guid("f29d1608-f324-4432-8e44-5ee320909b9d"), JobOfferApplicationsId = new Guid("5cfe1935-3a8e-418a-a260-38d0551d5027") }
+                    })
+                );
         }
     }
 }

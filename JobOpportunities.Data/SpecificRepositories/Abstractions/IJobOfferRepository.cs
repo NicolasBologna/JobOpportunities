@@ -1,7 +1,7 @@
 ﻿using JobOpportunities.Data.GenericRepository;
 using JobOpportunities.Domain;
 
-namespace JobOpportunities.Data.SpecificRepositories
+namespace JobOpportunities.Data.SpecificRepositories.Abstractions
 {
     public interface IJobOfferRepository : IGenericRepository<JobOffer>
     {
