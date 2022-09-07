@@ -45,12 +45,5 @@ namespace JobOpportunities.API.Controllers
             var newUserId = await Mediator.Send(command);
             return Ok(newUserId);
         }
-
-        [HttpDelete("{id}")]
-        public async Task<ActionResult<string>> Remove(Guid id)
-        {
-            await Mediator.Send(new RemoveCompanyAgentCommand() { Id = id });
-            return NoContent();
-        }
     }
 }
