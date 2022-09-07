@@ -1,6 +1,4 @@
-﻿using JobOpportunities.Domain.Relationships;
-
-namespace JobOpportunities.Domain
+﻿namespace JobOpportunities.Domain
 {
     public class Candidate : ApplicationUser
     {

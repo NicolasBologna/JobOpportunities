@@ -11,29 +11,25 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace JobOpportunities.API.Controllers
 {
-    [Route("api/[controller]")]
-    [ApiController]
-    public class JobOfferController : ControllerBase
+    public class JobOfferController : ApiControllerBase
     {
-        private readonly IMediator _mediator;
-
-        public JobOfferController(IMediator mediator)
+        [HttpGet]
+        public async Task<IEnumerable<GetJobOffersResponse>> Get()
         {
-            _mediator = mediator;
+            return await Mediator.Send(new GetJobOffersQuery());
         }
 
-        [HttpGet]
-        public async Task<IEnumerable<GetJobOffersResponse>> Get() => await _mediator.Send(new GetJobOffersQuery());
-
         [HttpGet("{id}")]
-        public async Task<GetJobOfferResponse> Get(Guid id) => await _mediator.Send(new GetJobOfferQuery { JobOfferId = id });
-
+        public async Task<GetJobOfferResponse> Get(Guid id)
+        {
+            return await Mediator.Send(new GetJobOfferQuery { JobOfferId = id });
+        }
 
         [HttpPost]
         [Authorize(Roles = "Admin")]
         public async Task<IActionResult> Post(CreateJobOfferCommand command)
         {
-            await _mediator.Send(command);
+            await Mediator.Send(command);
             return Ok();
         }
 
@@ -41,13 +37,16 @@ namespace JobOpportunities.API.Controllers
         [Authorize(Roles = "Admin")]
         public async Task<IActionResult> Put(UpdateJobOfferCommand command)
         {
-            await _mediator.Send(command);
+            await Mediator.Send(command);
             return Ok();
         }
 
         [HttpGet]
         [Route("{id}/potentialcandidates")]
-        public async Task<IEnumerable<GetJobOfferCandidatesResponse>> GetJobOfferCandidates(Guid id) => await _mediator.Send(new GetJobOfferCandidatesQuery { JobOfferId = id });
+        public async Task<IEnumerable<GetJobOfferCandidatesResponse>> GetJobOfferCandidates(Guid id)
+        {
+            return await Mediator.Send(new GetJobOfferCandidatesQuery { JobOfferId = id });
+        }
 
 
 

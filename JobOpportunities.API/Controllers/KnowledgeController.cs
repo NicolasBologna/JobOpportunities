@@ -6,26 +6,24 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace JobOpportunities.API.Controllers
 {
-    [Route("api/[controller]")]
-    [ApiController]
-    public class KnowledgeController : ControllerBase
+    public class KnowledgeController : ApiControllerBase
     {
-        private readonly IMediator _mediator;
-
-        public KnowledgeController(IMediator mediator)
-        {
-            _mediator = mediator;
-        }
         [HttpGet]
-        public async Task<IEnumerable<GetAllKnowledgeResponse>> Get() => await _mediator.Send(new GetAllKnowledgeQuery());
+        public async Task<IEnumerable<GetAllKnowledgeResponse>> Get()
+        {
+            return await Mediator.Send(new GetAllKnowledgeQuery());
+        }
 
         [HttpGet("{id}")]
-        public async Task<GetKnowledgeResponse> Get(Guid id) => await _mediator.Send(new GetKnowledgeQuery { KnowledgeId = id });
+        public async Task<GetKnowledgeResponse> Get(Guid id)
+        {
+            return await Mediator.Send(new GetKnowledgeQuery { KnowledgeId = id });
+        }
 
         [HttpPost]
         public async Task<IActionResult> Post([FromBody] CreateKnowledgeCommand command)
         {
-            await _mediator.Send(command);
+            await Mediator.Send(command);
 
             return Ok();
         }

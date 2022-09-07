@@ -9,35 +9,26 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace JobOpportunities.API.Controllers
 {
-    [Route("api/[controller]")]
-    [ApiController]
-    public class UserController : ControllerBase
+    public class UserController : ApiControllerBase
     {
-        private readonly IMediator _mediatr;
-
-        public UserController(IMediator mediatr)
-        {
-            _mediatr = mediatr;
-        }
-
         [HttpGet("{id}")]
         public async Task<ActionResult<GetUserQueryResponse>> Get(Guid id)
         {
-            var result = await _mediatr.Send(new GetUserQuery() { Id = id });
+            var result = await Mediator.Send(new GetUserQuery() { Id = id });
             return Ok(result);
         }
 
         [HttpPost]
         public async Task<ActionResult<string>> Register(CreateUserCommand command)
         {
-            var newUserId = await _mediatr.Send(command);
+            var newUserId = await Mediator.Send(command);
             return Ok(newUserId);
         }
 
         [HttpGet()]
         public async Task<ActionResult<GetUserQueryResponse>> Get()
         {
-            var result = await _mediatr.Send(new GetUsersQuery());
+            var result = await Mediator.Send(new GetUsersQuery());
             return Ok(result);
         }
 
@@ -51,14 +42,14 @@ namespace JobOpportunities.API.Controllers
                 return BadRequest();
             }
 
-            var newUserId = await _mediatr.Send(command);
+            var newUserId = await Mediator.Send(command);
             return Ok(newUserId);
         }
 
         [HttpDelete("{id}")]
         public async Task<ActionResult<string>> Remove(Guid id)
         {
-            await _mediatr.Send(new RemoveCompanyAgentCommand() { Id = id });
+            await Mediator.Send(new RemoveCompanyAgentCommand() { Id = id });
             return NoContent();
         }
     }

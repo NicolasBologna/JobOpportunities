@@ -1,5 +1,4 @@
-﻿using JobOpportunities.Domain.Relationships;
-using JobOpportunities.Domain.Users;
+﻿using JobOpportunities.Domain.Users;
 using System.ComponentModel.DataAnnotations.Schema;
 
 namespace JobOpportunities.Domain

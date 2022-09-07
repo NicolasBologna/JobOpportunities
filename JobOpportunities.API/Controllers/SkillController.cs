@@ -8,26 +8,24 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace JobOpportunities.API.Controllers
 {
-    [Route("api/[controller]")]
-    [ApiController]
-    public class SkillController : ControllerBase
+    public class SkillController : ApiControllerBase
     {
-        private readonly IMediator _mediator;
-
-        public SkillController(IMediator mediator)
-        {
-            _mediator = mediator;
-        }
         [HttpGet]
-        public async Task<IEnumerable<GetSkillsResponse>> Get() => await _mediator.Send(new GetSkillsQuery());
+        public async Task<IEnumerable<GetSkillsResponse>> Get()
+        {
+            return await Mediator.Send(new GetSkillsQuery());
+        }
 
         [HttpGet("{id}")]
-        public async Task<GetSkillResponse> Get(Guid id) => await _mediator.Send(new GetSkillQuery { SkillId = id });
+        public async Task<GetSkillResponse> Get(Guid id)
+        {
+            return await Mediator.Send(new GetSkillQuery { SkillId = id });
+        }
 
         [HttpPost]
         public async Task<IActionResult> Post([FromBody] CreateSkillCommand command)
         {
-            await _mediator.Send(command);
+            await Mediator.Send(command);
 
             return Ok();
         }

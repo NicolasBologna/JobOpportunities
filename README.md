@@ -156,6 +156,7 @@ The default username and password for RabbitMQ management plugin is: **guest**
 
 * [CQRS](https://garywoodfine.com/what-is-cqrs/) by Gary Woodfine
 * [ASP.NET + rabbitmq](https://hamedfathi.me/a-professional-asp.net-core-api-rabbitmq/)
+* [Ways to do DI](https://www.c-sharpcorner.com/article/basics-of-di/)
 
 ### To read
 

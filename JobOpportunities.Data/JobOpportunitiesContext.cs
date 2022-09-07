@@ -1,6 +1,5 @@
 ﻿using JobOpportunities.Data.Identity;
 using JobOpportunities.Domain;
-using JobOpportunities.Domain.Relationships;
 using JobOpportunities.Domain.Users;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
@@ -33,21 +32,6 @@ namespace JobOpportunities.Data
 
         protected override void OnModelCreating(ModelBuilder builder)
         {
-            //builder
-            //   .Entity<CandidateJobOffer>().HasKey(cj => new { cj.JobOfferId, cj.CandidateId });
-
-            //builder
-            //    .Entity<CandidateJobOffer>()
-            //    .HasOne(c => c.JobOffer)
-            //    .WithMany(c => c.CandidateJobOffer)
-            //    .HasForeignKey(cl => cl.JobOfferId).OnDelete(DeleteBehavior.Cascade);
-
-            //builder
-            //    .Entity<CandidateJobOffer>()
-            //    .HasOne(c => c.Candidate)
-            //    .WithMany(c => c.CandidateJobOffer)
-            //    .HasForeignKey(cl => cl.CandidateId).OnDelete(DeleteBehavior.Cascade);
-
             builder.Entity<CompanyAgent>().HasMany(x => x.Offers).WithOne(y => y.Company).OnDelete(DeleteBehavior.ClientCascade);
             builder.Entity<CompanyAgent>().Navigation(ca => ca.Offers).AutoInclude();
 
