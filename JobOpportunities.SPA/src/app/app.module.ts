@@ -12,6 +12,7 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { JobOffersListComponent } from './jobOffers/jobOffers-list/jobOffers-list.component';
 import { JobOfferDetailsComponent } from './jobOffers/jobOffer-details/jobOffer-details.component';
 import { KnowledgeComponent } from './knowledge/knowledge.component';
+import { NotFoundComponent } from './error-pages/not-found/not-found.component';
 
 @NgModule({
   imports: [
@@ -30,6 +31,7 @@ import { KnowledgeComponent } from './knowledge/knowledge.component';
     JobOffersListComponent,
     JobOfferDetailsComponent,
     KnowledgeComponent,
+    NotFoundComponent,
   ],
   providers: [],
   bootstrap: [AppComponent],

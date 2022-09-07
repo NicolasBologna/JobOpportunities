@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { Observable } from 'rxjs';
 import { JobOffer } from '../common/models/jobOffer';
-import { JobOffersService } from '../common/services/jobOffers.service';
+import { JobOffersRepositoryService } from '../common/services/jobOffersRepository.service';
 
 const emptyjobOffer: JobOffer = {
   id: '',
@@ -20,7 +20,7 @@ export class JobOffersComponent implements OnInit {
   //1. render jobOffers in a list
   // 2. Select a jobOffer
   // 3. Render Selected jobOffer
-  constructor(private jobOffersService: JobOffersService) {}
+  constructor(private jobOffersService: JobOffersRepositoryService) {}
 
   jobOffers = [];
   jobOffers$: any; //Observable<jobOffer[]>;
