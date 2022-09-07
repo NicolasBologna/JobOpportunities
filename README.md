@@ -166,6 +166,7 @@ The default username and password for RabbitMQ management plugin is: **guest**
 * [Dapper Migrations with Fluentmigrator in Aspnetcore](https://code-maze.com/dapper-migrations-fluentmigrator-aspnetcore/)
 * [Error Handling](https://code-maze.com/global-error-handling-aspnetcore/)
 * [GUID as clustering key](https://stackoverflow.com/questions/20463798/uniqueidentifier-vs-identity-vs-material-code-which-is-the-best-choice-for-p)
+* [Async comm between Net MS and Rabbitmq](https://www.c-sharpcorner.com/article/asynchronous-communication-between-microservices-using-net-core-api-rabbitmq/)
 
 ### To watch
 
@@ -174,3 +175,4 @@ The default username and password for RabbitMQ management plugin is: **guest**
 ### Tools
 
 [DBeaver](https://dbeaver.io/)
+[Mediatr Service Template](https://github.com/timdows/MediatRTemplate)
