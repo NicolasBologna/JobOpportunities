@@ -3,15 +3,11 @@ import { CommonModule } from '@angular/common';
 
 import { SkillLevelsRoutingModule } from './skill-levels-routing.module';
 import { SkillLevelListComponent } from './skill-level-list/skill-level-list.component';
+import { SkillLevelDetailsComponent } from './skill-level-details/skill-level-details.component';
 
 
 @NgModule({
-  declarations: [
-    SkillLevelListComponent
-  ],
-  imports: [
-    CommonModule,
-    SkillLevelsRoutingModule
-  ]
+  declarations: [SkillLevelListComponent, SkillLevelDetailsComponent],
+  imports: [CommonModule, SkillLevelsRoutingModule],
 })
-export class SkillLevelsModule { }
+export class SkillLevelsModule {}

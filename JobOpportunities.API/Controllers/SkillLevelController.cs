@@ -11,9 +11,9 @@ namespace JobOpportunities.API.Controllers
     public class SkillLevelController : ApiControllerBase
     {
         [HttpGet]
-        public async Task<IEnumerable<GetSkillLevelsResponse>> Get()
+        public async Task<ActionResult<IEnumerable<GetSkillLevelsResponse>>> Get()
         {
-            return await Mediator.Send(new GetSkillLevelsQuery());
+            return Ok(await Mediator.Send(new GetSkillLevelsQuery()));
         }
 
         [HttpGet("{id}")]

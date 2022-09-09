@@ -23,7 +23,8 @@
             <td>{{skill.name}}</td>
             <td>{{skill.description}}</td>
             <td>{{skill.createdAt | date: 'dd/MM/yyyy'}}</td>
-            <td><button type="button" id="details" class="btn btn-primary">Details</button></td>
+            <td><button type="button" id="details" class="btn btn-primary" (click)="getSkillLevelDetails(skill.id)">Details</button>
+            </td>
             <td><button type="button" id="update" class="btn btn-success">Update</button></td>
             <td><button type="button" id="delete" class="btn btn-danger">Delete</button></td>
           </tr>

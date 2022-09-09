@@ -17,6 +17,11 @@ export class SkillLevelsRepositoryService {
       this.createCompleteRoute(route, this.envUrl.urlAddress)
     );
   };
+  public getSkillLevel = (route: string) => {
+    return this.http.get<SkillLevel>(
+      this.createCompleteRoute(route, this.envUrl.urlAddress)
+    );
+  };
   public createSkillLevel = (route: string, skillLevel: SkillLevel) => {
     return this.http.post<SkillLevel>(
       this.createCompleteRoute(route, this.envUrl.urlAddress),

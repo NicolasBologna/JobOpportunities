@@ -27,7 +27,7 @@ public class AuditLogsBehavior<TRequest, TResponse> : IPipelineBehavior<TRequest
 
     public async Task<TResponse> Handle(TRequest request, CancellationToken cancellationToken, RequestHandlerDelegate<TResponse> next)
     {
-        _logger.LogInformation("{RequetsName}: {@User} with request {@Request}", typeof(TRequest).Name, _currentUserService.User.Id, request);
+        _logger.LogInformation("{RequetsName}: {@User} with request {@Request}", typeof(TRequest).Name, _currentUserService.User.Id == Guid.Empty.ToString() ? "anonymous" : _currentUserService.User.Id, request);
 
         IAuditScope? scope = null;
 
