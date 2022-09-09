@@ -1,36 +1,37 @@
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { EnvironmentUrlService } from './environmentUrl.service';
+import { SkillLevel } from '../models/skill-level';
+import { EnvironmentUrlService } from './environment-url.service';
 
 @Injectable({
   providedIn: 'root',
 })
-export class CompanyAgentsRepositoryService {
+export class SkillLevelsRepositoryService {
   constructor(
     private http: HttpClient,
     private envUrl: EnvironmentUrlService
   ) {}
 
-  public getJobOffers = (route: string) => {
-    return this.http.get<JobOffer[]>(
+  public getSkillLevels = (route: string) => {
+    return this.http.get<SkillLevel[]>(
       this.createCompleteRoute(route, this.envUrl.urlAddress)
     );
   };
-  public createJobOffer = (route: string, jobOffer: JobOffer) => {
-    return this.http.post<JobOffer>(
+  public createSkillLevel = (route: string, skillLevel: SkillLevel) => {
+    return this.http.post<SkillLevel>(
       this.createCompleteRoute(route, this.envUrl.urlAddress),
-      jobOffer,
+      skillLevel,
       this.generateHeaders()
     );
   };
-  public updateJobOffer = (route: string, jobOffer: JobOffer) => {
+  public updateSkillLevel = (route: string, skillLevel: SkillLevel) => {
     return this.http.put(
       this.createCompleteRoute(route, this.envUrl.urlAddress),
-      jobOffer,
+      skillLevel,
       this.generateHeaders()
     );
   };
-  public deleteJobOffer = (route: string) => {
+  public deleteSkillLevel = (route: string) => {
     return this.http.delete(
       this.createCompleteRoute(route, this.envUrl.urlAddress)
     );

@@ -6,11 +6,11 @@ namespace JobOpportunities.API.Controllers
 {
     public class CompanyAgentController : ApiControllerBase
     {
-        [HttpGet]
-        public async Task<ActionResult<List<CompanyAgent>>> Get()
-        {
-            return await Mediator.Send(new GetCompanyAgentsQuery() { })
-        }
+        //[HttpGet]
+        //public async Task<ActionResult<List<CompanyAgent>>> Get()
+        //{
+        //    return await Mediator.Send(new GetCompanyAgentsQuery() { })
+        //}
 
         [HttpDelete("{id}")]
         public async Task<ActionResult<string>> Remove(Guid id)

@@ -11,8 +11,6 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { KnowledgeComponent } from './knowledge/knowledge.component';
 import { NotFoundComponent } from './error-pages/not-found/not-found.component';
 import { JobOffersModule } from './job-offers/job-offers.module';
-import { SkillLevelsModule } from './skill-levels/skill-levels.module';
-import { InternalServerComponent } from './error-pages/internal-server/internal-server.component';
 
 @NgModule({
   imports: [
@@ -24,14 +22,12 @@ import { InternalServerComponent } from './error-pages/internal-server/internal-
     FormsModule,
     ReactiveFormsModule,
     JobOffersModule,
-    SkillLevelsModule,
   ],
   declarations: [
     AppComponent,
     HomeComponent,
     KnowledgeComponent,
     NotFoundComponent,
-    InternalServerComponent,
   ],
   providers: [],
   bootstrap: [AppComponent],

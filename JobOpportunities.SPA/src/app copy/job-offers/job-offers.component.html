@@ -1,0 +1,14 @@
+<div class="jobOffers-containers">
+  <div class="jobOffers-list">
+    <app-job-offers-list [jobOffers]="jobOffers$ | async" (selected)="selectJobOffer($event)"
+      (deleted)="deleteJobOffer($event)">
+    </app-job-offers-list>
+  </div>
+
+
+  <div class="jobOffer-details">
+    <app-job-offer-details [jobOffer]="selectedJobOffer" (cancelled)="reset()" (saved)="saveJobOffer($event)">
+    </app-job-offer-details>
+
+  </div>
+</div>

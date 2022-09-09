@@ -1,10 +1,10 @@
 import { Component, Input, EventEmitter, OnInit, Output } from '@angular/core';
-import { JobOffer } from 'src/app/common/models/jobOffer';
+import { JobOffer } from 'src/app/common/models/job-offer';
 
 @Component({
-  selector: 'app-jobOffers-list',
-  templateUrl: './jobOffers-list.component.html',
-  styleUrls: ['./jobOffers-list.component.scss'],
+  selector: 'app-job-offers-list',
+  templateUrl: './job-offers-list.component.html',
+  styleUrls: ['./job-offers-list.component.scss'],
 })
 export class JobOffersListComponent {
   @Input() jobOffers: JobOffer[] = [];

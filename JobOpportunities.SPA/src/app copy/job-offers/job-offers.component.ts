@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { Observable } from 'rxjs';
-import { JobOffer } from '../common/models/jobOffer';
-import { JobOffersRepositoryService } from '../common/services/jobOffersRepository.service';
+import { JobOffer } from '../common/models/job-offer';
+import { JobOffersRepositoryService } from '../common/services/job-offers-repository.service';
 
 const emptyjobOffer: JobOffer = {
   id: '',
@@ -12,17 +12,16 @@ const emptyjobOffer: JobOffer = {
 };
 
 @Component({
-  selector: 'app-jobOffers',
-  templateUrl: './jobOffers.component.html',
-  styleUrls: ['./jobOffers.component.scss'],
+  selector: 'app-job-offers',
+  templateUrl: './job-offers.component.html',
+  styleUrls: ['./job-offers.component.scss'],
 })
 export class JobOffersComponent implements OnInit {
   //1. render jobOffers in a list
   // 2. Select a jobOffer
   // 3. Render Selected jobOffer
   constructor(private jobOffersService: JobOffersRepositoryService) {}
-
-  jobOffers = [];
+  jobOffers: JobOffer[] = [];
   jobOffers$: any; //Observable<jobOffer[]>;
 
   selectedJobOffer = { ...emptyjobOffer };

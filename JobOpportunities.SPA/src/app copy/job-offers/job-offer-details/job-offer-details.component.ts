@@ -1,10 +1,10 @@
 import { Component, EventEmitter, OnInit, Output, Input } from '@angular/core';
-import { JobOffer } from 'src/app/common/models/jobOffer';
+import { JobOffer } from 'src/app/common/models/job-offer';
 
 @Component({
-  selector: 'app-jobOffer-details',
-  templateUrl: './jobOffer-details.component.html',
-  styleUrls: ['./jobOffer-details.component.scss'],
+  selector: 'app-job-offer-details',
+  templateUrl: './job-offer-details.component.html',
+  styleUrls: ['./job-offer-details.component.scss'],
 })
 export class JobOfferDetailsComponent {
   currentJobOffer: JobOffer;

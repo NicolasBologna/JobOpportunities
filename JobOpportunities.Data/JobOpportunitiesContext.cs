@@ -157,6 +157,16 @@ namespace JobOpportunities.Data
                     Title = ".NET FullStack FullTime",
                     ValidUntil = DateTime.Now.AddDays(90),
                 });
+
+            builder.Entity<JobOffer>().HasData(
+                new JobOffer
+                {
+                    Id = new Guid("FF414898-E070-4C52-BE2E-04CAE7A1AF1A"),
+                    CompanyId = new Guid("1B1D13DD-AFB4-474F-A60A-BF6AB3474898"),
+                    Description = "Posición ma o meno",
+                    Title = "Node Backend",
+                    ValidUntil = DateTime.Now.AddDays(90),
+                });
         }
         private static void SeedJobOfferRequiredSkills(ModelBuilder builder)
         {

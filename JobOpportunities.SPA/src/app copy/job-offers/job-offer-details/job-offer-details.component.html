@@ -4,7 +4,7 @@
       <span *ngIf="currentJobOffer?.id; else elseBlock">
         {{originalTitle | titlecase}}
       </span>
-      <ng-template #elseBlock>Select a Job Offer</ng-template>
+      <ng-template #elseBlock>Seleccioná una oferta</ng-template>
     </mat-card-title>
   </mat-card-header>
   <form #Myform="ngForm" (submit)="saved.emit(currentJobOffer)">

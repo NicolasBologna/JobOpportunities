@@ -1,8 +1,8 @@
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
-import { JobOffer } from '../models/jobOffer';
-import { EnvironmentUrlService } from './environmentUrl.service';
+import { JobOffer } from '../models/job-offer';
+import { EnvironmentUrlService } from './environment-url.service';
 
 const BASE_URL = 'https://localhost:7278/api';
 
