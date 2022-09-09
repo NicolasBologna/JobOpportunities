@@ -1,5 +1,5 @@
 import { Component, HostBinding } from '@angular/core';
-import { FormControl } from '@angular/forms';
+import { UntypedFormControl } from '@angular/forms';
 
 @Component({
   selector: 'app-root',
@@ -13,7 +13,7 @@ export class AppComponent {
     { path: '/job-offers', icon: 'view_list', title: 'Job Offers' },
   ];
 
-  themeToggleControl = new FormControl(false);
+  themeToggleControl = new UntypedFormControl(false);
 
   @HostBinding('class') className = '';
 
