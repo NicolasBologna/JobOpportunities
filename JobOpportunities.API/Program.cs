@@ -86,6 +86,22 @@ async Task SeedData()
 
     context.Database.EnsureCreated();
 
+    if (roleManager.Roles.Count() <= 2)
+    {
+        await roleManager.CreateAsync(new IdentityRole<Guid>
+        {
+            Name = "Admin"
+        });
+        await roleManager.CreateAsync(new IdentityRole<Guid>
+        {
+            Name = "Candidate"
+        });
+        await roleManager.CreateAsync(new IdentityRole<Guid>
+        {
+            Name = "CompanyAgent"
+        });
+    }
+
     if (userManager.Users.Count() <= 2)
     {
         logger.LogInformation("Creando usuario de prueba");
@@ -97,14 +113,6 @@ async Task SeedData()
         };
 
         await userManager.CreateAsync(newUser, "P@ss.W0rd");
-        await roleManager.CreateAsync(new IdentityRole<Guid>
-        {
-            Name = "Admin"
-        });
-        await roleManager.CreateAsync(new IdentityRole<Guid>
-        {
-            Name = "AnotherRole"
-        });
 
         await userManager.AddToRoleAsync(newUser, "Admin");
         await userManager.AddToRoleAsync(newUser, "AnotherRole");

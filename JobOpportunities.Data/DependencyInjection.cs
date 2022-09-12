@@ -41,7 +41,7 @@ public static class DependencyInjection
     private static IServiceCollection AddRepositories(this IServiceCollection services)
     {
         services.AddScoped(typeof(IGenericRepository<>), typeof(GenericRepository<>));
-        services.AddScoped(typeof(IReadRepository<>), typeof(ReadOnlyRepository<>));
+        services.AddScoped(typeof(GenericRepository.IReadRepository<>), typeof(ReadOnlyRepository<>));
         #region SpecificRepositories
         services.AddScoped<IJobOfferRepository, JobOfferRepository>();
         services.AddScoped<ICandidatesRepository, CandidatesRepository>();

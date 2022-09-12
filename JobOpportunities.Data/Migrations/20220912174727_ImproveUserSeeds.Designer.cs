@@ -4,6 +4,7 @@ using JobOpportunities.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -11,9 +12,10 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace JobOpportunities.Data.Migrations
 {
     [DbContext(typeof(JobOpportunitiesContext))]
-    partial class JobOpportunitiesContextModelSnapshot : ModelSnapshot
+    [Migration("20220912174727_ImproveUserSeeds")]
+    partial class ImproveUserSeeds
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -238,7 +240,7 @@ namespace JobOpportunities.Data.Migrations
                             CompanyId = new Guid("1b1d13dd-afb4-474f-a60a-bf6ab3474898"),
                             Description = "Una posición para pasarla bien",
                             Title = ".NET FullStack FullTime",
-                            ValidUntil = new DateTime(2022, 12, 11, 14, 59, 53, 170, DateTimeKind.Local).AddTicks(1430)
+                            ValidUntil = new DateTime(2022, 12, 11, 14, 47, 27, 328, DateTimeKind.Local).AddTicks(3438)
                         },
                         new
                         {
@@ -246,7 +248,7 @@ namespace JobOpportunities.Data.Migrations
                             CompanyId = new Guid("1b1d13dd-afb4-474f-a60a-bf6ab3474898"),
                             Description = "Posición ma o meno",
                             Title = "Node Backend",
-                            ValidUntil = new DateTime(2022, 12, 11, 14, 59, 53, 170, DateTimeKind.Local).AddTicks(1461)
+                            ValidUntil = new DateTime(2022, 12, 11, 14, 47, 27, 328, DateTimeKind.Local).AddTicks(3460)
                         });
                 });
 
@@ -469,21 +471,21 @@ namespace JobOpportunities.Data.Migrations
                             Id = new Guid("fab4fac1-c546-41de-aebc-a14da6895711"),
                             ConcurrencyStamp = "1",
                             Name = "Admin",
-                            NormalizedName = "ADMIN"
+                            NormalizedName = "Admin"
                         },
                         new
                         {
                             Id = new Guid("c7b013f0-5201-4317-abd8-c211f91b7330"),
                             ConcurrencyStamp = "2",
                             Name = "Candidate",
-                            NormalizedName = "CANDIDATE"
+                            NormalizedName = "Candidate"
                         },
                         new
                         {
                             Id = new Guid("30680485-8d48-4a7a-8f2b-8afdb1fc526c"),
                             ConcurrencyStamp = "3",
                             Name = "CompanyAgent",
-                            NormalizedName = "COMPANYAGENT"
+                            NormalizedName = "Company Agent"
                         });
                 });
 
@@ -622,13 +624,12 @@ namespace JobOpportunities.Data.Migrations
                         {
                             Id = new Guid("f47890b6-a3ce-4057-94a9-af862d2c01de"),
                             AccessFailedCount = 0,
-                            ConcurrencyStamp = "2487e0c0-4d7e-43f0-b8ab-bfd3f5db4d93",
+                            ConcurrencyStamp = "18fc2382-3be6-4c36-b655-5fa551a5a6f5",
                             Email = "pepito@endava.com",
                             EmailConfirmed = false,
                             FirstName = "Pepito",
                             LastName = "Juarez",
                             LockoutEnabled = false,
-                            PasswordHash = "AQAAAAEAACcQAAAAEHYjv69pzYvOQRtHxxRwjDRmYjtaA1AMymP1osTagAm7HtpAQEoOHQ4+GSDOdbD3JQ==",
                             PhoneNumberConfirmed = false,
                             TwoFactorEnabled = false,
                             UserName = "PepitoJuarez",
@@ -638,13 +639,12 @@ namespace JobOpportunities.Data.Migrations
                         {
                             Id = new Guid("f29d1608-f324-4432-8e44-5ee320909b9d"),
                             AccessFailedCount = 0,
-                            ConcurrencyStamp = "3ca14a87-aa23-4027-a0ba-d09addc4dd92",
+                            ConcurrencyStamp = "c57d3c30-a666-404f-90c9-5fc9db11e75a",
                             Email = "marcelo@endava.com",
                             EmailConfirmed = false,
                             FirstName = "Marcelo",
                             LastName = "Reynoso",
                             LockoutEnabled = false,
-                            PasswordHash = "AQAAAAEAACcQAAAAEANn1UczE0j7aXajH5kO6lUFGRdtdrve751LfFtedCWBh/uAdqT4NUOl+HHY4kvGHg==",
                             PhoneNumberConfirmed = false,
                             TwoFactorEnabled = false,
                             UserName = "MarceloReynoso",
@@ -688,12 +688,11 @@ namespace JobOpportunities.Data.Migrations
                         {
                             Id = new Guid("1b1d13dd-afb4-474f-a60a-bf6ab3474898"),
                             AccessFailedCount = 0,
-                            ConcurrencyStamp = "aed62408-5863-4074-8348-2c47450a57e8",
+                            ConcurrencyStamp = "12c7de69-ac21-47f0-9d53-4602cec7fff4",
                             EmailConfirmed = false,
                             FirstName = "José María",
                             LastName = "endava",
                             LockoutEnabled = false,
-                            PasswordHash = "AQAAAAEAACcQAAAAEFaABQJSdnO1MlGK6Lr/bdvB3vomKV1BhWhcAvBs+s03yNtutkNyhSJ49hJAf0xCTQ==",
                             PhoneNumberConfirmed = false,
                             TwoFactorEnabled = false,
                             Cuit = "34-523445345-4"

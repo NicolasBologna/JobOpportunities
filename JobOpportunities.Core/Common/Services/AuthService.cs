@@ -13,10 +13,10 @@ namespace JobOpportunities.Core.Common.Services;
 public class AuthService : IAuthService
 {
     private readonly IConfiguration _config;
-    private readonly UserManager<ApplicationUser> _userManager;
+    private readonly Microsoft.AspNetCore.Identity.UserManager<ApplicationUser> _userManager;
     private readonly IGenericRepository<RefreshToken> _refreshTokenRepository;
 
-    public AuthService(IConfiguration config, UserManager<ApplicationUser> userManager, IGenericRepository<RefreshToken> refreshTokenRepository)
+    public AuthService(IConfiguration config, Microsoft.AspNetCore.Identity.UserManager<ApplicationUser> userManager, IGenericRepository<RefreshToken> refreshTokenRepository)
     {
         _config = config;
         _userManager = userManager;

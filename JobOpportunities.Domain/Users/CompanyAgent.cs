@@ -8,7 +8,7 @@
         }
 
         public string Cuit { get; set; }
-
         public ICollection<JobOffer>? Offers { get; set; }
+
     }
 }

@@ -3,10 +3,7 @@ using JobOpportunities.Core.Features.Auth.Commands;
 using JobOpportunities.Core.Features.Auth.Models;
 using JobOpportunities.Core.Features.Auth.Queries;
 using JobOpportunities.Data.Identity;
-using JobOpportunities.Domain;
-using MediatR;
 using Microsoft.AspNetCore.Authorization;
-using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 
 namespace ConsultaAlumnos.API.Controllers

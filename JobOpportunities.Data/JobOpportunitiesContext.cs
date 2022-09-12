@@ -63,6 +63,7 @@ namespace JobOpportunities.Data
 
         private static void SeedData(ModelBuilder builder)
         {
+            SeedRoles(builder);
             SeedSkillLevels(builder);
             SeedKnowledge(builder);
             SeedSkills(builder);
@@ -72,8 +73,17 @@ namespace JobOpportunities.Data
             SeedCandidates(builder);
             SeedCandidateSkills(builder);
             SeedCandidatesJobOffers(builder);
+            SeedUserRoles(builder);
         }
 
+        private static void SeedRoles(ModelBuilder builder)
+        {
+            builder.Entity<IdentityRole<Guid>>().HasData(
+                new IdentityRole<Guid>() { Id = new Guid("fab4fac1-c546-41de-aebc-a14da6895711"), Name = "Admin", ConcurrencyStamp = "1", NormalizedName = "ADMIN" },
+                new IdentityRole<Guid>() { Id = new Guid("c7b013f0-5201-4317-abd8-c211f91b7330"), Name = "Candidate", ConcurrencyStamp = "2", NormalizedName = "CANDIDATE" },
+                new IdentityRole<Guid>() { Id = new Guid("30680485-8d48-4a7a-8f2b-8afdb1fc526c"), Name = "CompanyAgent", ConcurrencyStamp = "3", NormalizedName = "COMPANYAGENT" }
+                );
+        }
         private static void SeedSkillLevels(ModelBuilder builder)
         {
             builder.Entity<SkillLevel>().HasData(
@@ -139,13 +149,17 @@ namespace JobOpportunities.Data
 
         private static void SeedCompanies(ModelBuilder builder)
         {
-            builder.Entity<CompanyAgent>().HasData(
-                            new CompanyAgent("José María", "endava", "34-523445345-4")
-                            {
-                                Id = new Guid("1B1D13DD-AFB4-474F-A60A-BF6AB3474898"),
-                            }
-                            );
+            PasswordHasher<CompanyAgent> passwordHasher = new PasswordHasher<CompanyAgent>();
+            var company1 = new CompanyAgent("José María", "endava", "34-523445345-4")
+            {
+                Id = new Guid("1B1D13DD-AFB4-474F-A60A-BF6AB3474898"),
+            };
+
+            company1.PasswordHash = passwordHasher.HashPassword(company1, "Candidate*123");
+
+            builder.Entity<CompanyAgent>().HasData(company1);
         }
+
         private static void SeedJobOffers(ModelBuilder builder)
         {
             builder.Entity<JobOffer>().HasData(
@@ -183,25 +197,31 @@ namespace JobOpportunities.Data
         }
         private static void SeedCandidates(ModelBuilder builder)
         {
-            builder.Entity<Candidate>().HasData(
-                new Candidate("Pepito", "Juarez")
-                {
-                    Id = new Guid("f47890b6-a3ce-4057-94a9-af862d2c01de"),
-                    Email = "pepito@endava.com",
-                    UserName = "PepitoJuarez",
-                    PasswordHash = "123456UltraSecure",
-                    Cuil = "20-45323443-3"
-                });
+            PasswordHasher<Candidate> passwordHasher = new PasswordHasher<Candidate>();
+            var candidate1 = new Candidate("Pepito", "Juarez")
+            {
+                Id = new Guid("f47890b6-a3ce-4057-94a9-af862d2c01de"),
+                Email = "pepito@endava.com",
+                UserName = "PepitoJuarez",
+                Cuil = "20-45323443-3"
+            };
 
-            builder.Entity<Candidate>().HasData(
-                new Candidate("Marcelo", "Reynoso")
-                {
-                    Id = new Guid("f29d1608-f324-4432-8e44-5ee320909b9d"),
-                    Email = "marcelo@endava.com",
-                    UserName = "MarceloReynoso",
-                    PasswordHash = "320909b967uythgfd@434$%&",
-                    Cuil = "20-65723443-3"
-                });
+            var candidate2 = new Candidate("Marcelo", "Reynoso")
+            {
+                Id = new Guid("f29d1608-f324-4432-8e44-5ee320909b9d"),
+                Email = "marcelo@endava.com",
+                UserName = "MarceloReynoso",
+                Cuil = "20-65723443-3"
+            };
+
+            candidate1.PasswordHash = passwordHasher.HashPassword(candidate1, "Candidate*123");
+            candidate2.PasswordHash = passwordHasher.HashPassword(candidate2, "Candidate*123");
+
+            builder.Entity<Candidate>().HasData(new List<Candidate>()
+            {
+                candidate1,
+                candidate2
+            });
         }
         private static void SeedCandidateSkills(ModelBuilder builder)
         {
@@ -231,6 +251,15 @@ namespace JobOpportunities.Data
                          new { CandidatesId = new Guid("f47890b6-a3ce-4057-94a9-af862d2c01de"), JobOfferApplicationsId = new Guid("5cfe1935-3a8e-418a-a260-38d0551d5027") },
                         new { CandidatesId = new Guid("f29d1608-f324-4432-8e44-5ee320909b9d"), JobOfferApplicationsId = new Guid("5cfe1935-3a8e-418a-a260-38d0551d5027") }
                     })
+                );
+        }
+
+        private static void SeedUserRoles(ModelBuilder builder)
+        {
+            builder.Entity<IdentityUserRole<Guid>>().HasData(
+                new IdentityUserRole<Guid>() { RoleId = new Guid("30680485-8d48-4a7a-8f2b-8afdb1fc526c"), UserId = new Guid("1B1D13DD-AFB4-474F-A60A-BF6AB3474898") },
+                new IdentityUserRole<Guid>() { RoleId = new Guid("c7b013f0-5201-4317-abd8-c211f91b7330"), UserId = new Guid("f47890b6-a3ce-4057-94a9-af862d2c01de") },
+                new IdentityUserRole<Guid>() { RoleId = new Guid("c7b013f0-5201-4317-abd8-c211f91b7330"), UserId = new Guid("f29d1608-f324-4432-8e44-5ee320909b9d") }
                 );
         }
     }

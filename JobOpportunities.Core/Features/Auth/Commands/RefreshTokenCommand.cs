@@ -21,12 +21,12 @@ public class RefreshTokenCommandHandler : IRequestHandler<RefreshTokenCommand, R
     private readonly IGenericRepository<RefreshToken> _refreshTokenRepository;
     private readonly IAuthService _authService;
     private readonly ILogger<RefreshTokenCommand> _logger;
-    private readonly UserManager<ApplicationUser> _userManager;
+    private readonly Microsoft.AspNetCore.Identity.UserManager<ApplicationUser> _userManager;
 
     public RefreshTokenCommandHandler(IGenericRepository<RefreshToken> refreshTokenRepository,
         IAuthService authService,
         ILogger<RefreshTokenCommand> logger,
-        UserManager<ApplicationUser> userManager)
+        Microsoft.AspNetCore.Identity.UserManager<ApplicationUser> userManager)
     {
         _refreshTokenRepository = refreshTokenRepository;
         _authService = authService;

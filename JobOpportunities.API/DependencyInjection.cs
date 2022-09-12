@@ -2,6 +2,7 @@
 using JobOpportunities.API.Filters;
 using JobOpportunities.Data;
 using JobOpportunities.Domain;
+using JobOpportunities.Domain.Users;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
@@ -59,6 +60,36 @@ public static class DependencyInjection
                  opt.User.RequireUniqueEmail = true;
              })
             .AddEntityFrameworkStores<JobOpportunitiesContext>();
+
+        services.AddIdentityCore<CompanyAgent>(opt =>
+        {
+            opt.Password.RequiredLength = 6;
+            opt.Password.RequireDigit = false;
+            opt.Password.RequireUppercase = false;
+            opt.User.RequireUniqueEmail = true;
+        })
+        .AddRoles<IdentityRole<Guid>>()
+        .AddEntityFrameworkStores<JobOpportunitiesContext>();
+
+        services.AddIdentityCore<Admin>(opt =>
+        {
+            opt.Password.RequiredLength = 6;
+            opt.Password.RequireDigit = false;
+            opt.Password.RequireUppercase = false;
+            opt.User.RequireUniqueEmail = true;
+        })
+        .AddRoles<IdentityRole<Guid>>()
+        .AddEntityFrameworkStores<JobOpportunitiesContext>();
+
+        services.AddIdentityCore<Candidate>(opt =>
+        {
+            opt.Password.RequiredLength = 6;
+            opt.Password.RequireDigit = false;
+            opt.Password.RequireUppercase = false;
+            opt.User.RequireUniqueEmail = true;
+        })
+        .AddRoles<IdentityRole<Guid>>()
+        .AddEntityFrameworkStores<JobOpportunitiesContext>();
 
         return services;
     }
