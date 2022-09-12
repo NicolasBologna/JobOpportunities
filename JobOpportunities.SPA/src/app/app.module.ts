@@ -13,6 +13,7 @@ import { NotFoundComponent } from './error-pages/not-found/not-found.component';
 import { JobOffersModule } from './job-offers/job-offers.module';
 import { SkillLevelsModule } from './skill-levels/skill-levels.module';
 import { InternalServerComponent } from './error-pages/internal-server/internal-server.component';
+import { SkillsModule } from './skills/skills.module';
 
 @NgModule({
   imports: [
@@ -25,6 +26,7 @@ import { InternalServerComponent } from './error-pages/internal-server/internal-
     ReactiveFormsModule,
     JobOffersModule,
     SkillLevelsModule,
+    SkillsModule,
   ],
   declarations: [
     AppComponent,

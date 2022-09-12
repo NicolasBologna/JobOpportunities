@@ -20,6 +20,18 @@ const routes: Routes = [
         (m) => m.SkillLevelsModule
       ),
   },
+  {
+    path: 'skills',
+    loadChildren: () =>
+      import('./skills/skills.module').then((m) => m.SkillsModule),
+  },
+  {
+    path: 'company-agents',
+    loadChildren: () =>
+      import('./company-agents/company-agents.module').then(
+        (m) => m.CompanyAgentsModule
+      ),
+  },
   { path: '404', component: NotFoundComponent },
   { path: '500', component: InternalServerComponent },
   { path: '', redirectTo: '/home', pathMatch: 'full' },

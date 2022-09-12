@@ -1,5 +1,5 @@
 <div class="row">
-  <div class="offset-10 col-md-2 mt-2"> <a href="#">Create skill</a> </div>
+  <div class="offset-10 col-md-2 mt-2"> <a href="#">Create company agent</a> </div>
 </div> <br>
 <div class="row">
   <div class="col-md-12">
@@ -8,22 +8,24 @@
         <thead>
           <tr>
             <th>Id</th>
+            <th>Cuit</th>
+            <th>User Name</th>
+            <th>Email</th>
             <th>Nombre</th>
-            <th>Descripción</th>
-            <th>Creado el</th>
             <th>Details</th>
             <th>Update</th>
             <th>Delete</th>
           </tr>
         </thead>
         <tbody>
-          <tr *ngFor="let skill of skillLevels">
-            <td>{{skill.id}}</td>
-
-            <td>{{skill.name}}</td>
-            <td>{{skill.description}}</td>
-            <td>{{skill.createdAt | date: 'dd/MM/yyyy'}}</td>
-            <td><button type="button" id="details" class="btn btn-primary" (click)="getSkillLevelDetails(skill.id)">Details</button>
+          <tr *ngFor="let companyAgent of companyAgents">
+            <td>{{companyAgent.id}}</td>
+            <td>{{companyAgent.cuit}}</td>
+            <td>{{companyAgent.userName}}</td>
+            <td>{{companyAgent.email}}</td>
+            <td>{{companyAgent.firstName + ' ' + companyAgent.lastName}}</td>
+            <td><button type="button" id="details" class="btn btn-primary"
+                (click)="getCompanyAgentDetails(companyAgent.id)">Details</button>
             </td>
             <td><button type="button" id="update" class="btn btn-success">Update</button></td>
             <td><button type="button" id="delete" class="btn btn-danger">Delete</button></td>

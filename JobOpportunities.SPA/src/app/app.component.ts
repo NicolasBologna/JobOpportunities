@@ -11,7 +11,8 @@ export class AppComponent {
   links = [
     { path: '/home', icon: 'home', title: 'Home' },
     { path: '/job-offers', icon: 'view_list', title: 'Job Offers' },
-    { path: '/skill-levels', icon: 'view_list', title: 'Skill levels' },
+    { path: '/skill-levels', icon: 'view_list', title: 'Skill Levels' },
+    { path: '/company-agents', icon: 'view_list', title: 'Company Agents' },
   ];
 
   themeToggleControl = new UntypedFormControl(false);

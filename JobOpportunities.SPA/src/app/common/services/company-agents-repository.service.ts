@@ -1,6 +1,6 @@
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { JobOffer } from '../models/job-offer';
+import { CompanyAgent } from '../models/company-agent';
 import { EnvironmentUrlService } from './environment-url.service';
 
 @Injectable({
@@ -12,26 +12,26 @@ export class CompanyAgentsRepositoryService {
     private envUrl: EnvironmentUrlService
   ) {}
 
-  public getJobOffers = (route: string) => {
-    return this.http.get<JobOffer[]>(
+  public getCompanyAgents = (route: string) => {
+    return this.http.get<CompanyAgent[]>(
       this.createCompleteRoute(route, this.envUrl.urlAddress)
     );
   };
-  public createJobOffer = (route: string, jobOffer: JobOffer) => {
-    return this.http.post<JobOffer>(
+  public createCompanyAgent = (route: string, jobOffer: CompanyAgent) => {
+    return this.http.post<CompanyAgent>(
       this.createCompleteRoute(route, this.envUrl.urlAddress),
       jobOffer,
       this.generateHeaders()
     );
   };
-  public updateJobOffer = (route: string, jobOffer: JobOffer) => {
+  public updateCompanyAgent = (route: string, jobOffer: CompanyAgent) => {
     return this.http.put(
       this.createCompleteRoute(route, this.envUrl.urlAddress),
       jobOffer,
       this.generateHeaders()
     );
   };
-  public deleteJobOffer = (route: string) => {
+  public deleteCompanyAgent = (route: string) => {
     return this.http.delete(
       this.createCompleteRoute(route, this.envUrl.urlAddress)
     );
