@@ -1,1 +1,57 @@
-<p>company-agent-details works!</p>
+<div class="card card-body bg-light mb-2 mt-2">
+  <div class="row">
+    <div class="col-md-3">
+      <strong>Nombre:</strong>
+    </div>
+    <div class="col-md-3">
+      {{companyAgent?.firstName + " " +companyAgent?.lastName }}
+    </div>
+  </div>
+  <div class="row">
+    <div class="col-md-3">
+      <strong>Nombre de Usuario:</strong>
+    </div>
+    <div class="col-md-3">
+      <span>{{companyAgent?.userName}} </span>
+    </div>
+  </div>
+  <div class="row">
+    <div class="col-md-3">
+      <strong>Descripción:</strong>
+    </div>
+    <div class="col-md-3">
+      {{companyAgent?.cuit}}
+    </div>
+  </div>
+  <div class="row">
+    <div class="col-md-3">
+      <strong>Email:</strong>
+    </div>
+    <div class="col-md-3">
+      {{companyAgent?.email}}
+    </div>
+  </div>
+  <div class="d-flex justify-content-center mt-2">
+    <span [appAppend]="companyAgent"></span>
+  </div>
+  <!-- <div class="row" *ngIf='skillLevel?.accounts.length <= 2; else advancedUser'>
+    <div class="col-md-3">
+      <strong>Type of user:</strong>
+    </div>
+    <div class="col-md-3">
+      <span class="text-success">Beginner user.</span>
+    </div>
+  </div>
+  <ng-template #advancedUser>
+    <div class="row">
+      <div class="col-md-3">
+        <strong>Type of user:</strong>
+      </div>
+      <div class="col-md-3">
+        <span class="text-info">Advanced user.</span>
+      </div>
+    </div>
+  </ng-template> -->
+</div>
+<app-company-agent-job-offers [jobOffers]="companyAgent?.offers" (onJobOfferClick)="printToConsole($event)">
+</app-company-agent-job-offers>

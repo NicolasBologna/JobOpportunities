@@ -16,9 +16,13 @@
 
   </mat-slide-toggle>
   <mat-icon class="mr-1">bedtime_5</mat-icon>
-  <button class="login" mat-mini-fab>
-    <mat-icon>person</mat-icon>
-  </button>
+  <a class="login" mat-mini-fab [routerLink]="['/authentication/register']" routerLinkActive="active"
+    [routerLinkActiveOptions]="{exact: true}">
+    <mat-icon>person_add</mat-icon>
+
+  </a>
+  <a class="nav-link">
+  </a>
 </mat-toolbar>
 
 <mat-sidenav-container class="mat-app-background">

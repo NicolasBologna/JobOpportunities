@@ -12,7 +12,7 @@ export class AppComponent {
     { path: '/home', icon: 'home', title: 'Home' },
     { path: '/job-offers', icon: 'view_list', title: 'Job Offers' },
     { path: '/skill-levels', icon: 'view_list', title: 'Skill Levels' },
-    { path: '/company-agents', icon: 'view_list', title: 'Company Agents' },
+    { path: '/company-agents', icon: 'view_list', title: 'Company Contacts' },
   ];
 
   themeToggleControl = new UntypedFormControl(false);

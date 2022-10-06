@@ -9,6 +9,13 @@ import { InternalServerComponent } from './error-pages/internal-server/internal-
 const routes: Routes = [
   { path: 'home', component: HomeComponent },
   {
+    path: 'authentication',
+    loadChildren: () =>
+      import('./authentication/authentication.module').then(
+        (m) => m.AuthenticationModule
+      ),
+  },
+  {
     path: 'job-offers',
     loadChildren: () =>
       import('./job-offers/job-offers.module').then((m) => m.JobOffersModule),

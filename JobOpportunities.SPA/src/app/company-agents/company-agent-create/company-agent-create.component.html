@@ -1,0 +1,85 @@
+<div class="container-fluid">
+  <form [formGroup]="companyAgentForm" autocomplete="off" novalidate
+    (ngSubmit)="createCompanyAgent(companyAgentForm.value)">
+    <div class="card card-body bg-light mb-2 mt-2">
+
+      <div class="row mb-3">
+        <label for="firstName" class="col-form-label col-md-2">First Name: </label>
+        <div class="col-md-5">
+          <input type="text" formControlName="firstName" id="firstName" class="form-control" />
+        </div>
+        <div class="col-md-5">
+          <em *ngIf="validateControl('firstName')
+          && hasError('firstName', 'required')">Name is required</em>
+          <em *ngIf="validateControl('firstName')
+          && hasError('firstName', 'maxlength')">Maximum allowed length is 60 characters.</em>
+        </div>
+      </div>
+
+      <div class="mb-3 row">
+        <label for="lastName" class="col-form-label col-md-2">Last Name: </label>
+        <div class="col-md-5">
+          <input type="text" formControlName="lastName" id="lastName" class="form-control" />
+        </div>
+        <div class="col-md-5">
+          <em *ngIf="validateControl('lastName')
+          && hasError('lastName', 'required')">Last name is required</em>
+          <em *ngIf="validateControl('lastName')
+          && hasError('lastName', 'maxlength')">Maximum allowed length is 100 characters.</em>
+        </div>
+      </div>
+
+      <div class="mb-3 row">
+        <label for="cuit" class="col-form-label col-md-2">CUIT: </label>
+        <div class="col-md-5">
+          <input type="text" formControlName="cuit" id="cuit" class="form-control" />
+        </div>
+        <div class="col-md-5">
+          <em *ngIf="validateControl('cuit')
+          && hasError('cuit', 'required')">CUIT is required</em>
+          <em *ngIf="validateControl('cuit')
+          && hasError('cuit', 'maxlength')">Maximum allowed length is 100 characters.</em>
+        </div>
+      </div>
+
+      <div class="mb-3 row">
+        <label for="userName" class="col-form-label col-md-2">Username: </label>
+        <div class="col-md-5">
+          <input type="text" formControlName="userName" id="userName" class="form-control" />
+        </div>
+        <div class="col-md-5">
+          <em *ngIf="validateControl('userName')
+          && hasError('userName', 'required')">Username is required</em>
+          <em *ngIf="validateControl('userName')
+          && hasError('userName', 'maxlength')">Maximum allowed length is 100 characters.</em>
+        </div>
+      </div>
+
+      <div class="mb-3 row">
+        <label for="email" class="col-form-label col-md-2">Email: </label>
+        <div class="col-md-5">
+          <input type="text" formControlName="email" id="email" class="form-control" />
+        </div>
+        <div class="col-md-5">
+          <em *ngIf="validateControl('email')
+          && hasError('email', 'required')">Email is required</em>
+          <em *ngIf="validateControl('userName')
+          && hasError('email', 'email')">Should be a valid email</em>
+        </div>
+      </div>
+      <br><br>
+
+      <div class="mb-3 row">
+        <div class="offset-5 col-md-1">
+          <button type="submit" class="btn btn-info" [disabled]="!companyAgentForm.valid">Save</button>
+        </div>
+        <div class="col-md-1">
+          <button type="button" class="btn btn-danger" (click)="redirectToOwnerList()">Cancel</button>
+        </div>
+      </div>
+
+    </div>
+  </form>
+</div>
+
+<span>{{companyAgentForm.value | json}}</span>

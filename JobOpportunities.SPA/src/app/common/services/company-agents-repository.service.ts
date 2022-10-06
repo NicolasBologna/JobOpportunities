@@ -1,6 +1,7 @@
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { CompanyAgent } from '../models/company-agent';
+import { CompanyAgentForCreation } from '../models/company-agent-for-creation';
 import { EnvironmentUrlService } from './environment-url.service';
 
 @Injectable({
@@ -17,17 +18,25 @@ export class CompanyAgentsRepositoryService {
       this.createCompleteRoute(route, this.envUrl.urlAddress)
     );
   };
-  public createCompanyAgent = (route: string, jobOffer: CompanyAgent) => {
-    return this.http.post<CompanyAgent>(
+  public getCompanyAgent = (route: string) => {
+    return this.http.get<CompanyAgent>(
+      this.createCompleteRoute(route, this.envUrl.urlAddress)
+    );
+  };
+  public createCompanyAgent = (
+    route: string,
+    companyAgent: CompanyAgentForCreation
+  ) => {
+    return this.http.post<CompanyAgentForCreation>(
       this.createCompleteRoute(route, this.envUrl.urlAddress),
-      jobOffer,
+      companyAgent,
       this.generateHeaders()
     );
   };
-  public updateCompanyAgent = (route: string, jobOffer: CompanyAgent) => {
+  public updateCompanyAgent = (route: string, companyAgent: CompanyAgent) => {
     return this.http.put(
       this.createCompleteRoute(route, this.envUrl.urlAddress),
-      jobOffer,
+      companyAgent,
       this.generateHeaders()
     );
   };

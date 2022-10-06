@@ -68,7 +68,7 @@ p {
   flex-wrap: wrap;
 }
 
-.container [class*='col'] {
+.container [class*='column'] {
   padding: 10px;
   flex: 1;
 }
@@ -224,10 +224,6 @@ mat-list-item:not(:first-of-type) {
 
 mat-card-actions {
   margin-bottom: 0;
-}
-
-.full-width {
-  width: 100%;
 }
 
 .nav-link {

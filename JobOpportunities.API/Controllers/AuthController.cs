@@ -2,6 +2,8 @@
 using JobOpportunities.Core.Features.Auth.Commands;
 using JobOpportunities.Core.Features.Auth.Models;
 using JobOpportunities.Core.Features.Auth.Queries;
+using JobOpportunities.Core.Features.SignUp.Commands;
+using JobOpportunities.Core.Features.SignUp.Models;
 using JobOpportunities.Data.Identity;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
@@ -38,6 +40,14 @@ namespace ConsultaAlumnos.API.Controllers
         public Task<RefreshTokenCommandResponse> RefreshToken([FromBody] RefreshTokenCommand command)
         {
             return Mediator.Send(command);
+        }
+
+        [HttpPost("register")]
+
+        public async Task<IActionResult> RegisterNewUSer([FromBody] RegisterNewUserCommand command)
+        {
+            var response = await Mediator.Send(command);
+            return response.IsSuccessfulRegistration ? Ok() : BadRequest(response);
         }
     }
 

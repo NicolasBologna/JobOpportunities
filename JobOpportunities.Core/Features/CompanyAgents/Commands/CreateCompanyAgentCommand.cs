@@ -32,7 +32,11 @@ namespace JobOpportunities.Core.Features.CompanyAgents.Commands
         {
             var newObject = _mapper.Map<CompanyAgent>(request);
 
-            var result = await _userManager.CreateAsync(newObject, request.Password);
+            var result = new IdentityResult();
+
+
+            result = await _userManager.CreateAsync(newObject, request.Password);
+
 
             if (result.Succeeded)
             {

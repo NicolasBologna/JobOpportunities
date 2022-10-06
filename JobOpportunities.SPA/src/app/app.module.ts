@@ -14,6 +14,7 @@ import { JobOffersModule } from './job-offers/job-offers.module';
 import { SkillLevelsModule } from './skill-levels/skill-levels.module';
 import { InternalServerComponent } from './error-pages/internal-server/internal-server.component';
 import { SkillsModule } from './skills/skills.module';
+import { BootstrapModule } from './bootstrap.module';
 
 @NgModule({
   imports: [
@@ -27,6 +28,7 @@ import { SkillsModule } from './skills/skills.module';
     JobOffersModule,
     SkillLevelsModule,
     SkillsModule,
+    BootstrapModule,
   ],
   declarations: [
     AppComponent,
