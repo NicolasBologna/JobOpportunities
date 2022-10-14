@@ -52,13 +52,14 @@ public static class DependencyInjection
         services.AddEndpointsApiExplorer();
 
 
-        services.AddIdentity<ApplicationUser, IdentityRole<Guid>>(opt =>
+        services.AddIdentityCore<ApplicationUser>(opt =>
              {
                  opt.Password.RequiredLength = 6;
                  opt.Password.RequireDigit = false;
                  opt.Password.RequireUppercase = false;
                  opt.User.RequireUniqueEmail = true;
              })
+            .AddRoles<IdentityRole<Guid>>()
             .AddEntityFrameworkStores<JobOpportunitiesContext>();
 
         services.AddIdentityCore<CompanyAgent>(opt =>

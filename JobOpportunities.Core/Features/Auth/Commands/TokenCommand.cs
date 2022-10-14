@@ -41,6 +41,7 @@ namespace JobOpportunities.Core.Features.Auth.Commands
 
             return new TokenCommandResponse
             {
+                IsAuthSuccessful = true,
                 AccessToken = jwt,
                 RefreshToken = newRefreshToken.RefreshTokenValue
             };

@@ -34,9 +34,7 @@ namespace JobOpportunities.Core.Features.CompanyAgents.Commands
 
             var result = new IdentityResult();
 
-
             result = await _userManager.CreateAsync(newObject, request.Password);
-
 
             if (result.Succeeded)
             {

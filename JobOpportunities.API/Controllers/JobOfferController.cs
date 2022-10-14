@@ -13,6 +13,7 @@ namespace JobOpportunities.API.Controllers
 {
     public class JobOfferController : ApiControllerBase
     {
+        [Authorize]
         [HttpGet]
         public async Task<IEnumerable<GetJobOffersResponse>> Get()
         {
