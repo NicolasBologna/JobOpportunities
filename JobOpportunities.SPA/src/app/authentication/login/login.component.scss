@@ -1,12 +1,14 @@
 :host {
   display: flex;
   justify-content: center;
-  margin: 5rem 0rem;
 }
 
+form {
+  max-width: 20rem;
+}
 .mat-form-field {
-  width: 100%;
   min-width: 20rem;
+    margin: 1rem 0 1rem 0;
 }
 
 mat-card-title,
@@ -15,14 +17,11 @@ mat-card-content {
   justify-content: center;
 }
 
-.error {
-  padding: 16px;
-  width: 300px;
-  color: white;
-  background-color: red;
-}
-
 .button {
   display: flex;
   justify-content: flex-end;
+}
+
+.error {
+  color: red;
 }

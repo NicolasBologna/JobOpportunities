@@ -19,6 +19,7 @@ import { ErrorHandlerService } from './common/services/error-handler.service';
 import { JwtModule } from '@auth0/angular-jwt';
 import { PrivacyComponent } from './privacy/privacy.component';
 import { ForbiddenComponent } from './error-pages/forbidden/forbidden.component';
+import { FlexLayoutModule } from '@angular/flex-layout';
 
 export function tokenGetter() {
   return localStorage.getItem('token');
@@ -37,6 +38,7 @@ export function tokenGetter() {
     SkillLevelsModule,
     SkillsModule,
     BootstrapModule,
+    FlexLayoutModule,
     JwtModule.forRoot({
       config: {
         tokenGetter: tokenGetter,

@@ -35,6 +35,8 @@ namespace JobOpportunities.Data
             builder.Entity<CompanyAgent>().HasMany(x => x.Offers).WithOne(y => y.Company).OnDelete(DeleteBehavior.ClientCascade);
             builder.Entity<CompanyAgent>().Navigation(ca => ca.Offers).AutoInclude();
 
+            builder.Entity<ApplicationUser>().HasDiscriminator(b => b.UserType);
+
 
             SeedData(builder);
             base.OnModelCreating(builder);

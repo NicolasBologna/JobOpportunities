@@ -1,5 +1,6 @@
+import { NumberInput } from '@angular/cdk/coercion';
 import { Component, OnInit } from '@angular/core';
-import { JwtHelperService } from '@auth0/angular-jwt';
+
 export interface Tile {
   color: string;
   cols: number;
@@ -14,22 +15,41 @@ export interface Tile {
   styleUrls: ['./home.component.scss'],
 })
 export class HomeComponent {
+  public breakpoint: NumberInput = 1;
+  private smallWindow = (): boolean => {
+    return window.innerWidth <= 700;
+  };
+
+  private opportunitiesColumns = this.smallWindow() ? 1 : 3;
+  private myRequests = this.smallWindow() ? 1 : 2;
+
   tiles: Tile[] = [
     {
       text: 'Oportunidades',
-      cols: 3,
+      cols: this.opportunitiesColumns,
       rows: 1,
-      color: 'lightblue',
+      color: '#256D85',
       path: '/jobOffers',
     },
-    { text: 'Mi Usuario', cols: 1, rows: 2, color: 'lightgreen', path: '' },
+    { text: 'Mi Usuario', cols: 1, rows: 2, color: '#47B5FF', path: '' },
     { text: 'Favoritos', cols: 1, rows: 1, color: 'lightpink', path: '' },
     {
       text: 'Mis postulaciones',
-      cols: 2,
+      cols: this.myRequests,
       rows: 1,
       color: '#DDBDF1',
       path: '',
     },
   ];
+
+  ngOnInit() {
+    this.breakpoint = this.smallWindow() ? 1 : 4;
+  }
+
+  onResize(event) {
+    this.tiles[0].cols = this.smallWindow() ? 1 : 3;
+    this.tiles[3].cols = this.smallWindow() ? 1 : 2;
+    this.breakpoint = this.smallWindow() ? 1 : 4;
+    console.log(this.opportunitiesColumns);
+  }
 }

@@ -3,7 +3,7 @@ using Microsoft.AspNetCore.Identity;
 
 namespace JobOpportunities.Domain
 {
-    public abstract class ApplicationUser : IdentityUser<Guid>
+    public class ApplicationUser : IdentityUser<Guid>
     {
         public ApplicationUser(string firstName, string lastName)
         {
@@ -15,5 +15,6 @@ namespace JobOpportunities.Domain
 
         public string FirstName { get; set; }
         public string LastName { get; set; }
+        public string UserType { get; set; }
     }
 }

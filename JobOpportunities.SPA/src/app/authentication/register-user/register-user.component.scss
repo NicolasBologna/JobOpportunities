@@ -6,9 +6,22 @@ em {
 .ng-invalid.ng-touched {
   border-color: red;
 }
+mat-button-toggle-group {
+  margin: auto;
+}
 
 .card {
   margin-top: 10px;
   background-color: #fff;
   box-shadow: 1px 1px 1px #cabcbc;
+}
+
+form {
+  display: flex;
+  flex-direction: column;
+}
+
+.button {
+  display: flex;
+  justify-content: flex-end;
 }

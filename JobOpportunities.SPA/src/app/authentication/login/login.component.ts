@@ -26,6 +26,7 @@ export class LoginComponent implements OnInit {
     this.loginForm = new FormGroup({
       username: new FormControl('', [Validators.required]),
       password: new FormControl('', [Validators.required]),
+      userType: new FormControl('candidate'),
     });
     this.returnUrl = this.route.snapshot.queryParams['returnUrl'] || '/';
   }
@@ -45,17 +46,16 @@ export class LoginComponent implements OnInit {
     const userForAuth: UserForAuthenticationDto = {
       userName: login.username,
       password: login.password,
+      userType: login.userType,
     };
+    console.log(userForAuth);
     this.authService.loginUser('auth/token', userForAuth).subscribe({
       next: (res: AuthResponseDto) => {
-        console.log(res);
-
         localStorage.setItem('token', res.accessToken);
         this.authService.sendAuthStateChangeNotification(res.isAuthSuccessful);
         this.router.navigate([this.returnUrl]);
       },
       error: (err: HttpErrorResponse) => {
-        console.log(err);
         this.errorMessage = err.message;
         this.showError = true;
       },

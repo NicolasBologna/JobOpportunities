@@ -22,11 +22,12 @@ export class RegisterUserComponent implements OnInit {
   ) {}
   ngOnInit(): void {
     this.registerForm = new FormGroup({
-      firstName: new FormControl(''),
-      lastName: new FormControl(''),
+      firstName: new FormControl('', [Validators.required]),
+      lastName: new FormControl('', [Validators.required]),
       email: new FormControl('', [Validators.required, Validators.email]),
       password: new FormControl('', [Validators.required]),
       confirm: new FormControl(''),
+      userType: new FormControl('candidate', [Validators.required]),
     });
     this.registerForm
       .get('confirm')
@@ -56,6 +57,7 @@ export class RegisterUserComponent implements OnInit {
       email: formValues.email,
       password: formValues.password,
       confirmPassword: formValues.confirm,
+      userType: formValues.userType,
     };
     this.authService.registerUser('auth/register', user).subscribe({
       next: (_) => this.router.navigate(['/authentication/login']),

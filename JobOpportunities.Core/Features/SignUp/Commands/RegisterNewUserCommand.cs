@@ -20,26 +20,27 @@ namespace JobOpportunities.Core.Features.SignUp.Commands
     [AuditLog]
     public class RegisterNewUserCommand : IRequest<RegisterNewUserResponse>
     {
-        public string? FirstName { get; set; }
-        public string? LastName { get; set; }
-        public string? Email { get; set; }
-        public string? Password { get; set; }
-        public string? ConfirmPassword { get; set; }
+        public string FirstName { get; set; }
+        public string LastName { get; set; }
+        public string Email { get; set; }
+        public string Password { get; set; }
+        public string ConfirmPassword { get; set; }
+        public string UserType { get; set; }
     }
 
     public class RegisterNewUSerCommandHandler : IRequestHandler<RegisterNewUserCommand, RegisterNewUserResponse>
     {
-        private readonly UserManager<Candidate> _candidateManager;
+        private readonly UserManager<ApplicationUser> _candidateManager;
         private readonly IMapper _mapper;
 
-        public RegisterNewUSerCommandHandler(UserManager<Candidate> candidateManager, IMapper mapper)
+        public RegisterNewUSerCommandHandler(UserManager<ApplicationUser> candidateManager, IMapper mapper)
         {
             _candidateManager = candidateManager;
             _mapper = mapper;
         }
         public async Task<RegisterNewUserResponse> Handle(RegisterNewUserCommand userForRegistration, CancellationToken cancellationToken)
         {
-            var user = _mapper.Map<Candidate>(userForRegistration);
+            var user = _mapper.Map<ApplicationUser>(userForRegistration);
             var result = await _candidateManager.CreateAsync(user, userForRegistration.Password);
             if (!result.Succeeded)
             {
@@ -47,6 +48,7 @@ namespace JobOpportunities.Core.Features.SignUp.Commands
 
                 return new RegisterNewUserResponse { Errors = errors, IsSuccessfulRegistration = false };
             }
+            await _candidateManager.AddToRoleAsync(user, userForRegistration.UserType);
             return new RegisterNewUserResponse { IsSuccessfulRegistration = true };
         }
     }
