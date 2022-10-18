@@ -1,6 +1,7 @@
 import { HttpErrorResponse } from '@angular/common/http';
 import { Component, OnInit } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
+import { Router } from '@angular/router';
 import { PasswordConfirmationValidatorService } from 'src/app/common/custom-validators/password-confirmation-validator.service';
 import { UserForRegistrationDto } from 'src/app/common/models/user/user-for-registration';
 import { AuthenticationService } from 'src/app/common/services/authentication.service';
@@ -11,10 +12,13 @@ import { AuthenticationService } from 'src/app/common/services/authentication.se
   styleUrls: ['./register-user.component.scss'],
 })
 export class RegisterUserComponent implements OnInit {
-  registerForm: FormGroup;
+  public registerForm: FormGroup;
+  public errorMessage: string = '';
+  public showError: boolean;
   constructor(
     private authService: AuthenticationService,
-    private passConfValidator: PasswordConfirmationValidatorService
+    private passConfValidator: PasswordConfirmationValidatorService,
+    private router: Router
   ) {}
   ngOnInit(): void {
     this.registerForm = new FormGroup({
@@ -44,6 +48,7 @@ export class RegisterUserComponent implements OnInit {
     return this.registerForm.get(controlName).hasError(errorName);
   };
   public registerUser = (registerFormValue) => {
+    this.showError = false;
     const formValues = { ...registerFormValue };
     const user: UserForRegistrationDto = {
       firstName: formValues.firstName,
@@ -53,8 +58,11 @@ export class RegisterUserComponent implements OnInit {
       confirmPassword: formValues.confirm,
     };
     this.authService.registerUser('auth/register', user).subscribe({
-      next: (_) => console.log('Successful registration'),
-      error: (err: HttpErrorResponse) => console.log(err.error.errors, err),
+      next: (_) => this.router.navigate(['/authentication/login']),
+      error: (err: HttpErrorResponse) => {
+        this.errorMessage = err.message;
+        this.showError = true;
+      },
     });
   };
 }

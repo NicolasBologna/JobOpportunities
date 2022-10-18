@@ -1,5 +1,8 @@
 import { Component, HostBinding } from '@angular/core';
 import { UntypedFormControl } from '@angular/forms';
+import { Router } from '@angular/router';
+import { JwtHelperService } from '@auth0/angular-jwt';
+import { AuthenticationService } from './common/services/authentication.service';
 
 @Component({
   selector: 'app-root',
@@ -7,7 +10,15 @@ import { UntypedFormControl } from '@angular/forms';
   styleUrls: ['./app.component.scss'],
 })
 export class AppComponent {
-  title = 'Job Opportunities';
+  title = 'Bolsa de Trabajo';
+
+  public isUserAuthenticated: boolean;
+
+  constructor(
+    private authService: AuthenticationService,
+    private jwtHelper: JwtHelperService,
+    private router: Router
+  ) {}
   links = [
     { path: '/home', icon: 'home', title: 'Home' },
     { path: '/job-offers', icon: 'view_list', title: 'Job Offers' },
@@ -15,15 +26,23 @@ export class AppComponent {
     { path: '/company-agents', icon: 'view_list', title: 'Company Contacts' },
   ];
 
-  themeToggleControl = new UntypedFormControl(false);
+  themeToggleControl = new UntypedFormControl(true);
 
-  @HostBinding('class') className = '';
+  @HostBinding('class') className = 'darkMode';
 
   ngOnInit(): void {
     this.themeToggleControl.valueChanges.subscribe((val) => {
       this.className = val ? 'darkMode' : '';
     });
+    this.authService.authChanged.subscribe((res) => {
+      this.isUserAuthenticated = res;
+    });
+    if (this.authService.isUserAuthenticated())
+      this.authService.sendAuthStateChangeNotification(true);
   }
 
-  constructor() {}
+  public logout = () => {
+    this.authService.logout();
+    this.router.navigate(['/']);
+  };
 }

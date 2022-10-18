@@ -19,7 +19,7 @@ namespace ConsultaAlumnos.API.Controllers
         }
 
         [HttpGet("claims")]
-        [Authorize]
+        [Authorize(Roles = "Admin")]
         public async Task<ActionResult<TokenInfoQueryResponse>> PersonalInformation()
         {
             return await Mediator.Send(new TokenInfoQuery());
@@ -50,6 +50,4 @@ namespace ConsultaAlumnos.API.Controllers
             return response.IsSuccessfulRegistration ? Ok() : BadRequest(response);
         }
     }
-
-
 }

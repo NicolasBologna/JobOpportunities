@@ -1,4 +1,4 @@
-import { HttpClientModule } from '@angular/common/http';
+import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
 import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
@@ -15,6 +15,14 @@ import { SkillLevelsModule } from './skill-levels/skill-levels.module';
 import { InternalServerComponent } from './error-pages/internal-server/internal-server.component';
 import { SkillsModule } from './skills/skills.module';
 import { BootstrapModule } from './bootstrap.module';
+import { ErrorHandlerService } from './common/services/error-handler.service';
+import { JwtModule } from '@auth0/angular-jwt';
+import { PrivacyComponent } from './privacy/privacy.component';
+import { ForbiddenComponent } from './error-pages/forbidden/forbidden.component';
+
+export function tokenGetter() {
+  return localStorage.getItem('token');
+}
 
 @NgModule({
   imports: [
@@ -29,6 +37,13 @@ import { BootstrapModule } from './bootstrap.module';
     SkillLevelsModule,
     SkillsModule,
     BootstrapModule,
+    JwtModule.forRoot({
+      config: {
+        tokenGetter: tokenGetter,
+        allowedDomains: ['localhost:7278'], //Esto le dice que a todo lo que tenga este dominio le meta el JWT
+        disallowedRoutes: [],
+      },
+    }),
   ],
   declarations: [
     AppComponent,
@@ -36,8 +51,16 @@ import { BootstrapModule } from './bootstrap.module';
     KnowledgeComponent,
     NotFoundComponent,
     InternalServerComponent,
+    PrivacyComponent,
+    ForbiddenComponent,
   ],
-  providers: [],
+  providers: [
+    {
+      provide: HTTP_INTERCEPTORS,
+      useClass: ErrorHandlerService,
+      multi: true,
+    },
+  ],
   bootstrap: [AppComponent],
 })
 export class AppModule {}

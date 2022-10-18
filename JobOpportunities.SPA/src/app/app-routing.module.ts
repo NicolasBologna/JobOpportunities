@@ -5,6 +5,10 @@ import { JobOffersComponent } from './job-offers/job-offers.component';
 import { HomeComponent } from './home/home.component';
 import { NotFoundComponent } from './error-pages/not-found/not-found.component';
 import { InternalServerComponent } from './error-pages/internal-server/internal-server.component';
+import { AuthGuard } from './common/guards/auth.guard';
+import { PrivacyComponent } from './privacy/privacy.component';
+import { ForbiddenComponent } from './error-pages/forbidden/forbidden.component';
+import { AdminGuard } from './common/guards/admin.guard';
 
 const routes: Routes = [
   { path: 'home', component: HomeComponent },
@@ -19,6 +23,7 @@ const routes: Routes = [
     path: 'job-offers',
     loadChildren: () =>
       import('./job-offers/job-offers.module').then((m) => m.JobOffersModule),
+    canActivate: [AuthGuard],
   },
   {
     path: 'skill-levels',
@@ -39,7 +44,13 @@ const routes: Routes = [
         (m) => m.CompanyAgentsModule
       ),
   },
+  {
+    path: 'privacy',
+    component: PrivacyComponent,
+    canActivate: [AuthGuard, AdminGuard],
+  },
   { path: '404', component: NotFoundComponent },
+  { path: '403', component: ForbiddenComponent },
   { path: '500', component: InternalServerComponent },
   { path: '', redirectTo: '/home', pathMatch: 'full' },
   { path: '**', redirectTo: '/404', pathMatch: 'full' },

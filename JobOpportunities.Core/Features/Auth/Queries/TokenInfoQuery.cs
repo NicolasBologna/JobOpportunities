@@ -23,19 +23,19 @@ namespace JobOpportunities.Core.Features.Auth.Queries
             if (user is null)
                 throw new ForbiddenAccessException();
 
-            var claims = new
+            var response = new TokenInfoQueryResponse()
             {
                 Claims = user.Claims.Select(s => new
                 {
                     s.Type,
                     s.Value
                 }).ToList(),
-                user.Identity!.Name,
-                user.Identity.IsAuthenticated,
-                user.Identity.AuthenticationType
+                Name = user.Identity!.Name,
+                IsAuthenticated = user.Identity.IsAuthenticated,
+                AuthenticationType = user.Identity.AuthenticationType
             };
 
-            return Task.FromResult(new TokenInfoQueryResponse { Claims = claims });
+            return Task.FromResult(response);
         }
     }
 }
