@@ -4,6 +4,7 @@ using JobOpportunities.Domain.Users;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.Extensions.Configuration;
 using Microsoft.IdentityModel.Tokens;
+using System.Data;
 using System.IdentityModel.Tokens.Jwt;
 using System.Security.Claims;
 using System.Text;
@@ -31,12 +32,7 @@ public class AuthService : IAuthService
             new Claim(ClaimTypes.Name, user.UserName)
         };
 
-        var roles = await _userManager.GetRolesAsync(user);
-
-        foreach (var role in roles)
-        {
-            claims.Add(new Claim(ClaimTypes.Role, role));
-        }
+        claims.Add(new Claim(ClaimTypes.Role, user.UserType));
 
         var securityKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(_config["Jwt:Key"]));
         var credentials = new SigningCredentials(securityKey, SecurityAlgorithms.HmacSha256Signature);

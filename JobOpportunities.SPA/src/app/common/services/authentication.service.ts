@@ -46,7 +46,6 @@ export class AuthenticationService {
 
   public isUserAuthenticated = (): boolean => {
     const token = localStorage.getItem('token');
-    console.log(token);
     return (
       token && token !== 'undefined' && !this.jwtHelper.isTokenExpired(token)
     );
@@ -70,5 +69,15 @@ export class AuthenticationService {
         'http://schemas.microsoft.com/ws/2008/06/identity/claims/role'
       ];
     return role === 'Admin';
+  };
+
+  public getUserRole = (): string => {
+    const token = localStorage.getItem('token');
+    const decodedToken = this.jwtHelper.decodeToken(token);
+    const role =
+      decodedToken[
+        'http://schemas.microsoft.com/ws/2008/06/identity/claims/role'
+      ];
+    return role;
   };
 }

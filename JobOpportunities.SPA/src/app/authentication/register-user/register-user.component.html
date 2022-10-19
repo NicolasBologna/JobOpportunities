@@ -1,6 +1,6 @@
-<div>
-  <h2>Alta de Usuario</h2>
-  <form class="example-container" [formGroup]="registerForm" (ngSubmit)="registerUser(registerForm.value)">
+<mat-card class="register-container">
+  <mat-card-title>Alta de Usuario</mat-card-title>
+  <form [formGroup]="registerForm" (ngSubmit)="registerUser(registerForm.value)">
     <div>
       <mat-label>
         Tipo de usuario:
@@ -47,7 +47,8 @@
     <p *ngIf="showError" class="error">{{errorMessage}}</p>
 
     <div class="button">
+      <a mat-button [routerLink]="['/auth/login']">Ingresar</a>
       <button type="submit" mat-button [disabled]="!registerForm.valid">Crear</button>
     </div>
-    </form>
-</div>
+  </form>
+</mat-card>

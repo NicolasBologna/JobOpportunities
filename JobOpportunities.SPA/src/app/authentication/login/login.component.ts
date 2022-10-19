@@ -48,10 +48,10 @@ export class LoginComponent implements OnInit {
       password: login.password,
       userType: login.userType,
     };
-    console.log(userForAuth);
     this.authService.loginUser('auth/token', userForAuth).subscribe({
       next: (res: AuthResponseDto) => {
         localStorage.setItem('token', res.accessToken);
+        localStorage.setItem('user_type', this.authService.getUserRole());
         this.authService.sendAuthStateChangeNotification(res.isAuthSuccessful);
         this.router.navigate([this.returnUrl]);
       },

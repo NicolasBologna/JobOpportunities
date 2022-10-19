@@ -1,15 +1,14 @@
-import { Component, HostBinding } from '@angular/core';
+import { Component, HostBinding, OnInit } from '@angular/core';
 import { UntypedFormControl } from '@angular/forms';
 import { Router } from '@angular/router';
-import { JwtHelperService } from '@auth0/angular-jwt';
-import { AuthenticationService } from './common/services/authentication.service';
+import { AuthenticationService } from 'src/app/common/services/authentication.service';
 
 @Component({
-  selector: 'app-root',
-  templateUrl: './app.component.html',
-  styleUrls: ['./app.component.scss'],
+  selector: 'app-company-layout',
+  templateUrl: './company-layout.component.html',
+  styleUrls: ['./company-layout.component.scss'],
 })
-export class AppComponent {
+export class CompanyLayoutComponent implements OnInit {
   title = 'Bolsa de Trabajo';
 
   public isUserAuthenticated: boolean;

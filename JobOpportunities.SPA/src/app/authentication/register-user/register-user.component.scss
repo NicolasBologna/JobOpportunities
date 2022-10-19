@@ -10,10 +10,10 @@ mat-button-toggle-group {
   margin: auto;
 }
 
-.card {
-  margin-top: 10px;
-  background-color: #fff;
-  box-shadow: 1px 1px 1px #cabcbc;
+mat-card-title,
+mat-card-content {
+  display: flex;
+  justify-content: center;
 }
 
 form {
@@ -29,4 +29,14 @@ form {
 .error {
   color: #e71515;
   font-size: small;
+}
+
+.register-container {
+  background-color: #1b1c1dba;
+  padding: 2rem;
+  margin-top: 1rem;
+  color: rgba(255, 255, 255, 0.7);
+  border-radius: 0.5rem;
+  max-width: 30rem;
+  margin: auto;
 }

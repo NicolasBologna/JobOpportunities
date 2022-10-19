@@ -14,8 +14,10 @@ import { MaterialModule } from '../material.module';
       { path: 'register', component: RegisterUserComponent },
     ]),
     RouterModule.forChild([{ path: 'login', component: LoginComponent }]),
+    RouterModule.forChild([{ path: '', component: LoginComponent }]),
     ReactiveFormsModule,
     MaterialModule,
   ],
+  exports: [RegisterUserComponent, LoginComponent],
 })
 export class AuthenticationModule {}

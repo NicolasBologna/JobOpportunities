@@ -1,0 +1,13 @@
+@use './../../../../styles.scss' as styles;
+
+.clickable-tile {
+  border-radius: 2px;
+  filter: drop-shadow(3px 3px 3px rgb(116, 116, 116));
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  transition: 0.8s;
+}
+
+.clickable-tile:hover {
+  cursor: pointer;
+  transform: scale(1.03);
+}

@@ -1,0 +1,56 @@
+<mat-toolbar color="primary" class="mat-elevation-z4 mat-app-background">
+  <span>
+    <button mat-mini-fab (click)="sidenav?.toggle()" *ngIf="isUserAuthenticated">
+      <mat-icon>menu</mat-icon>
+    </button>
+    <span class="logo">
+      <img src="assets/logo.png" alt="Logo" />
+    </span>
+    <span class="title">
+      {{ title }}
+    </span>
+  </span>
+  <span class="spacer"></span>
+  <mat-icon class="mr-1">brightness_5</mat-icon>
+  <mat-slide-toggle [formControl]="themeToggleControl" class="mr-1">
+
+  </mat-slide-toggle>
+  <mat-icon class="mr-1">bedtime_5</mat-icon>
+  <a class="login" mat-mini-fab [routerLink]="['/authentication/register']" routerLinkActive="active"
+  *ngIf='!isUserAuthenticated'
+  [routerLinkActiveOptions]="{exact: true}">
+    <mat-icon>person_add</mat-icon>
+  </a>
+  <a class="login" mat-mini-fab [routerLink]="['/authentication/login']" routerLinkActive="active"
+    *ngIf='!isUserAuthenticated' [routerLinkActiveOptions]="{exact: true}">
+    <mat-icon>login</mat-icon>
+  </a>
+  <a class="login" mat-mini-fab (click)="logout()" *ngIf='isUserAuthenticated'>
+    <mat-icon>logout</mat-icon>
+  </a>
+  <a class="login" mat-mini-fab [routerLink]="['/privacy']" routerLinkActive="active"
+    [routerLinkActiveOptions]="{exact: true}" *ngIf='isUserAuthenticated'>
+    <mat-icon>person</mat-icon>
+  </a>
+  <a class="nav-link">
+  </a>
+</mat-toolbar>
+
+<mat-sidenav-container class="mat-app-background" [ngClass]="{'background-image': !isUserAuthenticated}">
+  <mat-sidenav #sidenav mode="side" opened class="app-sidenav " [hidden]="!isUserAuthenticated">
+    <!-- Sidenav Menu -->
+    <nav>
+      <a mat-button class="nav-link" *ngFor="let link of links" [routerLink]="link.path" routerLinkActive="active">
+        <mat-icon>
+          {{link.icon}}
+        </mat-icon>
+        {{link.title}}
+      </a>
+    </nav>
+  </mat-sidenav>
+  <div fxLayout="row wrap" fxLayoutAlign="center center" class="layout-wrapper">
+    <div fxFlex="80%" fxFlex.lt-md="100%" class="flex-wrapper">
+      <router-outlet></router-outlet>
+    </div>
+  </div>
+</mat-sidenav-container>
