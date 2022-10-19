@@ -1,5 +1,5 @@
 <mat-grid-list [cols]="breakpoint" rowHeight="2:1" (window:resize)="onResize($event)" gutterSize="1rem"
-  class="menu-tiles ">
+  class="menu-tiles " *ngIf="isUserAuthenticated">
   <mat-grid-tile *ngFor="let tile of tiles" [colspan]="tile.cols" [rowspan]="tile.rows" [style.background]="tile.color"
     class="clickable-tile" [routerLink]="tile.path">
     {{tile.text | uppercase}}

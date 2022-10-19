@@ -36,7 +36,7 @@
   </a>
 </mat-toolbar>
 
-<mat-sidenav-container class="mat-app-background">
+<mat-sidenav-container class="mat-app-background" [ngClass]="{'background-image': !isUserAuthenticated}">
   <mat-sidenav #sidenav mode="side" opened class="app-sidenav " [hidden]="!isUserAuthenticated">
     <!-- Sidenav Menu -->
     <nav>
@@ -48,7 +48,6 @@
       </a>
     </nav>
   </mat-sidenav>
-
   <div fxLayout="row wrap" fxLayoutAlign="center center" class="layout-wrapper">
     <div fxFlex="80%" fxFlex.lt-md="100%" class="flex-wrapper">
       <router-outlet></router-outlet>

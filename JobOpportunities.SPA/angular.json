@@ -26,10 +26,7 @@
             "polyfills": "src/polyfills.ts",
             "tsConfig": "tsconfig.app.json",
             "inlineStyleLanguage": "scss",
-            "assets": [
-              "src/favicon.ico",
-              "src/assets"
-            ],
+            "assets": ["src/favicon.ico", "src/assets"],
             "styles": [
               "./node_modules/ngx-bootstrap/datepicker/bs-datepicker.css",
               "./node_modules/bootstrap/dist/css/bootstrap.min.css",
@@ -46,7 +43,7 @@
                   "maximumError": "1mb"
                 },
                 {
-                  "type": "anyComponentStyle",  
+                  "type": "anyComponentStyle",
                   "maximumWarning": "2kb",
                   "maximumError": "4kb"
                 }

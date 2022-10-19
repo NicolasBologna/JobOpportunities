@@ -1,5 +1,6 @@
 import { NumberInput } from '@angular/cdk/coercion';
 import { Component, OnInit } from '@angular/core';
+import { AuthenticationService } from '../common/services/authentication.service';
 
 export interface Tile {
   color: string;
@@ -16,9 +17,13 @@ export interface Tile {
 })
 export class HomeComponent {
   public breakpoint: NumberInput = 1;
+  isUserAuthenticated: boolean = false;
+
   private smallWindow = (): boolean => {
     return window.innerWidth <= 700;
   };
+
+  constructor(private authService: AuthenticationService) {}
 
   private opportunitiesColumns = this.smallWindow() ? 1 : 3;
   private myRequests = this.smallWindow() ? 1 : 2;
@@ -44,6 +49,14 @@ export class HomeComponent {
 
   ngOnInit() {
     this.breakpoint = this.smallWindow() ? 1 : 4;
+    this.authService.authChanged.subscribe((res) => {
+      console.log('entro en el home', res);
+      console.log(typeof res);
+
+      this.isUserAuthenticated = res;
+    });
+    if (this.authService.isUserAuthenticated())
+      this.authService.sendAuthStateChangeNotification(true);
   }
 
   onResize(event) {
