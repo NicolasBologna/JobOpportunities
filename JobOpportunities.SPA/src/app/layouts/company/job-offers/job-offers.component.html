@@ -1,0 +1,9 @@
+<div class="jobs-container">
+  <app-job-offers-list [jobOffers]="jobOffers" (selected)="selectJobOffer($event)" (deleted)="deleteJobOffer($event)"
+    (create)="create($event)" class="offers-list">
+  </app-job-offers-list>
+
+  <app-job-offer-details [jobOffer]="selectedJobOffer" (cancelled)="reset()" (saved)="saveJobOffer($event)"
+    *ngIf="selectedJobOffer">
+  </app-job-offer-details>
+</div>

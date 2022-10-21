@@ -1,0 +1,47 @@
+<mat-card *ngIf="jobOffers.length > 0; else emptyList">
+  <mat-card-header>
+    <mat-card-title>
+      Mis ofertas creadas
+    </mat-card-title>
+  </mat-card-header>
+  <mat-card-content class="list-content">
+    <mat-list #jobOffersList>
+      <mat-list-item *ngFor="let jobOffer of jobOffers" (click)="selected.emit(jobOffer)">
+        <div class="mat-list-item-row">
+          <div class="mat-list-item-column">
+            <h4 matLine>Título: {{ jobOffer.title | titlecase }}</h4>
+            <p matLine>
+              Descripción: {{ jobOffer.description }}
+            </p>
+            <p matLine>
+              Válida hasta: {{ jobOffer.validUntil | date}}
+            </p>
+          </div>
+          <button matLine mat-icon-button color="warn"
+            (click)="deleted.emit(jobOffer.id); $event.stopImmediatePropagation() ">
+            <mat-icon>delete</mat-icon>
+          </button>
+        </div>
+      </mat-list-item>
+    </mat-list>
+    <button mat-fab color="primary" aria-label="Crear una nueva oferta" (click)="create.emit()" class="create-button">
+      <mat-icon>add</mat-icon>
+    </button>
+  </mat-card-content>
+</mat-card>
+
+<ng-template #emptyList>
+  <mat-card>
+    <mat-card-header>
+      <mat-card-title>
+        Aún no tenés ninguna oferta creada.
+      </mat-card-title>
+    </mat-card-header>
+    <mat-card-content class="empty-list-content">
+      <p class="card-text"> Hacé click para crear tu primer oferta</p>
+      <button mat-fab color="primary" aria-label="Crear una nueva oferta" (click)="create.emit()" class="create-button">
+        <mat-icon>add</mat-icon>
+      </button>
+    </mat-card-content>
+  </mat-card>
+</ng-template>

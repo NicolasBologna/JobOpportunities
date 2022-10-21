@@ -2,6 +2,7 @@ import { Component, HostBinding, OnInit } from '@angular/core';
 import { UntypedFormControl } from '@angular/forms';
 import { Router } from '@angular/router';
 import { AuthenticationService } from 'src/app/common/services/authentication.service';
+import { StylesService } from 'src/app/common/services/styles.service';
 
 @Component({
   selector: 'app-company-layout',
@@ -15,22 +16,19 @@ export class CompanyLayoutComponent implements OnInit {
 
   constructor(
     private authService: AuthenticationService,
-    private router: Router
+    private router: Router,
+    private styleService: StylesService
   ) {}
   links = [
-    { path: '/home', icon: 'home', title: 'Home' },
-    { path: '/job-offers', icon: 'view_list', title: 'Job Offers' },
-    { path: '/skill-levels', icon: 'view_list', title: 'Skill Levels' },
-    { path: '/company-agents', icon: 'view_list', title: 'Company Contacts' },
+    { path: '/home', icon: 'home', title: 'Inicio' },
+    { path: '/job-offers', icon: 'view_list', title: 'Mis Ofertas' },
   ];
 
   themeToggleControl = new UntypedFormControl(true);
 
-  @HostBinding('class') className = 'darkMode';
-
   ngOnInit(): void {
     this.themeToggleControl.valueChanges.subscribe((val) => {
-      this.className = val ? 'darkMode' : '';
+      this.styleService.sendDarkModeChangeNotification(val ? 'darkMode' : '');
     });
     this.authService.authChanged.subscribe((res) => {
       this.isUserAuthenticated = res;

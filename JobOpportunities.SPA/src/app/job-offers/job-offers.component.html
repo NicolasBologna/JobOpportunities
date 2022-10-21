@@ -1,8 +1,5 @@
-<div class="jobOffers-containers">
-  <div class="jobOffers-list">
-    <app-job-offers-list [jobOffers]="jobOffers" (selected)="selectJobOffer($event)" (deleted)="deleteJobOffer($event)">
-    </app-job-offers-list>
-  </div>
+<app-job-offers-list [jobOffers]="jobOffers" (selected)="selectJobOffer($event)" (deleted)="deleteJobOffer($event)">
+</app-job-offers-list>
 
 
   <!-- <div class="jobOffer-details">
@@ -10,4 +7,3 @@
     </app-job-offer-details>
 
   </div> -->
-</div>

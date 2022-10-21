@@ -12,6 +12,7 @@ import { AuthResponseDto } from 'src/app/common/responses/auth-response-dto';
 })
 export class LoginComponent implements OnInit {
   private returnUrl: string;
+  public showSpinner: boolean = false;
 
   loginForm: FormGroup;
   errorMessage: string = '';
@@ -41,12 +42,12 @@ export class LoginComponent implements OnInit {
   };
 
   loginUser = (loginFormValue) => {
+    this.showSpinner = true;
     this.showError = false;
     const login = { ...loginFormValue };
     const userForAuth: UserForAuthenticationDto = {
       userName: login.username,
       password: login.password,
-      userType: login.userType,
     };
     this.authService.loginUser('auth/token', userForAuth).subscribe({
       next: (res: AuthResponseDto) => {
@@ -58,6 +59,7 @@ export class LoginComponent implements OnInit {
       error: (err: HttpErrorResponse) => {
         this.errorMessage = err.message;
         this.showError = true;
+        this.showSpinner = false;
       },
     });
   };

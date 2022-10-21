@@ -2,6 +2,7 @@ import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { CompanyAgent } from '../models/company-agent';
 import { CompanyAgentForCreation } from '../models/company-agent-for-creation';
+import { JobOffer } from '../models/job-offer';
 import { EnvironmentUrlService } from './environment-url.service';
 
 @Injectable({
@@ -12,6 +13,11 @@ export class CompanyAgentsRepositoryService {
     private http: HttpClient,
     private envUrl: EnvironmentUrlService
   ) {}
+  public getJobOffers = (route: string) => {
+    return this.http.get<JobOffer[]>(
+      this.createCompleteRoute(route, this.envUrl.urlAddress)
+    );
+  };
 
   public getCompanyAgents = (route: string) => {
     return this.http.get<CompanyAgent[]>(

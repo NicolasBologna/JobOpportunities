@@ -20,10 +20,16 @@ const routes: Routes = [
   },
   {
     path: 'job-offers',
-    loadChildren: () =>
-      import('./../../job-offers/job-offers.module').then(
-        (m) => m.JobOffersModule
-      ),
+    component: CompanyLayoutComponent,
+    children: [
+      {
+        path: '',
+        loadChildren: () =>
+          import('./job-offers/job-offers.module').then(
+            (m) => m.JobOffersModule
+          ),
+      },
+    ],
   },
   {
     path: 'skill-levels',

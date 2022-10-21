@@ -1,0 +1,35 @@
+.card-text{
+  padding-top: 0.5rem;
+}
+
+.empty-list-content{
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  margin-top: 1rem;
+}
+
+.list-content{
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.mat-list-item-column{
+  display: flex;
+  flex-direction: column;
+}
+
+.mat-list-item-row{
+  display: flex;
+  flex-direction: row;
+  flex-wrap: nowrap;
+  align-items: center;
+}
+
+.mat-card
+{
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}

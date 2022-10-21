@@ -1,24 +1,25 @@
 // below defines your custom color to build a theme palette from
-$md-orangePalette: (
-  50 : #f7ece7,
-  100 : #ecd1c2,
-  200 : #e0b29a,
-  300 : #d39371,
-  400 : #c97b52,
-  500 : #c06434,
-  600 : #ba5c2f,
-  700 : #b25227,
-  800 : #aa4821,
-  900 : #9c3615,
-  A100 : #ffdacf,
-  A200 : #ffb29c,
-  A400 : #ff8a69,
-  A700 : #ff7650,
-  contrast: (50 : #000000,
+$primary: (
+  50 : #e0e0e0,
+  100 : #b3b3b3,
+  200 : #808080,
+  300 : #4d4d4d,
+  400 : #262626,
+  500 : #000000,
+  600 : #000000,
+  700 : #000000,
+  800 : #000000,
+  900 : #000000,
+  A100 : #a6a6a6,
+  A200 : #8c8c8c,
+  A400 : #737373,
+  A700 : #666666,
+  contrast: (
+    50 : #000000,
     100 : #000000,
     200 : #000000,
-    300 : #000000,
-    400 : #000000,
+    300 : #ffffff,
+    400 : #ffffff,
     500 : #ffffff,
     600 : #ffffff,
     700 : #ffffff,
@@ -26,31 +27,32 @@ $md-orangePalette: (
     900 : #ffffff,
     A100 : #000000,
     A200 : #000000,
-    A400 : #000000,
-    A700 : #000000,
-  )
+    A400 : #ffffff,
+    A700 : #ffffff,
+)
 );
 /* For use in src/lib/core/theming/_palette.scss */
-$md-complementaryColor: (
-  50 : #e7f2f7,
-  100 : #c2deec,
-  200 : #9ac8e0,
-  300 : #71b1d3,
-  400 : #52a1c9,
-  500 : #3490c0,
-  600 : #2f88ba,
-  700 : #277db2,
-  800 : #2173aa,
-  900 : #15619c,
-  A100 : #cfe9ff,
-  A200 : #9cd1ff,
-  A400 : #69b9ff,
-  A700 : #50adff,
-  contrast: (50 : #000000,
+$accent: (
+  50 : #e4f7eb,
+  100 : #baebcd,
+  200 : #8dddac,
+  300 : #5fcf8b,
+  400 : #3cc572,
+  500 : #1abb59,
+  600 : #17b551,
+  700 : #13ac48,
+  800 : #0fa43e,
+  900 : #08962e,
+  A100 : #c3ffd0,
+  A200 : #90ffa8,
+  A400 : #5dff7f,
+  A700 : #43ff6b,
+  contrast: (
+    50 : #000000,
     100 : #000000,
     200 : #000000,
-    300 : #000000,
-    400 : #000000,
+    300 : #ffffff,
+    400 : #ffffff,
     500 : #ffffff,
     600 : #ffffff,
     700 : #ffffff,
@@ -72,8 +74,8 @@ $md-complementaryColor: (
 // Be sure that you only ever include this mixin once!
 @include mat.core();
 
-$angular-primary: mat.define-palette($md-orangePalette, 500, 100, 900);
-$angular-accent: mat.define-palette($md-complementaryColor, A200, A100, A400);
+$angular-primary: mat.define-palette($primary, 500, 100, 900);
+$angular-accent: mat.define-palette($accent, A700, 700, 900);
 
 $angular-warn: mat.define-palette(mat.$red-palette);
 
@@ -103,11 +105,21 @@ $angular-dark-theme: mat.define-dark-theme(
   @include mat.all-component-colors($angular-dark-theme);
 }
 
-body {
+html,
+body,
+app-layout {
+  min-height: 100vh;
   margin: 0;
-  font-family: Roboto, sans-serif;
-  height: 100%;
   display: flex;
+    flex-direction: column;
+  }
+
+  body {
+  font-family: Roboto, sans-serif;
+}
+
+body>* {
+  flex-shrink: 0;
 }
 
 p {
@@ -177,19 +189,6 @@ mat-card:not(.dashboard-card) {
 
 .full-width {
   width: 100%;
-}
-
-.jobOffers-containers {
-  display: flex;
-  justify-content: space-around;
-
-  .jobOffers-list {
-    width: 49%;
-  }
-
-  .jobOffer-details {
-    width: 49%;
-  }
 }
 
 .login-container {
@@ -463,13 +462,6 @@ mat-toolbar {
   }
 }
 
-html,
-body,
-app-layout {
-  min-height: 100vh;
-  height: auto;
-  margin: 0;
-}
 //Common
 
 .mr-1{

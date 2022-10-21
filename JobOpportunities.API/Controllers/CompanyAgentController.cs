@@ -49,5 +49,12 @@ namespace JobOpportunities.API.Controllers
             await Mediator.Send(new RemoveCompanyAgentCommand() { Id = id });
             return NoContent();
         }
+
+        [HttpGet("joboffer")]
+        public async Task<ActionResult<GetCompanyAgentResponse>> GetMyJobOffers()
+        {
+            var result = await Mediator.Send(new GetCompanyAgentJobOffersQuery() { });
+            return Ok(result);
+        }
     }
 }

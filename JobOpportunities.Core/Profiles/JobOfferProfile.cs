@@ -15,6 +15,7 @@ namespace JobOpportunities.Core.Profiles
             CreateMap<CreateJobOfferCommand, JobOffer>();
             CreateMap<UpdateJobOfferCommand, JobOffer>();
             CreateMap<JobOffer, GetCompanyAgentResponse.CompanyJobOffer>();
+            CreateMap<JobOffer, GetCompanyAgentJobOffersResponse>();
         }
     }
 }

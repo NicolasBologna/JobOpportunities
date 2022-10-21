@@ -20,5 +20,11 @@ namespace JobOpportunities.Data.SpecificRepositories.Implementations
 
             return null;
         }
+
+        public async Task<ICollection<JobOffer>> GetAllJobOffersByCompanyAgent(string companyAgentId)
+        {
+            var jobOffers = await _dbSet.Include(jo => jo.RequiredSkills).Where(x => x.CompanyId.ToString() == companyAgentId).ToListAsync();
+            return jobOffers;
+        }
     }
 }

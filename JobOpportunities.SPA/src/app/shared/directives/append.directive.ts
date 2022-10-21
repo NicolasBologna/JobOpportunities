@@ -6,8 +6,7 @@ import {
   Renderer2,
   SimpleChanges,
 } from '@angular/core';
-import { CompanyAgent } from 'src/app copy/common/models/company-agent';
-import { JobOffer } from 'src/app/common/models/job-offer';
+import { CompanyAgent } from 'src/app/common/models/company-agent';
 
 @Directive({
   selector: '[appAppend]',

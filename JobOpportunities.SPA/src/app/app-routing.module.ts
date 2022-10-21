@@ -23,8 +23,6 @@ const routes: Routes = [
     matcher: (url) => {
       const user_type = localStorage.getItem('user_type');
       if (user_type === 'CompanyAgent') {
-        console.log('entre');
-
         return url.length ? { consumed: [] } : { consumed: url };
       }
       return null;

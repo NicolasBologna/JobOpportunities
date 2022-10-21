@@ -27,11 +27,10 @@ namespace JobOpportunities.API.Controllers
         }
 
         [HttpPost]
-        [Authorize(Roles = "Admin")]
+        [Authorize(Roles = "Admin, CompanyAgent")]
         public async Task<IActionResult> Post(CreateJobOfferCommand command)
         {
-            await Mediator.Send(command);
-            return Ok();
+            return Ok(await Mediator.Send(command));
         }
 
         [HttpPut]

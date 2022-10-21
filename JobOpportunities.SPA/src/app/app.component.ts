@@ -3,6 +3,7 @@ import { UntypedFormControl } from '@angular/forms';
 import { Router } from '@angular/router';
 import { JwtHelperService } from '@auth0/angular-jwt';
 import { AuthenticationService } from './common/services/authentication.service';
+import { StylesService } from './common/services/styles.service';
 
 @Component({
   selector: 'app-root',
@@ -16,7 +17,8 @@ export class AppComponent {
 
   constructor(
     private authService: AuthenticationService,
-    private router: Router
+    private router: Router,
+    private styleService: StylesService
   ) {}
   links = [
     { path: '/home', icon: 'home', title: 'Home' },
@@ -25,12 +27,10 @@ export class AppComponent {
     { path: '/company-agents', icon: 'view_list', title: 'Company Contacts' },
   ];
 
-  themeToggleControl = new UntypedFormControl(true);
-
   @HostBinding('class') className = 'darkMode';
 
   ngOnInit(): void {
-    this.themeToggleControl.valueChanges.subscribe((val) => {
+    this.styleService.darkModeChanged.subscribe((val) => {
       this.className = val ? 'darkMode' : '';
     });
     this.authService.authChanged.subscribe((res) => {

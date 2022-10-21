@@ -2,6 +2,8 @@ import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import { JobOffer } from '../models/job-offer';
+import { JobOfferForCreationDto } from '../models/job-offer-dtos/job-offer-for-creation-dto';
+import { CreateJobResponseDto } from '../responses/create-job-response-dto';
 import { EnvironmentUrlService } from './environment-url.service';
 
 const BASE_URL = 'https://localhost:7278/api';
@@ -20,8 +22,8 @@ export class JobOffersRepositoryService {
       this.createCompleteRoute(route, this.envUrl.urlAddress)
     );
   };
-  public createJobOffer = (route: string, jobOffer: JobOffer) => {
-    return this.http.post<JobOffer>(
+  public createJobOffer = (route: string, jobOffer: JobOfferForCreationDto) => {
+    return this.http.post<CreateJobResponseDto>(
       this.createCompleteRoute(route, this.envUrl.urlAddress),
       jobOffer,
       this.generateHeaders()
