@@ -1,5 +1,6 @@
 import { HttpErrorResponse } from '@angular/common/http';
 import { Component, OnInit } from '@angular/core';
+import { ToastrService } from 'ngx-toastr';
 import { Observable } from 'rxjs';
 import { CreateJobResponseDto } from 'src/app/common/responses/create-job-response-dto';
 import { JobOffer } from '../../../common/models/job-offer';
@@ -11,7 +12,6 @@ const emptyjobOffer: JobOffer = {
   title: '',
   description: '',
   validUntil: '',
-  companyId: '',
   requiredSkills: new Array<Skill>(),
 };
 
@@ -21,10 +21,10 @@ const emptyjobOffer: JobOffer = {
   styleUrls: ['./job-offers.component.scss'],
 })
 export class JobOffersComponent implements OnInit {
-  //1. render jobOffers in a list
-  // 2. Select a jobOffer
-  // 3. Render Selected jobOffer
-  constructor(private repository: JobOffersRepositoryService) {}
+  constructor(
+    private repository: JobOffersRepositoryService,
+    private toastr: ToastrService
+  ) {}
   jobOffers: JobOffer[] = [];
   selectedJobOffer: JobOffer | null;
 
@@ -38,17 +38,40 @@ export class JobOffersComponent implements OnInit {
     });
   };
 
-  selectJobOffer(event) {}
+  selectJobOffer(event: JobOffer) {
+    this.selectedJobOffer = event;
+  }
   saveJobOffer(event) {
-    this.repository.createJobOffer('jobOffer', event).subscribe({
-      next: (res: CreateJobResponseDto) => {
-        console.log(res);
-        this.jobOffers.push(res);
+    if (event.id) {
+      this.repository.updateJobOffer('jobOffer', event).subscribe({
+        next: () => {
+          let idx = this.jobOffers.map((x) => x.id).indexOf(event.id);
+          this.jobOffers[idx] = event;
+          this.selectedJobOffer = null;
+          this.toastr.success('La oferta se actualizó con éxito');
+        },
+        error: (err: HttpErrorResponse) => {},
+      });
+    } else {
+      this.repository.createJobOffer('jobOffer', event).subscribe({
+        next: (res: CreateJobResponseDto) => {
+          this.jobOffers.push(res);
+          this.selectedJobOffer = null;
+          this.toastr.success('La oferta se creó con éxito');
+        },
+        error: (err: HttpErrorResponse) => {},
+      });
+    }
+  }
+  deleteJobOffer(event: string) {
+    this.repository.delete(event).subscribe({
+      next: () => {
+        let idx = this.jobOffers.map((x) => x.id).indexOf(event);
+        this.jobOffers.splice(idx, 1);
       },
       error: (err: HttpErrorResponse) => {},
     });
   }
-  deleteJobOffer(event) {}
   create(event) {
     this.selectedJobOffer = emptyjobOffer;
   }

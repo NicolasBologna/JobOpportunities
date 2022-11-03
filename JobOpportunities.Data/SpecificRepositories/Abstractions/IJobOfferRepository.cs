@@ -5,7 +5,8 @@ namespace JobOpportunities.Data.SpecificRepositories.Abstractions
 {
     public interface IJobOfferRepository : IGenericRepository<JobOffer>
     {
-        Task<ICollection<JobOffer>> GetAllJobOffersByCompanyAgent(string companyAgentId);
-        Task<ICollection<Skill>?> GetAllRequiredSkills(Guid jobOfferId);
+        Task<IEnumerable<JobOffer>> GetAllJobOffersByCompanyAgent(string companyAgentId);
+        Task<IEnumerable<Skill>?> GetAllRequiredSkills(Guid jobOfferId);
+        Task<JobOffer?> GetWithRequiredSkills(Guid jobOfferId);
     }
 }

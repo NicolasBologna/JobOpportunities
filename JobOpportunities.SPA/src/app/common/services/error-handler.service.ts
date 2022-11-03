@@ -8,6 +8,7 @@ import {
 } from '@angular/common/http';
 import { Observable, throwError } from 'rxjs';
 import { catchError } from 'rxjs/operators';
+import { ToastrService } from 'ngx-toastr';
 
 @Injectable({
   providedIn: 'root',
@@ -15,7 +16,7 @@ import { catchError } from 'rxjs/operators';
 export class ErrorHandlerService {
   public errorMessage: string = '';
 
-  constructor(private router: Router) {}
+  constructor(private router: Router, private toastr: ToastrService) {}
 
   intercept(
     req: HttpRequest<any>,
@@ -52,7 +53,8 @@ export class ErrorHandlerService {
     return this.createErrorMessage(error);
   };
   private handle404Error = (error: HttpErrorResponse): string => {
-    this.router.navigate(['/404']);
+    //this.router.navigate(['/404']);
+    this.toastr.warning('asdasd');
     return this.createErrorMessage(error);
   };
   private handle403Error = (error: HttpErrorResponse) => {

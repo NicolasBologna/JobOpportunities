@@ -14,8 +14,8 @@ public static class DependencyInjection
     {
         services.AddValidatorsFromAssembly(typeof(GetJobOfferQuery).Assembly);
 
-        services.AddTransient(typeof(IPipelineBehavior<,>), typeof(ValidationBehaviour<,>));
-        services.AddTransient(typeof(IPipelineBehavior<,>), typeof(AuditLogsBehavior<,>));
+        services.AddScoped(typeof(IPipelineBehavior<,>), typeof(ValidationBehaviour<,>));
+        services.AddScoped(typeof(IPipelineBehavior<,>), typeof(AuditLogsBehavior<,>));
 
         services.AddTransient<IAuthService, AuthService>();
 

@@ -6,7 +6,7 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./not-found.component.scss'],
 })
 export class NotFoundComponent implements OnInit {
-  notFoundText: string = `404 SORRY COULDN'T FIND IT!!!`;
+  notFoundText: string = `El recurso al que intenta acceder no se encuentra!`;
 
   constructor() {}
 

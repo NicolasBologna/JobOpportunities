@@ -7,20 +7,27 @@
   <mat-card-content class="list-content">
     <mat-list #jobOffersList>
       <mat-list-item *ngFor="let jobOffer of jobOffers" (click)="selected.emit(jobOffer)">
-        <div class="mat-list-item-row">
-          <div class="mat-list-item-column">
-            <h4 matLine>Título: {{ jobOffer.title | titlecase }}</h4>
-            <p matLine>
-              Descripción: {{ jobOffer.description }}
-            </p>
-            <p matLine>
-              Válida hasta: {{ jobOffer.validUntil | date}}
-            </p>
+        <div class="gradient-border mat-list-item-row-wrapper">
+          <div class="mat-list-item-row">
+            <div class="mat-list-item-column">
+              <h4 matLine>Título: {{ jobOffer.title | titlecase }}</h4>
+              <p matLine>
+                Descripción: {{ jobOffer.description }}
+              </p>
+              <p matLine>
+                Válida hasta: {{ jobOffer.validUntil | date}}
+              </p>
+              <mat-chip-list aria-label="Skills requeridos" class="skills-list">
+                <mat-chip color="accent" selected *ngFor="let skill of jobOffer.requiredSkills">{{skill.name}}
+                </mat-chip>
+              </mat-chip-list>
+            </div>
+            <span class="flex"></span>
+            <button matLine mat-icon-button color="warn"
+              (click)="deleted.emit(jobOffer.id); $event.stopImmediatePropagation() ">
+              <mat-icon>delete</mat-icon>
+            </button>
           </div>
-          <button matLine mat-icon-button color="warn"
-            (click)="deleted.emit(jobOffer.id); $event.stopImmediatePropagation() ">
-            <mat-icon>delete</mat-icon>
-          </button>
         </div>
       </mat-list-item>
     </mat-list>

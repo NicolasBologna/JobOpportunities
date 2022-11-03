@@ -11,7 +11,7 @@ namespace JobOpportunities.Data.SpecificRepositories.Implementations
         {
         }
 
-        public async Task<ICollection<Skill>?> GetAllRequiredSkills(Guid jobOfferId)
+        public async Task<IEnumerable<Skill>?> GetAllRequiredSkills(Guid jobOfferId)
         {
             var jobOffer = await _dbSet.Include(jo => jo.RequiredSkills).SingleOrDefaultAsync(jo => jo.Id == jobOfferId);
 
@@ -21,10 +21,24 @@ namespace JobOpportunities.Data.SpecificRepositories.Implementations
             return null;
         }
 
-        public async Task<ICollection<JobOffer>> GetAllJobOffersByCompanyAgent(string companyAgentId)
+        public async Task<IEnumerable<JobOffer>> GetAllJobOffersByCompanyAgent(string companyAgentId)
         {
-            var jobOffers = await _dbSet.Include(jo => jo.RequiredSkills).Where(x => x.CompanyId.ToString() == companyAgentId).ToListAsync();
+            var jobOffers = await _dbSet
+                .Include(jo => jo.RequiredSkills).ThenInclude(rs => rs.Knowleadge)
+                .Include(jo => jo.RequiredSkills).ThenInclude(rs => rs.SkillLevel)
+                .Where(x => x.CompanyId.ToString() == companyAgentId)
+                .ToListAsync();
             return jobOffers;
+        }
+
+        public async Task<JobOffer?> GetWithRequiredSkills(Guid jobOfferId)
+        {
+            var jobOffer = await _dbSet.Include(jo => jo.RequiredSkills).SingleOrDefaultAsync(jo => jo.Id == jobOfferId);
+
+            if (jobOffer is not null)
+                return jobOffer;
+
+            return null;
         }
     }
 }

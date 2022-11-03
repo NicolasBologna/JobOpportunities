@@ -1,4 +1,6 @@
-﻿namespace JobOpportunities.Core.Features.JobOffers.Models
+﻿using JobOpportunities.Domain;
+
+namespace JobOpportunities.Core.Features.JobOffers.Models
 {
     public class GetJobOffersResponse
     {
@@ -7,5 +9,6 @@
         public string Description { get; set; }
         public DateTime ValidUntil { get; set; }
         public Guid CompanyId { get; set; }
+        public IEnumerable<Skill> RequiredSkills { get; set; }
     }
 }

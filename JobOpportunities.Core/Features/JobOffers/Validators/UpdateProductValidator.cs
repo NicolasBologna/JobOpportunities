@@ -9,8 +9,7 @@ namespace JobOpportunities.Core.Features.JobOffers.Validators
         {
             RuleFor(r => r.Id).NotEmpty();
             RuleFor(r => r.Title).NotEmpty();
-            RuleFor(r => r.ValidUntil).NotEmpty().GreaterThanOrEqualTo(DateTime.Now); ;
-            RuleFor(r => r.CompanyId).NotEmpty();
+            RuleFor(r => r.ValidUntil).NotEmpty().GreaterThanOrEqualTo(DateTime.Now);
             RuleFor(r => r.Description).NotNull().Length(0, 400);
         }
     }

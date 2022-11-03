@@ -34,7 +34,7 @@ namespace JobOpportunities.API.Controllers
         }
 
         [HttpPut]
-        [Authorize(Roles = "Admin")]
+        [Authorize(Roles = "Admin, CompanyAgent")]
         public async Task<IActionResult> Put(UpdateJobOfferCommand command)
         {
             await Mediator.Send(command);
@@ -48,11 +48,10 @@ namespace JobOpportunities.API.Controllers
             return await Mediator.Send(new GetJobOfferCandidatesQuery { JobOfferId = id });
         }
 
-
-
-        //[HttpDelete("{id}")]
-        //public void Delete(int id)
-        //{
-        //}
+        [HttpDelete("{id}")]
+        public async Task<Unit> Delete(Guid id)
+        {
+            return await Mediator.Send(new DeleteJobOfferCommand { Id = id });
+        }
     }
 }

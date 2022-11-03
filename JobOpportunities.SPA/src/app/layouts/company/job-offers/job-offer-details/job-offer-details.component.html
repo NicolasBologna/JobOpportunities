@@ -15,19 +15,18 @@
       <mat-form-field class="full-width" color="accent">
         <input type="text" matInput placeholder="Descripción" formControlName="description">
       </mat-form-field>
-
       <mat-form-field appearance="fill" class="full-width" color="accent" class="date-field">
         <mat-label>Válida hasta</mat-label>
-        <input matInput [matDatepicker]="picker" formControlName="validUntil">
+        <input matInput [matDatepicker]="picker" formControlName="validUntil" [min]="minDate">
         <mat-hint>MM/DD/AAAA</mat-hint>
         <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
         <mat-datepicker #picker></mat-datepicker>
       </mat-form-field>
       <mat-form-field class="example-chip-list" appearance="fill" color="accent">
         <mat-label>Skills Requeridos</mat-label>
-        <mat-chip-list #chipList aria-label="Skill Selection" formControlName="requiredSkillsIds">
-          <mat-chip *ngFor="let skill of requiredSkillsIds.value" (removed)="remove(skill)">
-            {{skill}}
+        <mat-chip-list #chipList aria-label="Skill Selection" formControlName="requiredSkills">
+          <mat-chip *ngFor="let skill of requiredSkills.value" (removed)="remove(skill)">
+            {{skill.name}}
             <button matChipRemove>
               <mat-icon>cancel</mat-icon>
             </button>
@@ -37,7 +36,7 @@
         </mat-chip-list>
         <mat-autocomplete #auto="matAutocomplete" (optionSelected)="selected($event)">
           <mat-option *ngFor="let skill of filteredSkills | async" [value]="skill">
-            {{skill}}
+            {{skill.name}}
           </mat-option>
         </mat-autocomplete>
       </mat-form-field>

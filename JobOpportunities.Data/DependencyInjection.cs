@@ -4,8 +4,6 @@ using JobOpportunities.Data.Identity;
 using JobOpportunities.Data.SpecificRepositories;
 using JobOpportunities.Data.SpecificRepositories.Abstractions;
 using JobOpportunities.Data.SpecificRepositories.Implementations;
-using JobOpportunities.Domain;
-using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
@@ -41,7 +39,7 @@ public static class DependencyInjection
     private static IServiceCollection AddRepositories(this IServiceCollection services)
     {
         services.AddScoped(typeof(IGenericRepository<>), typeof(GenericRepository<>));
-        services.AddScoped(typeof(GenericRepository.IReadRepository<>), typeof(ReadOnlyRepository<>));
+        services.AddScoped(typeof(IReadRepository<>), typeof(ReadOnlyRepository<>));
         #region SpecificRepositories
         services.AddScoped<IJobOfferRepository, JobOfferRepository>();
         services.AddScoped<ICandidatesRepository, CandidatesRepository>();

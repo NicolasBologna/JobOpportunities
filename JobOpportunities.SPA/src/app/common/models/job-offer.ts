@@ -5,7 +5,7 @@ export interface JobOffer {
   title: string;
   description: string;
   validUntil: Date | string;
-  companyId: string;
+  companyId?: string;
   requiredSkills?: Skill[];
   candidates?: [];
 }

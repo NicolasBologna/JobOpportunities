@@ -6,9 +6,11 @@ namespace JobOpportunities.Data.GenericRepository
     public interface IWriteRepository<T> //in, out, check covariant/contravariant     
     {
         void Add(T item);
-        void Remove(T item);
+        Task Remove(T item);
+        void Update(T item);
         Task<bool> SaveAsync(CancellationToken cancellationToken);
         Task<bool> SaveAsync();
+        bool Save();
     }
 
     public interface IReadRepository<T> where T : IEntity

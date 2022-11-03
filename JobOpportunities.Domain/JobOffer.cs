@@ -11,7 +11,7 @@ namespace JobOpportunities.Domain
         [ForeignKey("CompanyId")]
         public CompanyAgent Company { get; set; }
         public Guid CompanyId { get; set; }
-        public ICollection<Skill> RequiredSkills { get; set; } = new List<Skill>();
+        public IEnumerable<Skill> RequiredSkills { get; set; } = new List<Skill>();
         public ICollection<Candidate> Candidates { get; set; } = new List<Candidate>();
     }
 }

@@ -12,8 +12,8 @@ namespace JobOpportunities.Core.Profiles
         {
             CreateMap<JobOffer, GetJobOfferResponse>();
             CreateMap<JobOffer, GetJobOffersResponse>();
-            CreateMap<CreateJobOfferCommand, JobOffer>();
-            CreateMap<UpdateJobOfferCommand, JobOffer>();
+            CreateMap<CreateJobOfferCommand, JobOffer>().ForMember(x => x.RequiredSkills, opt => opt.Ignore());
+            CreateMap<UpdateJobOfferCommand, JobOffer>().ForMember(x => x.RequiredSkills, opt => opt.Ignore());
             CreateMap<JobOffer, GetCompanyAgentResponse.CompanyJobOffer>();
             CreateMap<JobOffer, GetCompanyAgentJobOffersResponse>();
         }

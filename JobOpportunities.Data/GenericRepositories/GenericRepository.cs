@@ -30,9 +30,15 @@ namespace JobOpportunities.Data.GenericRepository
             _dbSet.Add(item);
         }
 
-        public void Remove(T item)
+        public async Task Remove(T item)
         {
+            //_dbContext.Entry(item).State = EntityState.Deleted;
             _dbSet.Remove(item);
+        }
+
+        public void Update(T item)
+        {
+            _dbSet.Update(item);
         }
 
         public async Task<bool> SaveAsync(CancellationToken cancellationToken)
@@ -58,6 +64,11 @@ namespace JobOpportunities.Data.GenericRepository
         public async Task<bool> ItemExists(Guid id)
         {
             return await _dbSet.FindAsync(id) is not null;
+        }
+
+        public bool Save()
+        {
+            return _dbContext.SaveChanges() > 0;
         }
     }
 }

@@ -21,6 +21,7 @@ import { PrivacyComponent } from './privacy/privacy.component';
 import { ForbiddenComponent } from './error-pages/forbidden/forbidden.component';
 import { FlexLayoutModule } from '@angular/flex-layout';
 import { AuthModule } from './layouts/auth/auth.module';
+import { ToastrModule } from 'ngx-toastr';
 
 export function tokenGetter() {
   return localStorage.getItem('token');
@@ -31,6 +32,7 @@ export function tokenGetter() {
     BrowserModule,
     AppRoutingModule,
     BrowserAnimationsModule,
+    ToastrModule.forRoot(), // ToastrModule added
     MaterialModule,
     HttpClientModule,
     FormsModule,

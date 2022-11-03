@@ -1,4 +1,5 @@
-﻿using JobOpportunities.Domain;
+﻿using JobOpportunities.Core.Features.Skills.Models;
+using JobOpportunities.Domain;
 
 namespace JobOpportunities.Core.Features.JobOffers.Models
 {
@@ -9,7 +10,7 @@ namespace JobOpportunities.Core.Features.JobOffers.Models
         public string Description { get; set; }
         public DateTime ValidUntil { get; set; }
         public Guid CompanyId { get; set; }
-        public ICollection<Skill> RequiredSkills { get; set; } = new List<Skill>();
+        public ICollection<GetSkillsResponse> RequiredSkills { get; set; } = new List<GetSkillsResponse>();
         public ICollection<Candidate> Candidates { get; set; } = new List<Candidate>();
     }
 }

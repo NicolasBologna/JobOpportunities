@@ -5,6 +5,7 @@ import { FormGroup, FormControl, Validators } from '@angular/forms';
 import { AuthenticationService } from 'src/app/common/services/authentication.service';
 import { UserForAuthenticationDto } from 'src/app/common/models/user/user-for-authentication-dto';
 import { AuthResponseDto } from 'src/app/common/responses/auth-response-dto';
+import { ToastrService } from 'ngx-toastr';
 @Component({
   selector: 'app-login',
   templateUrl: './login.component.html',
@@ -20,7 +21,8 @@ export class LoginComponent implements OnInit {
   constructor(
     private authService: AuthenticationService,
     private router: Router,
-    private route: ActivatedRoute
+    private route: ActivatedRoute,
+    private toastrSerive: ToastrService
   ) {}
 
   ngOnInit(): void {
@@ -54,10 +56,13 @@ export class LoginComponent implements OnInit {
         localStorage.setItem('token', res.accessToken);
         localStorage.setItem('user_type', this.authService.getUserRole());
         this.authService.sendAuthStateChangeNotification(res.isAuthSuccessful);
+        this.toastrSerive.success('Ingresó correctamente', 'Bienvenido!');
         this.router.navigate([this.returnUrl]);
       },
       error: (err: HttpErrorResponse) => {
         this.errorMessage = err.message;
+        this.toastrSerive.error('Hubo un error', 'Intente nuevamente');
+
         this.showError = true;
         this.showSpinner = false;
       },

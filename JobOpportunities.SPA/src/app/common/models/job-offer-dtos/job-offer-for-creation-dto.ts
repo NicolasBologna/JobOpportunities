@@ -3,5 +3,5 @@ export interface JobOfferForCreationDto {
   description: string;
   validUntil: Date | string;
   companyId: string;
-  requiredSkillsIds: string[];
+  requiredSkills: string[];
 }
