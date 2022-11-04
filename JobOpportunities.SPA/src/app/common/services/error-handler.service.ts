@@ -49,7 +49,11 @@ export class ErrorHandlerService {
     }
   };
   private handle500Error = (error: HttpErrorResponse): string => {
-    this.router.navigate(['/500']);
+    //this.router.navigate(['/500']);
+    this.toastr.error(
+      'Ocurrió un problema al conectar con el servidor.',
+      'Ups'
+    );
     return this.createErrorMessage(error);
   };
   private handle404Error = (error: HttpErrorResponse): string => {

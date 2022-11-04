@@ -3,9 +3,9 @@ import { Component, OnInit } from '@angular/core';
 import { ToastrService } from 'ngx-toastr';
 import { Observable } from 'rxjs';
 import { CreateJobResponseDto } from 'src/app/common/responses/create-job-response-dto';
-import { JobOffer } from '../../../common/models/job-offer';
-import { Skill } from '../../../common/models/skill';
-import { JobOffersRepositoryService } from '../../../common/services/job-offers-repository.service';
+import { JobOffer } from '../common/models/job-offer';
+import { Skill } from '../common/models/skill';
+import { JobOffersRepositoryService } from '../common/services/job-offers-repository.service';
 
 const emptyjobOffer: JobOffer = {
   id: '',
