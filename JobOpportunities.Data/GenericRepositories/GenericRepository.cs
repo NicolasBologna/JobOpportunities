@@ -43,12 +43,27 @@ namespace JobOpportunities.Data.GenericRepository
 
         public async Task<bool> SaveAsync(CancellationToken cancellationToken)
         {
-            return await _dbContext.SaveChangesAsync(cancellationToken) > 0;
+            try
+            {
+                return await _dbContext.SaveChangesAsync(cancellationToken) > 0;
+            }
+            catch
+            {
+                return false;
+            }
+
         }
 
         public async Task<bool> SaveAsync()
         {
-            return await _dbContext.SaveChangesAsync() > 0;
+            try
+            {
+                return await _dbContext.SaveChangesAsync() > 0;
+            }
+            catch
+            {
+                return false;
+            }
         }
 
         public async Task<T?> FindByConditionAsync(Expression<Func<T, bool>> predicate)
@@ -68,7 +83,14 @@ namespace JobOpportunities.Data.GenericRepository
 
         public bool Save()
         {
-            return _dbContext.SaveChanges() > 0;
+            try
+            {
+                return _dbContext.SaveChanges() > 0;
+            }
+            catch
+            {
+                return false;
+            }
         }
     }
 }

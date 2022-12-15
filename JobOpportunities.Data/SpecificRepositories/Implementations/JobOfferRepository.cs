@@ -25,8 +25,18 @@ namespace JobOpportunities.Data.SpecificRepositories.Implementations
         {
             var jobOffers = await _dbSet
                 .Include(jo => jo.RequiredSkills).ThenInclude(rs => rs.Knowleadge)
-                .Include(jo => jo.RequiredSkills).ThenInclude(rs => rs.SkillLevel)
+                .Include(jo => jo.RequiredSkills).ThenInclude(rs => rs.Seniority)
                 .Where(x => x.CompanyId.ToString() == companyAgentId)
+                .ToListAsync();
+            return jobOffers;
+        }
+
+        public async Task<IEnumerable<JobOffer>> GetActiveJobOffersByCompanyAgent(string companyAgentId)
+        {
+            var jobOffers = await _dbSet
+                .Include(jo => jo.RequiredSkills).ThenInclude(rs => rs.Knowleadge)
+                .Include(jo => jo.RequiredSkills).ThenInclude(rs => rs.Seniority)
+                .Where(x => x.CompanyId.ToString() == companyAgentId && x.ValidUntil > DateTime.Now)
                 .ToListAsync();
             return jobOffers;
         }

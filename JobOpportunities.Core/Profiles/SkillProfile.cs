@@ -11,7 +11,7 @@ namespace JobOpportunities.Core.Profiles
         {
             CreateMap<CreateSkillCommand, Skill>();
             CreateMap<Skill, GetSkillResponse>();
-            CreateMap<Skill, GetSkillsResponse>().ForMember(x => x.Name, opt => opt.MapFrom(y => y.SkillLevel.Name + " " + y.Knowleadge.Title));
+            CreateMap<Skill, GetSkillsResponse>().ForMember(x => x.Name, opt => opt.MapFrom(y => y.Seniority.Name + " " + y.Knowleadge.Title));
         }
 
     }

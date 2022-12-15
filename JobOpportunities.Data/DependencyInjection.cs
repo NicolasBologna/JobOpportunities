@@ -45,6 +45,7 @@ public static class DependencyInjection
         services.AddScoped<ICandidatesRepository, CandidatesRepository>();
         services.AddScoped<ICompanyAgentRepository, CompanyAgentRepository>();
         services.AddScoped<ISkillRepository, SkillRepository>();
+        services.AddScoped<ISeniorityRepository, SeniorityRepository>();
         #endregion
 
         return services;

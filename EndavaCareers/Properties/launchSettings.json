@@ -1,0 +1,12 @@
+{
+  "profiles": {
+    "EndavaCareers": {
+      "commandName": "Project",
+      "launchBrowser": true,
+      "environmentVariables": {
+        "ASPNETCORE_ENVIRONMENT": "Development"
+      },
+      "applicationUrl": "https://localhost:61301;http://localhost:61305"
+    }
+  }
+}

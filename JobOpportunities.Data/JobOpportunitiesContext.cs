@@ -16,7 +16,7 @@ namespace JobOpportunities.Data
         public DbSet<JobOffer> JobOffers => Set<JobOffer>();
         public DbSet<FullTimeJob> FullTimeJobs => Set<FullTimeJob>();
         public DbSet<Intership> Interships => Set<Intership>();
-        public DbSet<SkillLevel> SkillLevels => Set<SkillLevel>();
+        public DbSet<Seniority> Senirorities => Set<Seniority>();
         public DbSet<CompanyAgent> Companies => Set<CompanyAgent>();
         public DbSet<Candidate> Candidates => Set<Candidate>();
         public DbSet<Knowledge> Knowleadges => Set<Knowledge>();
@@ -88,28 +88,25 @@ namespace JobOpportunities.Data
         }
         private static void SeedSkillLevels(ModelBuilder builder)
         {
-            builder.Entity<SkillLevel>().HasData(
-                new SkillLevel
+            builder.Entity<Seniority>().HasData(
+                new Seniority("Intern")
                 {
                     Id = new Guid("78867f5c-44fb-470d-9946-3da97e6ae2a7"),
                     Description = "Lower skills required",
-                    Name = "Intern"
                 });
 
-            builder.Entity<SkillLevel>().HasData(
-                new SkillLevel
+            builder.Entity<Seniority>().HasData(
+                new Seniority("Junior")
                 {
                     Id = new Guid("a9be5506-3f5e-403a-b113-73fba517f3c6"),
                     Description = "Lower skills required, but can finish some tasks",
-                    Name = "Junior"
                 });
 
-            builder.Entity<SkillLevel>().HasData(
-                new SkillLevel
+            builder.Entity<Seniority>().HasData(
+                new Seniority("Semi-Senior")
                 {
                     Id = new Guid("248b45b9-bf4a-4815-844d-ec02daaeb638"),
                     Description = "higher skills required, but less responsabilities",
-                    Name = "Semi-Senior"
                 });
         }
         private static void SeedKnowledge(ModelBuilder builder)
@@ -137,7 +134,7 @@ namespace JobOpportunities.Data
                 {
                     Id = new Guid("70068d37-d9e3-48d9-a390-e85a11f2f31f"),
                     KnowleadgeId = new Guid("b20501eb-5f36-4ed4-96ac-cf32817dce06"),
-                    SkillLevelId = new Guid("78867f5c-44fb-470d-9946-3da97e6ae2a7"),
+                    SeniorityId = new Guid("78867f5c-44fb-470d-9946-3da97e6ae2a7"),
                 });
 
             builder.Entity<Skill>().HasData(
@@ -145,7 +142,7 @@ namespace JobOpportunities.Data
                 {
                     Id = new Guid("2f8ce28b-8641-426e-98ba-eef98cc9f8a0"),
                     KnowleadgeId = new Guid("3f374542-7711-4581-80c3-6f1a0a7c1105"),
-                    SkillLevelId = new Guid("248b45b9-bf4a-4815-844d-ec02daaeb638"),
+                    SeniorityId = new Guid("248b45b9-bf4a-4815-844d-ec02daaeb638"),
                 });
         }
 

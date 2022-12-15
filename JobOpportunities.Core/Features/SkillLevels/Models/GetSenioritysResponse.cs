@@ -1,6 +1,6 @@
 ﻿namespace JobOpportunities.Core.Features.SkillLevels.Models
 {
-    public class GetSkillLevelsResponse
+    public class GetSenioritiesResponse
     {
         public Guid Id { get; set; }
         public DateTime? CreatedAt { get; set; }

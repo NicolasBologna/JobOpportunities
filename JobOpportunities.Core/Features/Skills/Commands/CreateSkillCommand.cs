@@ -10,7 +10,7 @@ namespace JobOpportunities.Core.Features.Skills.Commands
     public class CreateSkillCommand : IRequest
     {
         public Guid KnowleadgeId { get; set; }
-        public Guid SkillLevelId { get; set; }
+        public Guid SeniorityId { get; set; }
     }
 
     public class CreateSkillCommandHandler : IRequestHandler<CreateSkillCommand>

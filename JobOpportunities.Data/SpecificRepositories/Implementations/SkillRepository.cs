@@ -14,12 +14,12 @@ namespace JobOpportunities.Data.SpecificRepositories.Implementations
 
         public async Task<IEnumerable<Skill>> GetallWithRelated()
         {
-            return await _dbSet.Include(s => s.Knowleadge).Include(s => s.SkillLevel).ToListAsync();
+            return await _dbSet.Include(s => s.Knowleadge).Include(s => s.Seniority).ToListAsync();
         }
 
         public async Task<IEnumerable<Skill>> FindAllByConditionWithRelatedAsync(Expression<Func<Skill, bool>> predicate)
         {
-            return await _dbSet.Include(s => s.Knowleadge).Include(s => s.SkillLevel).Where(predicate).ToListAsync();
+            return await _dbSet.Include(s => s.Knowleadge).Include(s => s.Seniority).Where(predicate).ToListAsync();
         }
     }
 }

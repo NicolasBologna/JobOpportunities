@@ -8,22 +8,22 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace JobOpportunities.API.Controllers
 {
-    public class SkillLevelController : ApiControllerBase
+    public class SeniorityController : ApiControllerBase
     {
         [HttpGet]
-        public async Task<ActionResult<IEnumerable<GetSkillLevelsResponse>>> Get()
+        public async Task<ActionResult<IEnumerable<GetSenioritiesResponse>>> Get()
         {
-            return Ok(await Mediator.Send(new GetSkillLevelsQuery()));
+            return Ok(await Mediator.Send(new GetSenioritiesQuery()));
         }
 
         [HttpGet("{id}")]
-        public async Task<GetSkillLevelResponse> Get(Guid id)
+        public async Task<GetSeniorityResponse> Get(Guid id)
         {
-            return await Mediator.Send(new GetSkillLevelQuery { SkillLevelId = id });
+            return await Mediator.Send(new GetSeniorityQuery { SeniorityId = id });
         }
 
         [HttpPost]
-        public async Task<IActionResult> Post([FromBody] CreateSkillLevelCommand command)
+        public async Task<IActionResult> Post([FromBody] CreateSeniorityLevelCommand command)
         {
             await Mediator.Send(command);
 

@@ -49,14 +49,11 @@ namespace JobOpportunities.Core.Features.JobOffers.Commands
             var skills = await _skillRepository.FindAllByConditionWithRelatedAsync(s => request.RequiredSkills.Select(x => x.Id).ToList().Contains(s.Id.ToString()));
             jobOffer.RequiredSkills = skills;
 
-            try
-            {
-                await _repository.SaveAsync(cancellationToken);
 
-            }
-            catch (Exception ex)
+            var isCompleted = await _repository.SaveAsync(cancellationToken);
+            if (!isCompleted)
             {
-                throw ex;
+                throw new Exception(); //TODO: excepciones de bases de datos.wse3w4e330e3€
             }
 
             return Unit.Value;
