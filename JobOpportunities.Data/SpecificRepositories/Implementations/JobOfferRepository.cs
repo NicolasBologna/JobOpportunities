@@ -2,12 +2,13 @@
 using JobOpportunities.Data.SpecificRepositories.Abstractions;
 using JobOpportunities.Domain;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Logging;
 
 namespace JobOpportunities.Data.SpecificRepositories.Implementations
 {
     public class JobOfferRepository : GenericRepository<JobOffer>, IJobOfferRepository
     {
-        public JobOfferRepository(JobOpportunitiesContext dbContext) : base(dbContext)
+        public JobOfferRepository(JobOpportunitiesContext dbContext, ILogger logger) : base(dbContext, logger)
         {
         }
 

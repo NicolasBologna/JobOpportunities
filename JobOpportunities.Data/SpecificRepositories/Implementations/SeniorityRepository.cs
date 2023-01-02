@@ -4,12 +4,13 @@ using JobOpportunities.Data.GenericRepository;
 using JobOpportunities.Data.SpecificRepositories.Abstractions;
 using JobOpportunities.Domain;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Logging;
 
 namespace JobOpportunities.Data.SpecificRepositories.Implementations
 {
     public class SeniorityRepository : GenericRepository<Seniority>, ISeniorityRepository
     {
-        public SeniorityRepository(JobOpportunitiesContext dbContext) : base(dbContext)
+        public SeniorityRepository(JobOpportunitiesContext dbContext, ILogger logger) : base(dbContext, logger)
         {
         }
 

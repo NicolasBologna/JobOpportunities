@@ -1,4 +1,5 @@
 ﻿using JobOpportunities.Core.Comparers;
+using System.Security.Cryptography;
 
 namespace JobOpportunities.Domain
 {

@@ -112,25 +112,23 @@ namespace JobOpportunities.Data
         private static void SeedKnowledge(ModelBuilder builder)
         {
             builder.Entity<Knowledge>().HasData(
-                new Knowledge
+                new Knowledge(".NET")
                 {
                     Id = new Guid("b20501eb-5f36-4ed4-96ac-cf32817dce06"),
-                    Title = ".NET",
                     Description = "Versión 6 + todo el ecosistema",
                 });
 
             builder.Entity<Knowledge>().HasData(
-                new Knowledge
+                new Knowledge("Angular")
                 {
                     Id = new Guid("3f374542-7711-4581-80c3-6f1a0a7c1105"),
-                    Title = "Angular",
                     Description = "Versión 13",
                 });
         }
         private static void SeedSkills(ModelBuilder builder)
         {
             builder.Entity<Skill>().HasData(
-                new Skill
+                new Skill()
                 {
                     Id = new Guid("70068d37-d9e3-48d9-a390-e85a11f2f31f"),
                     KnowleadgeId = new Guid("b20501eb-5f36-4ed4-96ac-cf32817dce06"),

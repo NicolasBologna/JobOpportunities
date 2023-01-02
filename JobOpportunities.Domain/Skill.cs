@@ -2,6 +2,15 @@
 {
     public class Skill : EntityBase
     {
+        public Skill(Guid seniorityId, Guid knowleadgeId)
+        {
+            SeniorityId = seniorityId;
+            KnowleadgeId = knowleadgeId;
+        }
+        public Skill()
+        {
+
+        }
         public Knowledge Knowleadge { get; set; }
         public Guid KnowleadgeId { get; set; }
         public Seniority Seniority { get; set; }

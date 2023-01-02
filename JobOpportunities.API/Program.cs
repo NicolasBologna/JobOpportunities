@@ -12,16 +12,14 @@ using Serilog.Events;
 
 var builder = WebApplication.CreateBuilder(args);
 
-builder.Host.UseSerilog();
-
-Log.Logger = new LoggerConfiguration()
+builder.Host.UseSerilog(new LoggerConfiguration()
     .MinimumLevel.Override("Microsoft", LogEventLevel.Warning)
     .Enrich.FromLogContext()
     .WriteTo.Console()
     //.WriteTo.File("log.txt", rollingInterval: RollingInterval.Day)
     .WriteTo.MongoDBBson("mongodb://localhost:27017/JobOpportunities", collectionName: "Logs")
     //.WriteTo.MongoDBBson(databaseUrl: "mongodb://serilogMongo:<PASSWORD>@ac-tz1xyaf-shard-00-00.vzwjbbc.mongodb.net/JobOpportunities", collectionName: "JobOpportunitiesLogs")
-    .CreateLogger();
+    .CreateLogger());
 
 builder.Services.AddWebApiServices();
 builder.Services.AddDataServices(builder.Configuration);

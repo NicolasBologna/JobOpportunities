@@ -12,10 +12,11 @@ using System.Security.Claims;
 
 namespace JobOpportunities.Data.UnitTest.RepositoryLayer
 {
-    public class SeniorityRepositoryTests
+    public class KnowledgeRepositoryTests
     {
-        private JobOpportunitiesContext _context;
-        private SeniorityRepository _repository;
+        private JobOpportunitiesContext _context = default!;
+        private KnowledgeRepository _repository = default!;
+        private Guid _createdKnowledgeId;
 
         [SetUp]
         public async Task Setup()
@@ -34,10 +35,10 @@ namespace JobOpportunities.Data.UnitTest.RepositoryLayer
 
             var logger = Mock.Of<ILogger>();
 
-            _repository = new SeniorityRepository(_context, logger);
+            _repository = new KnowledgeRepository(_context, logger);
             _repository.Should().NotBeNull();
 
-            await CreateTestSeniorityOnDataBase();
+            await CreateTestKnowledgeOnDataBase();
         }
 
         private static Mock<IHttpContextAccessor> CreateMockedHttpContextAccessor()
@@ -57,27 +58,29 @@ namespace JobOpportunities.Data.UnitTest.RepositoryLayer
             return mockHttpContextAccessor;
         }
 
-        private async Task CreateTestSeniorityOnDataBase()
+        private async Task CreateTestKnowledgeOnDataBase()
         {
-            Seniority newSeniority = new("JAVA TEST")
+            Knowledge newKnowledge = new("Senior")
             {
                 Description = "Test",
             };
 
-            _context.Senirorities.Add(newSeniority);
+            _context.Knowleadges.Add(newKnowledge);
+
+            _createdKnowledgeId = newKnowledge.Id;
 
             await _context.SaveChangesAsync();
         }
 
         [Test]
-        public async Task CreateSeniority_Success()
+        public async Task CreateKnowledge_Success()
         {
-            Seniority newSeniority = new(".NET")
+            Knowledge newKnowledge = new("Junior")
             {
                 Description = "Test",
             };
 
-            _repository.Add(newSeniority);
+            _repository.Add(newKnowledge);
 
             bool result = await _repository.SaveAsync();
 
@@ -85,47 +88,32 @@ namespace JobOpportunities.Data.UnitTest.RepositoryLayer
         }
 
         [Test]
-        public async Task CreateSeniority_Failure_DoesntHaveName()
+        public async Task GetKnowledgeById_Success()
         {
-            Seniority newSeniority = new(null);
-            _repository.Add(newSeniority);
-            bool result = await _repository.SaveAsync();
-            result.Should().BeFalse();
+            var dbSeniority = await _repository.GetKnowledgeById(_createdKnowledgeId);
+            dbSeniority.Should().NotBeNull();
+            dbSeniority.Title.Should().Be("Senior");
+            dbSeniority.Description.Should().Be("Test");
         }
 
         [Test]
-        public async Task GetSeniorityByName_Success()
+        public async Task GetKnowledgeById_Failure_InvalidId()
         {
-            Seniority seniority = await _repository.GetSenioritylByName("JAVA TEST");
-            seniority.Should().NotBeNull();
+            using (StringWriter outputStream = new StringWriter())
+            {
+                Console.SetOut(outputStream);
+                await _repository.Invoking(y => y.GetKnowledgeById(Guid.Empty))
+                .Should().ThrowAsync<ArgumentException>();
 
-            Seniority dbSeniority = _context.Senirorities.First();
-
-            bool senioritysAreEqual = dbSeniority == seniority;
-
-            seniority.Name.Should().Be("JAVA TEST");
-            seniority.Description.Should().Be("Test");
-            senioritysAreEqual.Should().BeTrue();
+                outputStream.ToString().Should().Contain("Argument Exception in GetKnowledgeById! KnowledgeId  =");
+            }
         }
 
         [Test]
-        [TestCase("")]
-        [TestCase(null)]
-        [TestCase("#")]
-        [TestCase("$")]
-        [TestCase("%")]
-        [TestCase("*")]
-        public async Task GetSeniorityByName_Failure_InvalidName(string name)
+        public async Task GetKnowledgeById_Failure_KnowledgeNotFound()
         {
-            await _repository.Invoking(y => y.GetSenioritylByName(name))
-                .Should().ThrowAsync<SeniorityNotFoundException>();
-        }
-
-        [Test]
-        public async Task GetSeniorityByName_Failure_SeniorityDoesntExists()
-        {
-            await _repository.Invoking(y => y.GetSenioritylByName("MISSING"))
-                .Should().ThrowAsync<SeniorityNotFoundException>();
+            await _repository.Invoking(y => y.GetKnowledgeById(new Guid("1F1C2726-E262-4F74-A85A-BA1E515B09A9")))
+            .Should().ThrowAsync<KnowledgeNotFoundException>();
         }
     }
 }

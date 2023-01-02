@@ -1,5 +1,6 @@
 ﻿using JobOpportunities.Domain;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Logging;
 using System.Linq.Expressions;
 
 namespace JobOpportunities.Data.GenericRepository
@@ -7,11 +8,13 @@ namespace JobOpportunities.Data.GenericRepository
     public class GenericRepository<T> : IGenericRepository<T> where T : class, IEntity
     {
         protected readonly JobOpportunitiesContext _dbContext;
+        protected readonly ILogger _logger;
         protected readonly DbSet<T> _dbSet;
 
-        public GenericRepository(JobOpportunitiesContext dbContext)
+        public GenericRepository(JobOpportunitiesContext dbContext, ILogger logger)
         {
-            _dbContext = dbContext ?? throw new ArgumentNullException(nameof(dbContext)); ;
+            _dbContext = dbContext ?? throw new ArgumentNullException(nameof(dbContext));
+            _logger = logger;
             _dbSet = _dbContext.Set<T>();
         }
 
@@ -60,8 +63,9 @@ namespace JobOpportunities.Data.GenericRepository
             {
                 return await _dbContext.SaveChangesAsync() > 0;
             }
-            catch
+            catch (Exception ex)
             {
+                _logger.LogError($"Exception during database query: {ex.Message}");
                 return false;
             }
         }
